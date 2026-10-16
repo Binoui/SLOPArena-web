@@ -63,4 +63,4 @@ Pushes to `main` test the feedback API and deploy through GitHub Actions. The ba
 
 Optional repository variables `VITE_STEAM_URL`, `VITE_FEEDBACK_API_URL` and `VITE_PRESENCE_URL` configure the Pages build. Without them, the Pages build calls the production API on `sloparena.barakaslurp.fr`, which must stay reachable over HTTPS with CORS allowed for feedback.
 
-The social preview metadata uses `https://sloparena.barakaslurp.fr/social-preview.png`; that host must serve the deployed `public/social-preview.png`.
+The social preview metadata uses `https://sloparena.barakaslurp.fr/social-preview.png?v=2`; that host must serve the deployed `public/social-preview.png`. Bump the `v` query in `src/layouts/Base.astro` whenever the card changes, because Cloudflare and link-preview services cache it by URL.
