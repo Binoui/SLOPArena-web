@@ -1,0 +1,97 @@
+---
+import { render } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import { getDocs, type Doc } from '../lib/docs'
+import { formatDate } from '../lib/format'
+import { links } from '../config'
+import { href, type Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+  doc: Doc
+}
+
+const { lang, doc } = Astro.props
+
+const copy = {
+  en: {
+    docs: 'Docs',
+    nav: 'Documentation',
+    breadcrumb: 'Breadcrumb',
+    sections: { play: 'Playing', build: 'Behind the slop' },
+    play: 'How to play',
+    updated: 'Updated',
+    edit: 'Edit this page on GitHub',
+    previous: 'Previous',
+    next: 'Next',
+    fallback: '',
+  },
+  fr: {
+    docs: 'Docs',
+    nav: 'Documentation',
+    breadcrumb: 'Fil d’Ariane',
+    sections: { play: 'Jouer', build: 'Dans les coulisses' },
+    play: 'Comment jouer',
+    updated: 'Mis à jour le',
+    edit: 'Modifier cette page sur GitHub',
+    previous: 'Précédent',
+    next: 'Suivant',
+    fallback: 'Cette page n’est pas encore traduite : voici la version anglaise.',
+  },
+}[lang]
+
+const { Content } = await render(doc.entry)
+const docs = await getDocs(lang)
+const index = docs.findIndex((item) => item.slug === doc.slug)
+const previous = docs[index - 1]
+const next = docs[index + 1]
+const route = `docs/${doc.slug}/`
+const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
+---
+<Base lang={lang} route={route} title={doc.entry.data.title} description={doc.entry.data.description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href(lang, 'docs/')}>{copy.docs}</a> / {copy.sections[doc.entry.data.section]}</nav>
+      <h1 lang={doc.fallback ? 'en' : undefined}>{doc.entry.data.title}</h1>
+      <p class="lede" lang={doc.fallback ? 'en' : undefined}>{doc.entry.data.description}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap docs-layout">
+      <nav class="docs-nav" aria-label={copy.nav}>
+        <h2>{copy.sections.play}</h2>
+        <ul><li><a href={href(lang, 'play/')}>{copy.play}</a></li></ul>
+        {(['play', 'build'] as const).map((section) => {
+          const items = docs.filter((item) => item.entry.data.section === section)
+          return items.length > 0 && (
+            <>
+              {section !== 'play' && <h2>{copy.sections[section]}</h2>}
+              <ul>
+                {items.map((item) => (
+                  <li><a href={href(lang, `docs/${item.slug}/`)} aria-current={item.slug === doc.slug ? 'page' : undefined}>{item.entry.data.title}</a></li>
+                ))}
+              </ul>
+            </>
+          )
+        })}
+      </nav>
+      <div>
+        {doc.fallback && <p class="notice" style="margin-bottom: 28px">{copy.fallback}</p>}
+        <article class="prose" lang={doc.fallback ? 'en' : undefined}>
+          <Content />
+        </article>
+        <div class="doc-meta label">
+          <span>{copy.updated} {formatDate(lang, doc.entry.data.updated)}</span>
+          <a href={editUrl} target="_blank" rel="noopener">{copy.edit} ↗</a>
+        </div>
+        {(previous || next) && (
+          <nav class="doc-pager" aria-label={`${copy.previous} / ${copy.next}`}>
+            {previous && <a href={href(lang, `docs/${previous.slug}/`)}><span class="label">← {copy.previous}</span><b>{previous.entry.data.title}</b></a>}
+            {next && <a class="next" href={href(lang, `docs/${next.slug}/`)}><span class="label">{copy.next} →</span><b>{next.entry.data.title}</b></a>}
+          </nav>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>

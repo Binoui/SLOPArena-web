@@ -1,0 +1,300 @@
+---
+import Base from '../layouts/Base.astro'
+import SteamCta from '../components/SteamCta.astro'
+import SteamHelp from '../components/SteamHelp.astro'
+import Icon from '../components/Icon.astro'
+import { links } from '../config'
+import { href, type Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+
+type Binding = { action: string; keys: string[] }
+
+const copy = {
+  en: {
+    title: 'How to play',
+    description: 'Get SLOPArena playtest access on Steam, learn the keyboard and controller controls, and understand damage, stocks, recovery and shields.',
+    kicker: 'Field guide',
+    lede: 'Get access, learn the buttons, and find out why you just flew off the stage.',
+    get: {
+      title: 'Get the game',
+      steps: [
+        { title: 'Request access', text: 'Open SLOPArena on Steam and hit Request Access under “Join the SLOPArena Playtest”. Wishlist it while you’re there.' },
+        { title: 'Wait for the email', text: 'The playtest lets people in by waves. Steam emails you when the developer is ready for more players.' },
+        { title: 'Install and fight', text: 'SLOPArena Playtest shows up in your Steam library. Install it, open Training, and start hitting things.' },
+      ],
+      needsTitle: 'What you need',
+      needs: ['A Steam account', 'Windows', 'Keyboard and mouse, or a controller (Xbox, DualShock and DualSense work)', 'An internet connection for online rooms'],
+    },
+    controls: {
+      title: 'Controls',
+      lede: 'These are the defaults. Remap anything in Settings → Controls, and the HUD always shows your current bindings.',
+      keyboard: 'Keyboard and mouse',
+      controller: 'Controller',
+      kb: [
+        { action: 'Move', keys: ['W', 'A', 'S', 'D'] },
+        { action: 'Camera and aim', keys: ['Mouse'] },
+        { action: 'Jump (tap for a short hop)', keys: ['Space'] },
+        { action: 'Shield on the ground, air dodge in the air', keys: ['Shift'] },
+        { action: 'Grab', keys: ['C'] },
+        { action: 'Crouch, slide, fast fall', keys: ['X'] },
+        { action: 'Normals', keys: ['1', '2', '3', '4'] },
+        { action: 'Specials, as labelled on the HUD', keys: ['A', 'E', 'R', 'F'] },
+        { action: 'Face where the camera looks', keys: ['Left click'] },
+        { action: 'Lock on or off a target', keys: ['Right click'] },
+        { action: 'Switch target', keys: ['Tab'] },
+        { action: 'Zoom', keys: ['Wheel'] },
+        { action: 'Pause', keys: ['Esc'] },
+      ] as Binding[],
+      pad: [
+        { action: 'Move', keys: ['Left stick'] },
+        { action: 'Camera and aim', keys: ['Right stick'] },
+        { action: 'Jump (tap for a short hop)', keys: ['RB'] },
+        { action: 'Shield on the ground, air dodge in the air', keys: ['RT'] },
+        { action: 'Grab', keys: ['LB', '+', 'RT'] },
+        { action: 'Crouch, slide, fast fall', keys: ['LT'] },
+        { action: 'Normals 1 · 2 · 3 · 4', keys: ['A', 'X', 'Y', 'B'] },
+        { action: 'Specials A · R · E · F', keys: ['LB', '+', 'A', 'X', 'Y', 'B'] },
+        { action: 'Face where the camera looks', keys: ['L3'] },
+        { action: 'Lock on or off a target', keys: ['R3'] },
+        { action: 'Switch target', keys: ['D-pad →'] },
+        { action: 'Pause', keys: ['Start'] },
+      ] as Binding[],
+      padNote: 'Xbox labels. On PlayStation: A = Cross, X = Square, Y = Triangle, B = Circle, LB/RB = L1/R1, LT/RT = L2/R2.',
+    },
+    basics: {
+      title: 'The basics',
+      items: [
+        { title: 'Damage is distance', text: 'Every hit adds to your percent. The same punch that tickles at 20% launches you at 120%.', loud: true },
+        { title: 'Stocks and blast zones', text: 'Fly past the edge of the stage or fall into the void and you lose a stock. Matches start with three. Last fighter standing wins.' },
+        { title: 'Getting back', text: 'You have a double jump, an air dodge and an E special built for recovery. There are no ledge grabs in this playtest: land on the stage or don’t land.' },
+        { title: 'Shield and air dodge', text: 'Hold Shift on the ground to block from every direction. Letting go leaves you open for a moment. In the air, the same button is a quick forward dodge, once per jump.' },
+        { title: 'Short hop, fast fall', text: 'Tap jump for a short hop, hold it for a full jump. Press X while falling to drop fast.' },
+        { title: 'Clash', text: 'Two attacks that connect at the same time bounce off each other: no damage, both back to neutral.' },
+      ],
+    },
+    modes: {
+      title: 'Modes',
+      items: [
+        { title: 'Training', text: 'One idle CPU and your moves on the HUD. Press Esc to make it attack, shield or dodge, change its damage, or reset positions.' },
+        { title: 'Solo', text: 'Fight an attacking CPU at the difficulty you pick.' },
+        { title: 'Online rooms', text: 'Browse rooms, join one, pick a fighter and a stage. Up to four players, stock rules, rematch in the same room. Still rough: report every desync.' },
+        { title: 'Arcade', text: 'Solo challenges with personal bests, starting with Slopball: return the ball over the net with your attacks.', sticker: 'In the works' },
+      ],
+    },
+    faq: {
+      title: 'Questions',
+      items: [
+        { q: 'Is it free?', a: ['Yes. SLOPArena is free to play and the playtest is free. There’s nothing to buy.'] },
+        { q: 'Why do I have to request access?', a: ['The playtest is limited so the servers and the one developer can keep up. Steam lets people in by waves and emails you when it’s your turn.'] },
+        { q: 'Mac or Linux?', a: ['Not officially. The playtest build is made for Windows.'] },
+        { q: 'Is it finished?', a: ['No. Balance is unfinished, online play still has connection problems, and things will break. That’s what the feedback form is for.'] },
+        { q: 'Is it made with AI?', a: ['Yes, openly. SLOPArena uses AI coding agents and generated art as production tools, and those workflows are public. Every change is still reviewed and playtested by a human.', 'The name owns it.'] },
+        { q: 'Where do I report bugs?', a: ['Use the feedback form, post on Discord, or open an issue on GitHub if you can describe how to make it happen again.'] },
+        { q: 'Can I contribute?', a: ['Yes. The game is MIT-licensed on GitHub. Start with the docs, then read the contributing guide in the repository.'] },
+      ],
+    },
+    stuck: { title: 'Stuck?', text: 'Ask on Discord. Someone, possibly the developer, will answer.', feedback: 'Send feedback' },
+  },
+  fr: {
+    title: 'Comment jouer',
+    description: 'Obtenez l’accès au playtest SLOPArena sur Steam, apprenez les commandes clavier et manette, et comprenez dégâts, vies, remontée et bouclier.',
+    kicker: 'Guide de terrain',
+    lede: 'Obtenez l’accès, apprenez les touches et comprenez pourquoi vous venez de quitter l’arène en vol plané.',
+    get: {
+      title: 'Obtenir le jeu',
+      steps: [
+        { title: 'Demandez l’accès', text: 'Ouvrez la page SLOPArena sur Steam et demandez l’accès au playtest. Ajoutez le jeu à votre liste de souhaits au passage.' },
+        { title: 'Attendez l’e-mail', text: 'Le playtest accepte les joueurs par vagues. Steam vous écrit quand le développeur est prêt à accueillir du monde.' },
+        { title: 'Installez et combattez', text: 'SLOPArena Playtest apparaît dans votre bibliothèque Steam. Installez-le, ouvrez Training et commencez à taper.' },
+      ],
+      needsTitle: 'Ce qu’il vous faut',
+      needs: ['Un compte Steam', 'Windows', 'Clavier et souris, ou une manette (Xbox, DualShock et DualSense fonctionnent)', 'Une connexion internet pour les salons en ligne'],
+    },
+    controls: {
+      title: 'Commandes',
+      lede: 'Voici les touches par défaut. Tout se reconfigure dans Settings → Controls (le jeu est en anglais), et le HUD affiche toujours vos touches actuelles.',
+      keyboard: 'Clavier et souris',
+      controller: 'Manette',
+      kb: [
+        { action: 'Se déplacer (WASD en QWERTY)', keys: ['Z', 'Q', 'S', 'D'] },
+        { action: 'Caméra et visée', keys: ['Souris'] },
+        { action: 'Sauter (appui court : petit saut)', keys: ['Espace'] },
+        { action: 'Bouclier au sol, esquive en l’air', keys: ['Maj'] },
+        { action: 'Saisie', keys: ['C'] },
+        { action: 'S’accroupir, glisser, chute rapide', keys: ['X'] },
+        { action: 'Coups normaux', keys: ['1', '2', '3', '4'] },
+        { action: 'Spéciales, comme indiqué sur le HUD', keys: ['A', 'E', 'R', 'F'] },
+        { action: 'Se tourner vers la caméra', keys: ['Clic gauche'] },
+        { action: 'Verrouiller une cible', keys: ['Clic droit'] },
+        { action: 'Changer de cible', keys: ['Tab'] },
+        { action: 'Zoom', keys: ['Molette'] },
+        { action: 'Pause', keys: ['Échap'] },
+      ] as Binding[],
+      pad: [
+        { action: 'Se déplacer', keys: ['Stick gauche'] },
+        { action: 'Caméra et visée', keys: ['Stick droit'] },
+        { action: 'Sauter (appui court : petit saut)', keys: ['RB'] },
+        { action: 'Bouclier au sol, esquive en l’air', keys: ['RT'] },
+        { action: 'Saisie', keys: ['LB', '+', 'RT'] },
+        { action: 'S’accroupir, glisser, chute rapide', keys: ['LT'] },
+        { action: 'Coups normaux 1 · 2 · 3 · 4', keys: ['A', 'X', 'Y', 'B'] },
+        { action: 'Spéciales A · R · E · F', keys: ['LB', '+', 'A', 'X', 'Y', 'B'] },
+        { action: 'Se tourner vers la caméra', keys: ['L3'] },
+        { action: 'Verrouiller une cible', keys: ['R3'] },
+        { action: 'Changer de cible', keys: ['Croix →'] },
+        { action: 'Pause', keys: ['Start'] },
+      ] as Binding[],
+      padNote: 'Libellés Xbox. Sur PlayStation : A = Croix, X = Carré, Y = Triangle, B = Rond, LB/RB = L1/R1, LT/RT = L2/R2.',
+    },
+    basics: {
+      title: 'Les bases',
+      items: [
+        { title: 'Les dégâts, c’est de la distance', text: 'Chaque coup fait grimper votre pourcentage. Le coup de poing qui chatouille à 20 % vous éjecte à 120 %.', loud: true },
+        { title: 'Vies et zones d’éjection', text: 'Sortez de l’arène en vol ou tombez dans le vide, et vous perdez une vie. Les matchs commencent avec trois vies. Le dernier debout gagne.' },
+        { title: 'Revenir sur le terrain', text: 'Vous avez un double saut, une esquive aérienne et une spéciale E faite pour remonter. Pas d’accroche aux rebords dans ce playtest : atterrissez sur l’arène, ou n’atterrissez pas.' },
+        { title: 'Bouclier et esquive', text: 'Maintenez Maj au sol pour bloquer dans toutes les directions. Le relâcher vous expose un instant. En l’air, la même touche fait une esquive vers l’avant, une fois par saut.' },
+        { title: 'Petit saut, chute rapide', text: 'Appuyez brièvement pour un petit saut, maintenez pour un saut complet. Appuyez sur X pendant la chute pour tomber plus vite.' },
+        { title: 'Clash', text: 'Deux attaques qui touchent en même temps se repoussent : aucun dégât, retour au neutre pour les deux.' },
+      ],
+    },
+    modes: {
+      title: 'Modes',
+      items: [
+        { title: 'Training', text: 'Un CPU immobile et vos coups affichés sur le HUD. Échap pour le faire attaquer, bloquer ou esquiver, changer ses dégâts ou réinitialiser les positions.' },
+        { title: 'Solo', text: 'Affrontez un CPU agressif, à la difficulté de votre choix.' },
+        { title: 'Salons en ligne', text: 'Parcourez les salons, rejoignez-en un, choisissez un combattant et une arène. Jusqu’à quatre joueurs, en vies, revanche dans le même salon. Encore brut : signalez chaque désynchro.' },
+        { title: 'Arcade', text: 'Des défis solo avec records personnels, à commencer par le Slopball : renvoyez la balle par-dessus le filet avec vos attaques.', sticker: 'En préparation' },
+      ],
+    },
+    faq: {
+      title: 'Questions',
+      items: [
+        { q: 'C’est gratuit ?', a: ['Oui. SLOPArena est gratuit, et le playtest aussi. Il n’y a rien à acheter.'] },
+        { q: 'Pourquoi faut-il demander l’accès ?', a: ['Le playtest est limité pour que les serveurs et l’unique développeur suivent le rythme. Steam fait entrer les joueurs par vagues et vous écrit quand c’est votre tour.'] },
+        { q: 'Mac ou Linux ?', a: ['Pas officiellement. Le build du playtest est prévu pour Windows.'] },
+        { q: 'C’est fini ?', a: ['Non. L’équilibrage n’est pas terminé, le jeu en ligne a encore des problèmes de connexion, et des choses vont casser. C’est à ça que sert le formulaire d’avis.'] },
+        { q: 'C’est fait avec de l’IA ?', a: ['Oui, ouvertement. SLOPArena utilise des agents de code IA et des images générées comme outils de production, et ces workflows sont publics. Chaque changement est quand même relu et testé par un humain.', 'Le nom assume.'] },
+        { q: 'Où signaler un bug ?', a: ['Utilisez le formulaire d’avis, postez sur Discord, ou ouvrez une issue sur GitHub si vous savez comment le reproduire.'] },
+        { q: 'Je peux contribuer ?', a: ['Oui. Le jeu est sous licence MIT sur GitHub. Commencez par les docs, puis lisez le guide de contribution du dépôt.'] },
+      ],
+    },
+    stuck: { title: 'Bloqué ?', text: 'Demandez sur Discord. Quelqu’un, peut-être le développeur, vous répondra.', feedback: 'Donner son avis' },
+  },
+}[lang]
+
+const keyClass = (key: string) => (key === '+' ? 'label' : 'key')
+---
+<Base lang={lang} route="play/" title={copy.title} description={copy.description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">{copy.kicker}</p>
+      <h1>{copy.title}</h1>
+      <p class="lede">{copy.lede}</p>
+    </div>
+  </section>
+
+  <section class="section" id="access">
+    <div class="wrap">
+      <h2 class="h3-title">{copy.get.title}</h2>
+      <ol class="steps">
+        {copy.get.steps.map((step) => <li><h3>{step.title}</h3><p>{step.text}</p></li>)}
+      </ol>
+      <div class="split" style="margin-top: clamp(32px, 4vw, 48px); align-items: start">
+        <div>
+          <SteamCta lang={lang} />
+          <SteamHelp lang={lang} />
+        </div>
+        <div class="verdict">
+          <h3>{copy.get.needsTitle}</h3>
+          <ul>{copy.get.needs.map((need) => <li>{need}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="controls">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>{copy.controls.title}</h2>
+        <p class="lede">{copy.controls.lede}</p>
+      </div>
+      <div class="controls">
+        {[[copy.controls.keyboard, copy.controls.kb], [copy.controls.controller, copy.controls.pad]].map(([title, bindings]) => (
+          <div class="control-table">
+            <h3>{title as string}</h3>
+            <dl>
+              {(bindings as Binding[]).map((binding) => (
+                <div>
+                  <dt>{binding.action}</dt>
+                  <dd>{binding.keys.map((key) => <span class={keyClass(key)}>{key}</span>)}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <p class="fine-print">{copy.controls.padNote}</p>
+    </div>
+  </section>
+
+  <section class="section" id="basics">
+    <div class="wrap">
+      <div class="section-head"><h2>{copy.basics.title}</h2></div>
+      <ul class="basics">
+        {copy.basics.items.map((item) => (
+          <li class:list={['basic', item.loud && 'basic--loud']}>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="modes">
+    <div class="wrap">
+      <div class="section-head"><h2>{copy.modes.title}</h2></div>
+      <ul class="modes">
+        {copy.modes.items.map((item) => (
+          <li>
+            {item.sticker && <span class="sticker">{item.sticker}</span>}
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head"><h2>{copy.faq.title}</h2></div>
+      <div class="faq">
+        {copy.faq.items.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <div>{item.a.map((paragraph) => <p>{paragraph}</p>)}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-orange">
+    <div class="wrap callout">
+      <h2>{copy.stuck.title}</h2>
+      <div>
+        <p>{copy.stuck.text}</p>
+        <div class="callout__actions">
+          <a class="btn btn--ink" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />Discord ↗</a>
+          <a class="btn" href={href(lang, 'feedback/')}>{copy.stuck.feedback} →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

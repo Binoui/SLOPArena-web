@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro'
+import { href } from '../i18n'
+---
+<Base lang="en" route="" title="Page not found" description="This page flew past the blast zone." noindex>
+  <section class="section">
+    <div class="wrap not-found">
+      <p class="sticker">404 · Ring out</p>
+      <h1>Off the stage.</h1>
+      <p class="lede">This page flew past the blast zone. <span lang="fr">Cette page est sortie de l’arène.</span></p>
+      <div class="callout__actions">
+        <a class="btn btn--yellow" href={href('en')}>Back to the arena</a>
+        <a class="btn" href={href('fr')} lang="fr">Retour à l’arène</a>
+      </div>
+    </div>
+  </section>
+</Base>

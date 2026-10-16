@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets'
+import Base from '../layouts/Base.astro'
+import Icon from '../components/Icon.astro'
+import { fighters, jumpHeight, tuningSnapshot, type Fighter } from '../data/fighters'
+import { links } from '../config'
+import { formatDate, formatNumber } from '../lib/format'
+import { href, type Lang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+interface Props {
+  lang: Lang
+  fighter: Fighter
+}
+
+const { lang, fighter } = Astro.props
+const t = ui[lang]
+
+const copy = {
+  en: {
+    description: (name: string, epithet: string) => `${name}, ${epithet.toLowerCase()}: SLOPArena fighter brief with specials, normals, strengths and weaknesses.`,
+    crumbs: 'Fighters',
+    breadcrumb: 'Breadcrumb',
+    portrait: 'Character art',
+    steam: 'Play on Steam',
+    report: (name: string) => `Main ${name}? Report what’s broken`,
+    plan: 'Game plan',
+    good: 'Good at',
+    bad: 'Bad at',
+    specials: 'Specials',
+    specialsLede: 'Cooldowns start when the move ends. Every E special is a recovery move.',
+    normals: 'Normals',
+    normalsLede: 'No cooldowns. The same key does something different on the ground and in the air.',
+    movement: 'Movement',
+    stats: ['Run speed', 'Air speed', 'Jump height', 'Gravity'],
+    tuning: (date: string) => `Playtest tuning as of ${date}. Jump height is estimated from jump speed and gravity. Numbers move between builds.`,
+    inGame: 'In game',
+    others: 'The rest of the roster',
+  },
+  fr: {
+    description: (name: string, epithet: string) => `${name}, ${epithet.toLowerCase()} : fiche du combattant SLOPArena avec spéciales, coups normaux, points forts et points faibles.`,
+    crumbs: 'Combattants',
+    breadcrumb: 'Fil d’Ariane',
+    portrait: 'Illustration',
+    steam: 'Jouer sur Steam',
+    report: (name: string) => `Vous jouez ${name} ? Signalez ce qui cloche`,
+    plan: 'Plan de jeu',
+    good: 'Points forts',
+    bad: 'Points faibles',
+    specials: 'Spéciales',
+    specialsLede: 'Le temps de recharge démarre à la fin du coup. La spéciale E sert toujours à revenir sur le terrain.',
+    normals: 'Coups normaux',
+    normalsLede: 'Sans temps de recharge. La même touche fait autre chose au sol et en l’air.',
+    movement: 'Déplacements',
+    stats: ['Vitesse au sol', 'Vitesse en l’air', 'Hauteur de saut', 'Gravité'],
+    tuning: (date: string) => `Réglages du playtest au ${date}. La hauteur de saut est estimée à partir de la vitesse de saut et de la gravité. Les chiffres bougent d’un build à l’autre.`,
+    inGame: 'En jeu',
+    others: 'Le reste du roster',
+  },
+}[lang]
+
+const n = (value: number) => formatNumber(lang, value)
+const max = (pick: (fighter: Fighter) => number) => Math.max(...fighters.map(pick))
+const stats = [
+  { label: copy.stats[0], value: fighter.movement.run, max: max((f) => f.movement.run), text: `${n(fighter.movement.run)} m/s` },
+  { label: copy.stats[1], value: fighter.movement.air, max: max((f) => f.movement.air), text: `${n(fighter.movement.air)} m/s` },
+  { label: copy.stats[2], value: jumpHeight(fighter.movement), max: max((f) => jumpHeight(f.movement)), text: `≈${n(jumpHeight(fighter.movement))} m` },
+  { label: copy.stats[3], value: fighter.movement.gravity, max: max((f) => f.movement.gravity), text: `${n(fighter.movement.gravity)} m/s²` },
+]
+const route = `fighters/${fighter.id}/`
+---
+<Base lang={lang} route={route} title={fighter.name} description={copy.description(fighter.name, fighter.epithet[lang])}>
+  <div class="fighter-page" style={`--accent: ${fighter.accent}`}>
+    <section class="fighter-hero">
+      <div class="wrap fighter-hero__grid">
+        <figure class="portrait-card">
+          <Image src={fighter.portrait} alt={fighter.name} widths={[400, 512]} sizes="(max-width: 900px) 90vw, 480px" loading="eager" fetchpriority="high" />
+          <figcaption>{copy.portrait}</figcaption>
+        </figure>
+        <div>
+          <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href(lang, 'fighters/')}>{copy.crumbs}</a> / {fighter.name}</nav>
+          <h1>{fighter.name}</h1>
+          <p class="strip">{fighter.epithet[lang]}</p>
+          <p class="fighter-hero__pitch">{fighter.pitch[lang]}</p>
+          <ul class="tags">{fighter.tags[lang].map((tag) => <li class="tag">{tag}</li>)}</ul>
+          <div class="fighter-hero__actions">
+            <a class="btn btn--yellow" href={links.steam} target="_blank" rel="noopener"><Icon name="steam" />{copy.steam} ↗</a>
+            <a class="text-link" href={`${href(lang, 'feedback/')}?fighter=${fighter.id}`}>{copy.report(fighter.name)} →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split">
+        <div>
+          <h2 class="h3-title">{copy.plan}</h2>
+          <ol class="gameplan">{fighter.gameplan[lang].map((step) => <li>{step}</li>)}</ol>
+        </div>
+        <div class="verdicts">
+          <div class="verdict verdict--good">
+            <h3>{copy.good}</h3>
+            <ul>{fighter.strengths[lang].map((item) => <li>{item}</li>)}</ul>
+          </div>
+          <div class="verdict verdict--bad">
+            <h3>{copy.bad}</h3>
+            <ul>{fighter.weaknesses[lang].map((item) => <li>{item}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h3-title">{copy.specials}</h2>
+        <p class="section-lede">{copy.specialsLede}</p>
+        <ul class="specials">
+          {fighter.specials.map((special) => (
+            <li class:list={['special', special.slot === fighter.signature && 'special--signature']}>
+              <span class="key key--ink">{special.slot}</span>
+              <div>
+                <h3>{special.name}</h3>
+                <p class="special__meta">
+                  <span class="flag">{t.slots[special.slot]}</span>
+                  <span>{n(special.cooldownSeconds)} s {t.common.cooldown}</span>
+                  {special.slot === fighter.signature && <span class="flag flag--accent">{t.common.mustTry}</span>}
+                </p>
+              </div>
+              <p>{special.text[lang]}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h3-title">{copy.normals}</h2>
+        <p class="section-lede">{copy.normalsLede}</p>
+        <div class="normals">
+          {(['ground', 'air'] as const).map((place) => (
+            <table>
+              <caption>{place === 'ground' ? t.common.ground : t.common.air}</caption>
+              <tbody>
+                {fighter.normals[place].map((name, index) => (
+                  <tr><th scope="row"><span class="key">{index + 1}</span></th><td>{name}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split">
+        <div>
+          <h2 class="h3-title">{copy.movement}</h2>
+          <ul class="stats">
+            {stats.map((stat) => (
+              <li class="stat">
+                <span>{stat.label}</span>
+                <span class="stat__bar" aria-hidden="true"><span style={`width: ${Math.round((stat.value / stat.max) * 100)}%`}></span></span>
+                <span class="stat__value">{stat.text}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="fine-print">{copy.tuning(formatDate(lang, new Date(tuningSnapshot)))}</p>
+        </div>
+        <div>
+          <h2 class="h3-title">{copy.inGame}</h2>
+          <figure class="shot-frame">
+            <Image src={fighter.shot} alt={fighter.shotAlt[lang]} widths={[640, 960, 1280]} sizes="(max-width: 900px) 92vw, 560px" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="h3-title">{copy.others}</h2>
+        <ul class="roster-nav">
+          {fighters.map((other) => (
+            <li>
+              <a href={href(lang, `fighters/${other.id}/`)} aria-current={other.id === fighter.id ? 'page' : undefined}>
+                <Image src={other.portrait} alt="" widths={[112]} sizes="56px" />
+                <span>{other.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import Icon from './Icon.astro'
+import { trailer } from '../config'
+
+interface Props {
+  poster: ImageMetadata
+  playLabel: string
+  caption: string
+}
+
+const { poster, playLabel, caption } = Astro.props
+const watchUrl = `https://www.youtube.com/watch?v=${trailer.youtubeId}`
+const embedUrl = `https://www.youtube-nocookie.com/embed/${trailer.youtubeId}?autoplay=1&rel=0`
+---
+<figure class="video" data-video={embedUrl} data-title={trailer.title}>
+  <div class="video__frame">
+    <Image src={poster} alt="" widths={[640, 960, 1280]} sizes="(max-width: 900px) 100vw, 660px" />
+    <button class="video__play" type="button" aria-label={playLabel}>
+      <span class="video__button"><Icon name="play" /></span>
+    </button>
+  </div>
+  <figcaption>
+    <span>{caption}</span>
+    <a href={watchUrl} target="_blank" rel="noopener">YouTube ↗</a>
+  </figcaption>
+</figure>
+
+<script>
+  // Load YouTube only on request: no third-party requests before the visitor asks.
+  for (const figure of document.querySelectorAll<HTMLElement>('[data-video]')) {
+    figure.querySelector('button')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe')
+      iframe.src = figure.dataset.video!
+      iframe.title = figure.dataset.title || 'Video'
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin'
+      iframe.allowFullscreen = true
+      figure.querySelector('.video__frame')!.replaceChildren(iframe)
+      iframe.focus()
+    }, { once: true })
+  }
+</script>

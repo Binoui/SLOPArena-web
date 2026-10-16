@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro'
+import { links } from '../config'
+import { href, langs, type Lang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+interface Props {
+  lang: Lang
+  route: string
+}
+
+const { lang, route } = Astro.props
+const t = ui[lang]
+const items = [
+  { route: 'play/', label: t.nav.play },
+  { route: 'fighters/', label: t.nav.fighters },
+  { route: 'docs/', label: t.nav.docs },
+  { route: 'feedback/', label: t.nav.feedback },
+]
+const current = (itemRoute: string) => (route === itemRoute ? 'page' : route.startsWith(itemRoute) ? 'true' : undefined)
+---
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href={href(lang)} aria-label={t.home}>SLOPArena</a>
+    <nav class="site-nav" aria-label={t.nav.label}>
+      <ul>
+        {items.map((item) => (
+          <li><a href={href(lang, item.route)} aria-current={current(item.route)}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="header-steam" href={links.steam} target="_blank" rel="noopener" aria-label={t.steam.headerAria}>
+      <Icon name="steam" />{t.steam.headerCta}<span aria-hidden="true">↗</span>
+    </a>
+    <div class="lang-switch" role="group" aria-label={t.language}>
+      {langs.map((code) => (
+        <a href={href(code, route)} hreflang={code} lang={code} aria-current={code === lang ? 'true' : undefined} data-lang-switch={code}>{code.toUpperCase()}</a>
+      ))}
+    </div>
+  </div>
+</header>

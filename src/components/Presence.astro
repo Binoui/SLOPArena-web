@@ -1,0 +1,68 @@
+---
+import { endpoints, links } from '../config'
+import { ui } from '../i18n/ui'
+import type { Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = ui[lang].presence
+---
+<section class="presence" data-state="checking" data-presence={endpoints.presence} data-strings={JSON.stringify(t)} aria-live="polite">
+  <div class="wrap presence__inner">
+    <span class="presence__dot" aria-hidden="true"></span>
+    <strong data-presence-copy>{t.checking}</strong>
+    <span class="presence__names" data-presence-names></span>
+    <a class="presence__link" href={links.discord} target="_blank" rel="noopener">{t.discord} ↗</a>
+  </div>
+</section>
+
+<script>
+  type Strings = Record<'checking' | 'one' | 'many' | 'matchOne' | 'matchMany' | 'empty' | 'unavailable', string>
+
+  const root = document.querySelector<HTMLElement>('[data-presence]')
+  if (root) {
+    const strings = JSON.parse(root.dataset.strings || '{}') as Strings
+    const copy = root.querySelector<HTMLElement>('[data-presence-copy]')!
+    const names = root.querySelector<HTMLElement>('[data-presence-names]')!
+    const count = (template: string, n: number) => template.replace('{n}', String(n))
+
+    const show = (state: 'live' | 'empty' | 'unavailable', text: string, detail = '') => {
+      root.dataset.state = state
+      copy.textContent = text
+      names.textContent = detail
+    }
+
+    const update = async () => {
+      try {
+        const response = await fetch(root.dataset.presence!, { signal: AbortSignal.timeout(4000) })
+        if (!response.ok) throw new Error('presence unavailable')
+        const data = await response.json()
+        const players = data?.onlinePlayerCount
+        const matches = data?.activeMatchCount
+        if (!Number.isInteger(players) || players < 0 || !Number.isInteger(matches) || matches < 0) throw new Error('invalid presence')
+        if (players === 0) return show('empty', strings.empty)
+        const playerText = count(players === 1 ? strings.one : strings.many, players)
+        const matchText = count(matches === 1 ? strings.matchOne : strings.matchMany, matches)
+        const playerNames = Array.isArray(data.playerNames) ? data.playerNames.map(String).join(' · ') : ''
+        show('live', `${playerText} · ${matchText}`, playerNames)
+      } catch {
+        show('unavailable', strings.unavailable)
+      }
+    }
+
+    let timer = 0
+    const schedule = () => {
+      window.clearInterval(timer)
+      if (document.visibilityState === 'visible') timer = window.setInterval(update, 15000)
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') update()
+      schedule()
+    })
+    update()
+    schedule()
+  }
+</script>

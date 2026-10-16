@@ -1,15 +1,14 @@
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM node:22-alpine AS feedback
+# The feedback API only uses Node built-ins; package.json supplies "type": "module".
+FROM node:24-alpine AS feedback
 WORKDIR /app
-COPY package*.json ./
-RUN npm install --omit=dev
-COPY server.js ./
+COPY package.json server.js ./
 ENV DATA_DIR=/data
 VOLUME ["/data"]
 EXPOSE 3000

@@ -1,0 +1,65 @@
+---
+import { links } from '../config'
+import { href, type Lang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = ui[lang]
+const columns = [
+  {
+    title: t.footer.play,
+    links: [
+      { label: 'Steam', href: links.steam, external: true },
+      { label: t.nav.play, href: href(lang, 'play/') },
+      { label: t.nav.fighters, href: href(lang, 'fighters/') },
+      { label: t.nav.feedback, href: href(lang, 'feedback/') },
+    ],
+  },
+  {
+    title: t.footer.community,
+    links: [
+      { label: 'Discord', href: links.discord, external: true },
+      { label: 'Reddit', href: links.reddit, external: true },
+      { label: 'YouTube', href: links.youtube, external: true },
+    ],
+  },
+  {
+    title: t.footer.build,
+    links: [
+      { label: t.nav.docs, href: href(lang, 'docs/') },
+      { label: t.footer.gameSource, href: links.github, external: true },
+      { label: t.footer.siteSource, href: links.webRepo, external: true },
+    ],
+  },
+]
+---
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="brand" href={href(lang)} aria-label={t.home}>SLOPArena</a>
+      <p class="site-footer__tagline">{t.footer.tagline}</p>
+    </div>
+    {columns.map((column) => (
+      <nav aria-label={column.title}>
+        <h2>{column.title}</h2>
+        <ul>
+          {column.links.map((link) => (
+            <li>
+              {link.external
+                ? <a href={link.href} target="_blank" rel="noopener">{link.label} <span aria-hidden="true">↗</span><span class="sr-only">{t.common.newTab}</span></a>
+                : <a href={link.href}>{link.label}</a>}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+  </div>
+  <div class="wrap site-footer__bottom">
+    <span>{t.footer.status}</span>
+    <span>{t.footer.joke}</span>
+  </div>
+</footer>

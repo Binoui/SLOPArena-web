@@ -1,0 +1,15 @@
+---
+import { links } from '../config'
+import { ui } from '../i18n/ui'
+import type { Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+}
+
+const t = ui[Astro.props.lang].steam
+---
+<div class="steam-help">
+  <p>{t.howItWorks}</p>
+  <p><a class="text-link" href={links.steamLaunch}>{t.launch}</a></p>
+</div>
