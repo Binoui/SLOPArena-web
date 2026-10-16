@@ -3,4 +3,4 @@ dist/
 .astro/
 .env
 .DS_Store
-data/
+/data/
