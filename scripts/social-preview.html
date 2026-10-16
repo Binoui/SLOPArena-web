@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  Source for public/social-preview.png (1200×630). Regenerate from the repository root:
+  google-chrome --headless=new --hide-scrollbars --window-size=1200,630 \
+    --screenshot=public/social-preview.png "file://$PWD/scripts/social-preview.html"
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: 'Archivo Black'; src: url(../node_modules/@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2); }
+  @font-face { font-family: 'Space Mono'; font-weight: 700; src: url(../node_modules/@fontsource/space-mono/files/space-mono-latin-700-normal.woff2); }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #ded8c9; color: #171814; font-family: 'Archivo Black', sans-serif; position: relative; }
+  body::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E"); }
+  .ring { position: absolute; right: -150px; top: -170px; width: 560px; height: 560px; border: 2px solid rgba(23, 24, 20, .28); border-radius: 50%; }
+  .strip { position: absolute; left: 62px; top: 58px; padding: 8px 16px 7px; background: #f4efe3; border: 3px solid #171814; font: 700 20px/1 'Space Mono', monospace; letter-spacing: .12em; transform: rotate(-2deg); }
+  .plate { position: absolute; left: 50px; top: 110px; padding: 22px 34px 12px 26px; background: #ffcc22 radial-gradient(rgba(23, 24, 20, .14) 1px, transparent 1.6px); background-size: auto, 8px 8px; font-size: 148px; line-height: .84; letter-spacing: -.055em; clip-path: polygon(0 3%, 6% 0, 19% 2.4%, 33% .4%, 47% 2.2%, 62% 0, 78% 2%, 91% .2%, 100% 1.8%, 98.6% 19%, 100% 37%, 98.4% 56%, 100% 76%, 98.8% 100%, 84% 97.6%, 70% 100%, 54% 97.8%, 39% 100%, 23% 98%, 9% 100%, 0 97.2%, 1.4% 79%, 0 58%, 1.2% 37%, .2% 18%); transform: rotate(-1.6deg); }
+  .plate span { display: block; }
+  .cards { position: absolute; right: 44px; top: 96px; display: grid; grid-template-columns: repeat(2, 214px); gap: 24px 22px; }
+  .card { background: #f4efe3; border: 3px solid #171814; box-shadow: 7px 7px 0 #171814; }
+  .card img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-bottom: 7px solid var(--accent); }
+  .card b { display: block; padding: 7px 10px 6px; font-weight: 400; font-size: 26px; letter-spacing: -.02em; }
+  .card:nth-child(1) { transform: rotate(-4deg); }
+  .card:nth-child(2) { transform: rotate(3deg) translateY(-10px); }
+  .card:nth-child(3) { transform: rotate(2deg) translateY(4px); }
+  .card:nth-child(4) { transform: rotate(-3deg) translateY(-6px); }
+  .cards { grid-template-rows: 214px 214px; }
+  .card { height: fit-content; }
+  .card img { height: 150px; aspect-ratio: auto; object-position: center 25%; }
+  .footer { position: absolute; left: 62px; bottom: 54px; display: flex; gap: 14px; align-items: center; font: 700 22px/1 'Space Mono', monospace; letter-spacing: .1em; }
+  .footer span { padding: 9px 14px 8px; border: 3px solid #171814; }
+  .footer span:first-child { background: #171814; color: #ded8c9; box-shadow: 5px 5px 0 #f05b35; }
+</style>
+</head>
+<body>
+  <div class="ring"></div>
+  <h1 class="plate"><span>SLOP</span><span>ARENA</span></h1>
+  <div class="footer"><span>STEAM PLAYTEST</span><span>OPEN SOURCE</span></div>
+  <div class="cards">
+    <div class="card" style="--accent:#3a8dde"><img src="../src/assets/fighters/fightguy-portrait.png" alt="" /><b>FIGHTGUY</b></div>
+    <div class="card" style="--accent:#f07a1e"><img src="../src/assets/fighters/manki-portrait.png" alt="" /><b>MANKI</b></div>
+    <div class="card" style="--accent:#5fd84a"><img src="../src/assets/fighters/wibou-portrait.png" alt="" /><b>WIBOU</b></div>
+    <div class="card" style="--accent:#d2402f"><img src="../src/assets/fighters/bonk-portrait.png" alt="" /><b>BONK</b></div>
+  </div>
+</body>
+</html>

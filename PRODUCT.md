@@ -8,48 +8,55 @@ web
 
 ## Users
 
-The primary users are friends invited to a SlopArena playtest. They need to find the demo on Steam, understand the controls and lobby flow, find other players, and report what happened after playing.
+The primary users are friends and curious players joining the SLOPArena playtest. They need to understand what the game is and who the fighters are, request Steam Playtest access, learn the controls and the lobby flow, find other players, and report what happened after playing. Contributors and people interested in how the game is made use the docs.
 
 ## Product Purpose
 
-SlopArena-web turns an invitation into a completed playtest: players discover the free online PvP demo on Steam, fight friends or meet players on Discord, and send useful feedback that informs the next build.
+SLOPArena-web turns curiosity into a completed playtest: visitors see real gameplay and the roster, request access on the Steam store page, fight friends or meet players on Discord, and send useful feedback that informs the next build. It also hosts the bilingual docs that explain how the game is made.
 
 ## Positioning
 
-SlopArena is a transparent, community-built pre-alpha. Players are invited into an unfinished platform fighter, shown its rough edges honestly, and given a direct role in making the next demo less broken.
+SLOPArena is a transparent, solo-developed, open-source pre-alpha built with AI agents in the open. It is unreleased: the Steam store page is listed as coming soon, and only a limited playtest is available. Players are invited into an unfinished platform fighter, shown its rough edges honestly, and given a direct role in making the next build less broken.
 
 ## Operating Context
 
-- Players arrive through a shared link before a playtest.
-- The demo is presented as available on Steam; the site falls back to a Steam search URL unless `VITE_STEAM_URL` supplies a direct destination. Verify the deployed destination and actual availability before sharing widely.
+- Players arrive through a shared link, the Steam page or the playtest video.
+- The Steam store page (app `5324910`) is public and wishlistable, listed as coming soon. Its limited Steam Playtest (app `5325920`) is joined by requesting access there; Steam emails players when they are let in. `steam://run/5325920` launches the playtest once access is granted. The site states this flow plainly and never promises instant access.
 - Keyboard/mouse and gamepad controls are supported in the game; players meet through the server browser and lobby.
 - Discord helps players find matches; Reddit hosts public discussion, and the game repository shows its source.
 - Live presence distinguishes confirmed zero players from an unavailable request.
-- After playing, users can send one required message anonymously or with an optional handle. Four 1–5 ratings and favorite character are optional.
+- After playing, users can send one required message anonymously or with an optional handle. A topic, four 1–5 ratings and a favorite fighter are optional.
+- Online play still has known connection problems; copy says so instead of promising working netcode.
 
 ## Capabilities and Constraints
 
 - The product is a small, chaotic free 3D online platform fighter for friends.
 - The public experience supports English and French, including automatic language selection and a persistent manual switch.
-- Manki and FightGuy are the current named playable characters represented on the site.
-- The primary call to action points to Steam; provide a direct SlopArena destination via `VITE_STEAM_URL` when verified.
-- The feedback flow requires only a nonblank message; blank name means anonymous, while four ratings can be unselected, scored, or explicitly marked `notTried`.
+- The roster on the site is FightGuy, Manki, Wibou and Bonk, with kits, cooldowns and movement copied from the game's character packages; the snapshot date lives in `src/data/fighters.ts`.
+- The primary CTA links to the Steam store page and explains access by request. Do not invent download routes or claim instant access.
+- The feedback flow requires only a nonblank message; blank name means anonymous, a topic is optional, four ratings can be unselected, scored, or explicitly marked `notTried`, and the favorite fighter covers all four fighters.
 - The site must remain usable when live presence is unavailable.
-- The project can be deployed as a Vite static site through GitHub Pages or as Docker services with nginx and the feedback API.
+- The project is an Astro static site deployed through GitHub Pages or as Docker services with nginx and the feedback API. Docs are Markdown in `src/content/docs/<lang>/`; a missing French page falls back to English.
 
 ## Brand Commitments
 
-Preserve the SlopArena name, Manki and FightGuy, the candid early-playtest status, and the self-aware humor about questionable balance. Preserve the free 3D fighter pitch, bilingual copy, video, keyboard/gamepad guidance, purposeful community links, presence states, and message-first feedback.
+Preserve the SLOPArena name (player-facing spelling; shorthand SLOPA), the four fighters, the candid early-playtest status, and self-aware humor about questionable balance. The shared visual north star is “Low-poly underground toy-fight-club, with DIY internet-game energy”: chunky low-poly forms, exaggerated silhouettes, curated asset-pack collage, and toy as scavenged construction—not literal plastic or mandatory cuteness. Be cool first, joke second, slightly crappy on purpose, and extremely readable. Use Action Yellow `#FFCC22` for graphic primary actions and selection; preserve character/team colors and blue specials. Archivo Black is the shared name-mark and native menu display voice; keep Archivo Black + Space Mono for marketing, with readable sans-serif for dense HUD/settings. Preserve character identity, proportions, and chunky model forms in art. Adapt the graphic treatment to the setting rather than forcing warehouse stages or decoration-only generic grit.
+
+The website flyer is the strongest existing graphic reference. Source hierarchy: usability/readability first; shared guide `../SlopArena/docs/design/visual-language.md` is brand authority, art conventions owns 3D/assets, this local DESIGN document realizes the website surface, and `.impeccable/design.json` mirrors it rather than acting as a separate guide. The website now ships Action Yellow and the Archivo family; native UI migration is tracked in the game repository.
+
+Preserve the free 3D fighter pitch, real gameplay media, bilingual copy, video, keyboard/gamepad guidance, purposeful community links, presence states, message-first feedback, and honest docs about the AI-assisted workflow.
 
 ## Evidence on Hand
 
-- `public/characters/manki.png` and `public/characters/fightguy.png`: current character artwork.
-- `https://youtu.be/LFdEtBUN6wU`: the playtest video embedded in the gameplay card.
-- `src/main.js`: complete English and French copy, community/access content, presence experience, and feedback form.
+- `src/assets/fighters/*-portrait.png`: the game's illustrated fighter portraits (from the Unity client's `Resources/UI/Portraits`), also used as Steam key art.
+- `src/assets/screens/`: five gameplay screenshots published on the Steam store page.
+- `src/assets/stages/`: stage-select previews of the six curated PvP stages.
+- `https://youtu.be/LFdEtBUN6wU`: “SLOPArena Playtest OUT !!!”, embedded on the home page behind a click-to-load facade.
+- `src/views/` and `src/data/`: complete English and French copy, roster data, access, controls and feedback content.
 - `README.md`: development, deployment, Steam, feedback, and presence behavior.
-- `server.js`: strict v2 feedback record contract and local newline-delimited storage.
-- The gameplay card embeds the playtest video at `https://youtu.be/LFdEtBUN6wU`. There is no committed testimonial, player count, benchmark, press quote, pricing plan, or other third-party proof. Future work must not fabricate these.
-- `public/social-preview.png`: 1200×630 bilingual-safe share card using the existing character renders and wordmark.
+- `server.js`: strict v3 feedback record contract and local newline-delimited storage.
+- There is no committed testimonial, player count, benchmark, press quote, pricing plan, or other third-party proof. Future work must not fabricate these.
+- `public/social-preview.png`: 1200×630 language-neutral share card with the name plate and the four portraits, generated from `scripts/social-preview.html`.
 
 ## Product Principles
 

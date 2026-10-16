@@ -1,0 +1,365 @@
+---
+import { Image } from 'astro:assets'
+import Base from '../layouts/Base.astro'
+import Icon from '../components/Icon.astro'
+import { fighters } from '../data/fighters'
+import { endpoints, links } from '../config'
+import type { Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Feedback',
+    heading: 'How was the slop?',
+    description: 'Played SLOPArena? Tell the developer what broke, what felt great and who needs a nerf.',
+    kicker: 'After the match',
+    lede: 'What broke, what felt great, who needs a nerf. One sentence is enough, and it goes straight to the developer.',
+    helpTitle: 'What helps most',
+    help: [
+      'What you were doing when it broke: fighter, stage, mode.',
+      'What you expected, and what happened instead.',
+      'Who felt too strong or too weak, and why.',
+      'Something that felt great. That counts too.',
+    ],
+    elsewhere: 'Rather talk? Come to the Discord. Bug you can reproduce every time? A GitHub issue is perfect.',
+    form: 'Match report',
+    minute: 'Takes a minute',
+    topic: 'What’s it about?',
+    topics: { bug: 'Something broke', balance: 'Balance', love: 'Felt great', idea: 'Idea', other: 'Other' },
+    message: 'What happened?',
+    messageHint: 'One sentence is enough.',
+    placeholder: 'e.g. “Bonk felt way too slow, and the camera got lost on Splash Deck.”',
+    favorite: 'Favorite fighter',
+    noFavorite: 'No favorite',
+    unsure: 'Not sure',
+    ratings: 'Rate the session',
+    ratingsHint: 'Four quick scores, if you played.',
+    questions: {
+      fun: ['How fun was it?', 'Not fun', 'Great fun'],
+      hitDifficulty: ['How easy was it to land hits?', 'Very hard', 'Very easy'],
+      camera: ['How comfortable was the camera?', 'Uncomfortable', 'Comfortable'],
+      lockOn: ['How useful was lock-on?', 'Not useful', 'Very useful'],
+    },
+    notTried: 'Didn’t try',
+    name: 'Name or Discord handle',
+    nameHint: 'Leave it empty to stay anonymous.',
+    optional: 'optional',
+    required: 'required',
+    send: 'Send report',
+    note: 'No account needed.',
+    done: 'Report filed',
+    doneText: 'Thanks for helping break it better. It’s in the developer’s pile now.',
+    another: 'Send another',
+    strings: {
+      sending: 'Sending…',
+      required: 'Write at least one sentence before sending.',
+      network: 'Couldn’t reach the feedback service. Your report is still here, try again in a moment.',
+      service: 'The feedback service is down right now. Your report is still here, try again later.',
+      rejected: 'The report wasn’t accepted. Check it and try again.',
+      retry: 'Try again',
+      send: 'Send report',
+      counter: '{n} / 2000',
+    },
+  },
+  fr: {
+    title: 'Avis',
+    heading: 'Alors, ce slop ?',
+    description: 'Vous avez joué à SLOPArena ? Dites au développeur ce qui a cassé, ce qui était génial et qui mérite un nerf.',
+    kicker: 'Après le match',
+    lede: 'Ce qui a cassé, ce qui était génial, qui mérite un nerf. Une phrase suffit, et elle arrive directement chez le développeur.',
+    helpTitle: 'Ce qui aide le plus',
+    help: [
+      'Ce que vous faisiez quand ça a cassé : combattant, arène, mode.',
+      'Ce que vous attendiez, et ce qui s’est passé à la place.',
+      'Qui vous a paru trop fort ou trop faible, et pourquoi.',
+      'Un truc génial. Ça compte aussi.',
+    ],
+    elsewhere: 'Vous préférez en parler ? Passez sur le Discord. Un bug reproductible à chaque fois ? Une issue GitHub, c’est parfait.',
+    form: 'Rapport de match',
+    minute: 'Une minute, pas plus',
+    topic: 'C’est à quel sujet ?',
+    topics: { bug: 'Un truc a cassé', balance: 'Équilibrage', love: 'C’était génial', idea: 'Idée', other: 'Autre' },
+    message: 'Qu’est-ce qui s’est passé ?',
+    messageHint: 'Une phrase suffit.',
+    placeholder: 'ex. « Bonk est bien trop lent, et la caméra s’est perdue sur Splash Deck. »',
+    favorite: 'Combattant préféré',
+    noFavorite: 'Aucun',
+    unsure: 'Je ne sais pas',
+    ratings: 'Notez la session',
+    ratingsHint: 'Quatre notes rapides, si vous avez joué.',
+    questions: {
+      fun: ['C’était amusant ?', 'Pas amusant', 'Très amusant'],
+      hitDifficulty: ['Était-il facile de toucher vos adversaires ?', 'Très difficile', 'Très facile'],
+      camera: ['La caméra était-elle confortable ?', 'Inconfortable', 'Confortable'],
+      lockOn: ['Le verrouillage de cible était-il utile ?', 'Inutile', 'Très utile'],
+    },
+    notTried: 'Pas essayé',
+    name: 'Nom ou pseudo Discord',
+    nameHint: 'Laissez vide pour rester anonyme.',
+    optional: 'facultatif',
+    required: 'obligatoire',
+    send: 'Envoyer le rapport',
+    note: 'Pas besoin de compte.',
+    done: 'Rapport reçu',
+    doneText: 'Merci de nous aider à mieux casser le jeu. Il est maintenant sur la pile du développeur.',
+    another: 'En envoyer un autre',
+    strings: {
+      sending: 'Envoi…',
+      required: 'Écrivez au moins une phrase avant d’envoyer.',
+      network: 'Impossible de joindre le service d’avis. Votre rapport est toujours là, réessayez dans un instant.',
+      service: 'Le service d’avis est en panne pour le moment. Votre rapport est toujours là, réessayez plus tard.',
+      rejected: 'Le rapport n’a pas été accepté. Vérifiez-le et réessayez.',
+      retry: 'Réessayer',
+      send: 'Envoyer le rapport',
+      counter: '{n} / 2000',
+    },
+  },
+}[lang]
+
+const topics = Object.entries(copy.topics)
+const questions = Object.entries(copy.questions)
+---
+<Base lang={lang} route="feedback/" title={copy.title} description={copy.description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">{copy.kicker}</p>
+      <h1>{copy.heading}</h1>
+      <p class="lede">{copy.lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap feedback-layout">
+      <aside class="feedback-aside">
+        <div>
+          <h2 class="h3-title">{copy.helpTitle}</h2>
+          <ul>{copy.help.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        <p class="notice">{copy.elsewhere}</p>
+        <div class="callout__actions" style="margin-top: 0">
+          <a class="btn btn--ink" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />Discord ↗</a>
+          <a class="btn" href={links.githubIssues} target="_blank" rel="noopener"><Icon name="github" />GitHub ↗</a>
+        </div>
+      </aside>
+
+      <div class="report">
+        <form id="report" novalidate data-endpoint={endpoints.feedback} data-lang={lang} data-strings={JSON.stringify(copy.strings)}>
+          <div class="report__head">
+            <h2 id="report-title">{copy.form}</h2>
+            <span class="sticker">{copy.minute}</span>
+          </div>
+
+          <fieldset>
+            <legend>{copy.topic} <span class="optional">({copy.optional})</span></legend>
+            <div class="chips">
+              {topics.map(([value, label]) => (
+                <label class="chip"><input type="radio" name="topic" value={value} /><span>{label}</span></label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="report-message">{copy.message} <span class="optional">({copy.required})</span></label>
+            <textarea id="report-message" name="message" maxlength="2000" required aria-describedby="report-message-meta" placeholder={copy.placeholder}></textarea>
+            <div class="field-meta" id="report-message-meta">
+              <span>{copy.messageHint}</span>
+              <span data-counter aria-hidden="true">0 / 2000</span>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>{copy.favorite} <span class="optional">({copy.optional})</span></legend>
+            <div class="tiles">
+              {fighters.map((fighter) => (
+                <label class="tile">
+                  <input type="radio" name="favoriteCharacter" value={fighter.id} />
+                  <span>
+                    <Image src={fighter.portrait} alt="" widths={[160, 240]} sizes="120px" />
+                    <b>{fighter.name}</b>
+                  </span>
+                </label>
+              ))}
+            </div>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="favoriteCharacter" value="none" /><span>{copy.noFavorite}</span></label>
+              <label class="chip"><input type="radio" name="favoriteCharacter" value="unsure" /><span>{copy.unsure}</span></label>
+            </div>
+          </fieldset>
+
+          <details class="ratings">
+            <summary><b>{copy.ratings} <span class="optional">({copy.optional})</span></b><small>{copy.ratingsHint}</small></summary>
+            <div class="ratings__body">
+              {questions.map(([key, [question, low, high]]) => (
+                <fieldset class="rating">
+                  <legend>{question}</legend>
+                  <div class="pips">
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <label><input type="radio" name={`rating-${key}`} data-rating={key} value={value} /><span>{value}</span></label>
+                    ))}
+                    <label><input type="radio" name={`rating-${key}`} data-rating={key} value="notTried" /><span>{copy.notTried}</span></label>
+                  </div>
+                  <div class="pips__ends" aria-hidden="true"><span>1 · {low}</span><span>5 · {high}</span></div>
+                </fieldset>
+              ))}
+            </div>
+          </details>
+
+          <div class="field">
+            <label class="field-label" for="report-name">{copy.name} <span class="optional">({copy.optional})</span></label>
+            <input id="report-name" name="name" type="text" maxlength="80" autocomplete="nickname" aria-describedby="report-name-hint" />
+            <p class="field-meta" id="report-name-hint">{copy.nameHint}</p>
+          </div>
+
+          <div class="report__submit">
+            <button class="btn btn--yellow" type="submit" data-submit>{copy.send}</button>
+            <span class="label">{copy.note}</span>
+          </div>
+          <p class="report__status" role="status" aria-live="polite" data-status></p>
+        </form>
+
+        <div class="report__done" data-done hidden>
+          <h2 class="stamp" tabindex="-1">{copy.done}</h2>
+          <p>{copy.doneText}</p>
+          <div class="callout__actions" style="margin-top: 0">
+            <button class="btn" type="button" data-another>{copy.another}</button>
+            <a class="btn btn--ink" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />Discord ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const draftKey = 'sloparena-feedback-draft'
+  const ratingKeys = ['fun', 'hitDifficulty', 'camera', 'lockOn'] as const
+  const fighterIds = ['fightguy', 'manki', 'wibou', 'bonk']
+
+  const form = document.querySelector<HTMLFormElement>('#report')
+  if (form) {
+    const strings = JSON.parse(form.dataset.strings || '{}') as Record<string, string>
+    const message = form.querySelector<HTMLTextAreaElement>('#report-message')!
+    const nameField = form.querySelector<HTMLInputElement>('#report-name')!
+    const counter = form.querySelector<HTMLElement>('[data-counter]')!
+    const status = form.querySelector<HTMLElement>('[data-status]')!
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!
+    const done = document.querySelector<HTMLElement>('[data-done]')!
+    const radio = (name: string) => form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? ''
+
+    const setStatus = (text: string, tone = '') => {
+      status.textContent = text
+      status.dataset.tone = tone
+    }
+    const updateCounter = () => {
+      counter.textContent = strings.counter.replace('{n}', String(message.value.length))
+    }
+    const read = () => ({
+      topic: radio('topic'),
+      message: message.value,
+      favoriteCharacter: radio('favoriteCharacter'),
+      ratings: Object.fromEntries(ratingKeys.map((key) => [key, radio(`rating-${key}`)])),
+      name: nameField.value,
+    })
+    const check = (name: string, value: string) => {
+      const input = [...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`)].find((item) => item.value === value)
+      if (input) input.checked = true
+    }
+
+    // Restore an unsent draft, then honour ?fighter= from the fighter pages.
+    try {
+      const draft = JSON.parse(localStorage.getItem(draftKey) || 'null')
+      if (draft) {
+        message.value = draft.message || ''
+        nameField.value = draft.name || ''
+        check('topic', draft.topic)
+        check('favoriteCharacter', draft.favoriteCharacter)
+        for (const key of ratingKeys) check(`rating-${key}`, draft.ratings?.[key])
+        if (ratingKeys.some((key) => draft.ratings?.[key])) form.querySelector('details')!.open = true
+      }
+    } catch {
+      // A broken or blocked draft just means an empty form.
+    }
+    const fighter = new URLSearchParams(location.search).get('fighter')
+    if (fighter && fighterIds.includes(fighter) && !radio('favoriteCharacter')) check('favoriteCharacter', fighter)
+    updateCounter()
+
+    let saveTimer = 0
+    form.addEventListener('input', () => {
+      updateCounter()
+      if (message.value.trim()) message.removeAttribute('aria-invalid')
+      window.clearTimeout(saveTimer)
+      saveTimer = window.setTimeout(() => {
+        try {
+          localStorage.setItem(draftKey, JSON.stringify(read()))
+        } catch {
+          // Drafts are a convenience; the form works without storage.
+        }
+      }, 300)
+    })
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      const values = read()
+      if (!values.message.trim()) {
+        message.setAttribute('aria-invalid', 'true')
+        setStatus(strings.required, 'error')
+        message.focus()
+        return
+      }
+      const payload = {
+        language: form.dataset.lang,
+        name: values.name.trim() || null,
+        message: values.message.trim(),
+        ratings: Object.fromEntries(ratingKeys.map((key) => {
+          const value = values.ratings[key]
+          return [key, value === '' ? null : value === 'notTried' ? value : Number(value)]
+        })),
+        favoriteCharacter: values.favoriteCharacter || null,
+        topic: values.topic || null,
+      }
+
+      submit.disabled = true
+      submit.textContent = strings.sending
+      setStatus(strings.sending)
+      try {
+        const response = await fetch(form.dataset.endpoint!, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+        if (!response.ok) throw new Error(response.status === 400 ? 'rejected' : 'service')
+        window.clearTimeout(saveTimer)
+        try {
+          localStorage.removeItem(draftKey)
+        } catch {
+          // Nothing to clean up if storage is blocked.
+        }
+        form.reset()
+        updateCounter()
+        setStatus('')
+        form.hidden = true
+        done.hidden = false
+        done.querySelector<HTMLElement>('.stamp')!.focus()
+      } catch (error) {
+        const reason = error instanceof Error && (error.message === 'rejected' || error.message === 'service') ? error.message : 'network'
+        setStatus(strings[reason], 'error')
+        submit.textContent = strings.retry
+      } finally {
+        submit.disabled = false
+        if (!form.hidden && submit.textContent === strings.sending) submit.textContent = strings.send
+      }
+    })
+
+    done.querySelector('[data-another]')!.addEventListener('click', () => {
+      done.hidden = true
+      form.hidden = false
+      submit.textContent = strings.send
+      message.focus()
+    })
+  }
+</script>

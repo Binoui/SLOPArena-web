@@ -1,10 +1,10 @@
 ---
 name: SlopArena
-description: A scrappy basement fight flyer for an unfinished platform fighter.
+description: Bold DIY fight-flyer marketing for an unreleased low-poly underground toy-fight-club.
 colors:
   newsprint: "#ded8c9"
   soot: "#171814"
-  acid: "#dfff36"
+  action-yellow: "#FFCC22"
   corner-orange: "#f05b35"
   registration-line: "rgba(23, 24, 20, 0.28)"
   field-paper: "#f4efe3"
@@ -29,10 +29,15 @@ typography:
     fontWeight: 700
     lineHeight: 1
   body:
-    fontFamily: "Space Mono, monospace"
-    fontSize: "16px"
+    fontFamily: "Archivo, sans-serif"
+    fontSize: "17px"
     fontWeight: 400
     lineHeight: 1.6
+  prose:
+    fontFamily: "Archivo, sans-serif"
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.68
   label:
     fontFamily: "Space Mono, monospace"
     fontSize: "12px"
@@ -50,13 +55,13 @@ spacing:
   xl: "32px"
 components:
   download-primary:
-    backgroundColor: "{colors.acid}"
+    backgroundColor: "{colors.action-yellow}"
     textColor: "{colors.soot}"
     rounded: "{rounded.square}"
     padding: "18px 30px"
     typography: "{typography.title}"
   feedback-submit:
-    backgroundColor: "{colors.acid}"
+    backgroundColor: "{colors.action-yellow}"
     textColor: "{colors.soot}"
     rounded: "{rounded.square}"
     padding: "13px 16px"
@@ -82,79 +87,84 @@ components:
 
 # Design System: SlopArena
 
+**Authority:** [SlopArena Visual Language](../SlopArena/docs/design/visual-language.md) defines the shared identity; [Art and Asset Conventions](../SlopArena/docs/contributing/conventions.md) own 3D presentation and assets. This document specifies the marketing realization, mirrored by `.impeccable/design.json`, not a competing guide. Marketing is Persuade; access instructions and feedback controls prioritize usability over expression.
+
 ## Overview
 
-**Creative North Star: "Basement Fight Flyer"**
+**Creative North Star: "Low-poly underground toy-fight-club, with DIY internet-game energy."**
 
-SlopArena looks like a local tournament announcement assembled with a photocopier, a marker, and just enough layout discipline to keep the fight organized. The system is scrappy, editorial, and playful: oversized condensed-feeling display type does the shouting, compact monospace copy handles instructions and evidence, and small rotations make the composition feel physically placed rather than digitally perfected.
+The website’s strongest existing graphic reference is its basement-fight flyer: a local match announcement assembled from paper, marker, and disciplined layout. That flyer is a useful expression of the brand, not a complete approved implementation. The shared identity extends to the game: chunky low-poly forms, exaggerated silhouettes, and a curated asset-pack collage. “Toy” means scavenged, hand-built construction—not a requirement for literal plastic, cuteness, or a cozy mood.
 
-The roughness is controlled. Strong grids, repeated two-pixel rules, strict square controls, and clear section boundaries keep every crooked card and annotation legible. The visual world rejects slick esports polish—no neon gradients, glossy glass, cinematic chrome, or anonymous competitive-gaming spectacle.
+Keep the presentation slightly crappy on purpose, cool first and joke second, while making every action and character extremely readable. Harmonize scale, lighting, material response, palette/value hierarchy, and composition; do not force one universal shader onto every asset. The direction rejects generic esports polish, cute/cozy styling, generic stock UI, and diffusion-like gloss or hyperdetail.
+
+**Approved visual reference:** use the [offline visual board](../SlopArena/docs/design/references/sloparena-visual-identity/visual-reference-board.html) and [rooftop composition study](../SlopArena/docs/design/references/sloparena-visual-identity/visual-reference-study.png), approved on 2026-09-30, as marketing evidence for torn-paper framing, blunt headlines, restrained crude symbols, and graphic/world coherence. The rooftop and its angular lettering are illustrative, not mandatory stage art or a second name mark. Proposed neutral/orange shades do not replace this document's tokens. [Shared reference boundaries](../SlopArena/docs/design/visual-language.md#approved-visual-board--rough-edges-clear-decisions) remain authoritative; no runtime migration or release prerequisite is implied.
 
 **Key Characteristics:**
-- Warm newsprint surfaces under near-black structural ink.
-- Acid chartreuse for action and status; corner orange for emphasis and interruption.
-- Monumental Archivo Black headlines paired with compact Space Mono utility copy.
-- Square corners, two-pixel rules, slight rotations, and hard offset-print shadows.
-- Editorial sectioning that collapses cleanly from asymmetric desktop grids to single-column mobile flow.
+- Warm newsprint surfaces under near-black structural ink, echoing the existing flyer construction.
+- Action Yellow `#FFCC22` identifies graphic primary actions and selection; existing local paper/ink values may vary, and orange remains an accent.
+- Archivo Black is the shared name-mark and native menu display voice; Space Mono remains the marketing utility voice.
+- Square corners, hard edges, controlled print offsets, authored asymmetry, and stable interaction geometry.
+- Preserve actual character identity, proportions, and chunky model forms in all artwork; favor curated low-poly collage over generic decorative grit.
+- Stage themes may range from industrial spaces to pools, rooftops, night cities, or tabletop settings; the improvised-fight premise, not a warehouse, connects them.
+- Editorial sectioning collapses cleanly from asymmetric desktop grids to single-column mobile flow.
+
+**Status:** The website implements this direction: Action Yellow `#FFCC22`, Archivo Black, Space Mono and Archivo, self-hosted. Native UI still retains Baloo and older yellow shades. SLOPArena is solo-developed and unreleased; its Steam store page is listed as coming soon and the playtest is joined by requesting access there, which is exactly what the primary CTA says.
 
 ## Colors
 
-The palette behaves like a four-ink flyer: warm stock, dense black ink, one fluorescent action color, and one warm marker accent.
+The flyer palette uses warm stock and structural ink, with Action Yellow for graphic primary actions and selection and orange retained as a local accent. Paper and ink values may vary by surface.
 
 ### Primary
-- **Acid:** The fluorescent action ink. Use it for download and submit actions, controller callouts, hover inversions, and the live-presence light.
+- **Action Yellow:** `#FFCC22`. Use consistently for graphic primary actions and selection. Do not recolor character/team colors or blue specials.
 
 ### Secondary
-- **Corner Orange:** The disruptive marker color. Use it for the word or number that must break the composition, the feedback field, focus outlines, and selected form accents.
+- **Corner Orange:** Keep the existing local orange (`#F05B35` in marketing) for emphasis and interruption; native orange (`#E05C2A`) remains distinct.
 
 ### Neutral
 - **Newsprint:** The dominant warm page stock and reversed text on Soot.
-- **Soot:** The structural ink for text, rules, dark bands, and offset shadows.
+- **Soot:** Structural ink for text, rules, dark bands, and offset shadows.
 - **Registration Line:** A translucent Soot rule for oversized background geometry where a full-strength border would compete.
 - **Field Paper:** A lighter stock reserved for editable fields inside Newsprint panels.
 - **Success:** Semantic confirmation copy only.
 - **Error:** Validation and submission failure copy only.
 
-**The Four-Ink Rule.** Newsprint and Soot build the page; Acid calls for action; Corner Orange interrupts. Do not introduce a fifth decorative hue.
-
-**The Acid Is Action Rule.** Acid must remain scarce enough to identify interaction or live status immediately.
+**The Action Rule.** Action Yellow marks graphic primary action and selection; do not use it as general decoration or impose it on character/team colors or blue specials.
 
 ## Typography
 
 **Display Font:** Archivo Black (with sans-serif fallback)  
-**Body Font:** Space Mono (with monospace fallback)  
+**Body Font:** Archivo (variable, with system sans fallback)  
 **Label/Mono Font:** Space Mono
 
-**Character:** Archivo Black delivers blunt flyer-scale impact while Space Mono makes every instruction, status, and aside feel typed onto the same physical artifact. The contrast is intentionally extreme: display text shouts; utility text stays compact and exact.
+**Character:** Archivo Black is the shared name-mark and target display voice, including native menu declarations. Space Mono remains the marketing voice for compact utility copy. Use a readable sans-serif for dense settings and HUD content; short native utility labels may use mono where practical. The website’s current typography is not evidence that native font changes have shipped.
 
 ### Hierarchy
-- **Display:** Heavy Archivo Black at the fluid hero scale, tightly tracked and compressed vertically. Reserve it for the first-view statement.
-- **Headline:** Heavy Archivo Black at the smaller fluid section scale with the same tight rhythm.
-- **Title:** Archivo Black at compact component scale for primary action labels and installation steps.
-- **Body:** Space Mono at compact reading scale with open line height for explanations and form content.
-- **Label:** Bold Space Mono with positive tracking, commonly uppercase, for navigation, legends, metadata, and status.
+- **Display / Headline / Title:** Archivo Black for the mark, declarations, and compact action titles.
+- **Body / Prose:** Archivo for paragraphs, fighter briefs and docs. It shares the name mark's family and stays readable at length.
+- **Label:** Space Mono for buttons, kickers, tags, metadata, status and short dry annotations; do not use it for long-form reading.
+- **Dense runtime UI:** Prefer readable sans-serif type for settings and HUD; mono is optional for short utility labels.
 
-**The Shout and Type Rule.** Archivo Black names the fight or action; Space Mono explains, labels, and reports it. Never set paragraphs in the display face.
-
-**The Compact Utility Rule.** Small monospace copy earns its size through short lines, strong contrast, and generous line height; do not use it for long-form reading.
+**The Shout and Type Rule.** Archivo Black declares; Space Mono handles marketing utility copy. Keep dense runtime information readable rather than forcing a typeface everywhere.
 
 ## Layout
 
-The desktop composition alternates full-bleed structural bands with a centered content frame capped at 1120px. The hero is a centered overlay composition: copy sits above two edge-anchored character renders and a large registration circle. Gameplay and feedback use asymmetric two-column grids; access uses three concise answers, followed by a standalone Discord-first community section. Major sections use approximately 90px vertical padding, while navigation and footer rely on full-width bands and responsive horizontal gutters.
+The site is multi-page: Home, Fighters (index and one brief per fighter), How to play, Feedback and Docs, in English at the root and French under `/fr/`. Pages alternate full-bleed structural bands (paper, an ink stage band, an orange feedback band) with a content frame capped at 1180px and section padding of roughly 64–118px.
 
-At 820px and below, content becomes single-column. Play, Community, Feedback, and the language switch remain accessible; at 600px and below the header wraps to two rows. Character renders shrink and move toward the hero edges, annotations disappear, presence wraps, access answers stack with separators, and the footer changes to a vertical stack. The implemented 390px layout has no horizontal overflow.
+The home hero is a two-column poster: a tape strip, the torn Action Yellow name plate, the pitch and the Steam CTA on the left; a tilted gameplay screenshot with an orange print offset, a “not a render” sticker and four fanned fighter cards on the right. Below it come the live-presence band, the trailer with four pillars and a screenshot strip, the roster, the stage wall, the three access steps, the feedback band and the docs teaser. Fighter briefs pair a large portrait card with the name, epithet, pitch, tags and actions, then game plan, strengths and weaknesses, specials, normals, movement bars and an in-game screenshot. Docs use a sticky sidebar beside a 72-character prose column.
+
+At 900px and below, grids become single-column. At 760px and below the header becomes two rows (mark, Steam and language; then a scrollable nav) and stops being sticky. At 600px and below fighter cards turn horizontal, stages use two columns, the hero cards sit in a row under the screenshot and the decorative circle disappears. The 390px layouts have no horizontal overflow.
 
 **The Structure Before Slop Rule.** Establish the grid, reading order, and section boundary first; rotation and overlap may disturb the surface but never the task flow.
 
 ## Elevation & Depth
 
-Depth follows a structural offset-print philosophy. Most surfaces remain flat. Priority cards use unblurred offset shadows in Soot or Corner Orange, as if a second ink plate or paper layer slipped during printing; slight rotation reinforces the physical registration error. The presence indicator is the exception: its soft Acid glow communicates live state rather than elevation.
+Depth follows a structural offset-print philosophy. Most surfaces remain flat. Priority cards use unblurred offset shadows in Soot or Corner Orange, as if a second ink plate or paper layer slipped during printing; slight rotation reinforces the physical registration error. The presence indicator is the exception: its soft Action Yellow glow communicates live state rather than elevation.
 
 ### Shadow Vocabulary
-- **Primary press:** A 7px Soot offset for the download control and feedback panel; compresses to 4px as the download control is pressed by hover movement.
+- **Primary press:** A 7px Soot offset for the Steam CTA (9px for the report card); compresses to 4px as the CTA is pressed by hover movement.
 - **Compact press:** A 5px Soot offset for the feedback submit control; compresses to 3px on hover.
-- **Feature offset:** A 10px Corner Orange offset for the dark gameplay card.
-- **Live glow:** A soft 12px Acid halo around the presence light; never use it on containers.
+- **Feature offset:** A 10–12px Corner Orange offset for dark gameplay frames (trailer, hero screenshot); fighter pages use the fighter's signature color instead.
+- **Live glow:** A soft 12px Action Yellow halo around the presence light; never use it on containers.
 - **Character ground:** A downward translucent Soot drop-shadow under fighter renders.
 
 **The Printed Depth Rule.** Hard shadows indicate physical offset or pressability, not ambient light. Never put them on every container.
@@ -169,11 +179,11 @@ The system is overwhelmingly square. Cards, buttons, fields, switches, and struc
 
 ## Components
 
-Components are rough but orderly: hard-edged, visibly interactive, and placed on disciplined grids.
+Components are rough but orderly: hard-edged, visibly interactive, and placed on disciplined grids. Keep interaction geometry stable; authored asymmetry belongs in composition, not shifting controls.
 
 ### Buttons
 - **Shape:** Square, two-pixel Soot outline.
-- **Primary:** Acid fill, Soot type, and a hard offset shadow. The large download action uses a stacked Archivo Black title and tracked Space Mono note; the compact submit action uses bold Space Mono.
+- **Primary:** Action Yellow fill, Soot type, and a hard offset shadow. The large primary action uses an Archivo Black title and tracked Space Mono note; the compact submit action uses bold Space Mono.
 - **Hover / Focus:** Hover translates the control toward its shadow and shortens the offset, producing a physical press. Keyboard focus uses a three-pixel Corner Orange outline with a two-pixel gap.
 - **Disabled:** Retains its silhouette and shadow, reduces opacity, removes press movement, and uses the appropriate waiting cursor.
 
@@ -190,32 +200,43 @@ Components are rough but orderly: hard-edged, visibly interactive, and placed on
 - **Error / Disabled:** Error appears as semantic Error text with an explicit retry action. Failed submission preserves the visible draft; the submit control is disabled only while sending.
 
 ### Navigation
-- The top bar is a 74px Newsprint band separated by a two-pixel Soot rule. The slightly rotated Archivo Black wordmark anchors the left; tracked Space Mono links and a boxed language switch align right with 44px-high targets.
-- Link hover uses a three-pixel Corner Orange underline with a six-pixel offset. The active language is a Soot block reversed to Newsprint; hover and keyboard focus invert to Acid.
-- On narrow screens, retain all three task links and the language switch by wrapping the header instead of hiding navigation.
+- The sticky top bar is a 68px Newsprint band separated by a two-pixel Soot rule. The wordmark sits on a small rotated Action Yellow name plate; tracked Space Mono links (How to play, Fighters, Docs, Feedback), a Soot Steam button with an orange offset, and a boxed language switch align right with 40–44px targets.
+- The current section gets a three-pixel Corner Orange underline. The active language is a Soot block reversed to Newsprint; hover inverts to Action Yellow.
+- On narrow screens, keep every link and the language switch by wrapping the header into two rows instead of hiding navigation.
+
+### Steam CTA
+- The primary action everywhere: an Action Yellow block with a Soot disc holding the Steam mark, an Archivo Black title (“Request access on Steam”) and a Space Mono note (“Free playtest · Windows”). It links to the store page and is followed, where space allows, by the access-by-request explanation and a `steam://` launch link for players already in.
+
+### Fighter and stage cards
+- Fighter cards: Field Paper, two-pixel Soot border, hard offset shadow, the square portrait with a six-pixel stripe in the fighter's signature color, the name, epithet, pitch, tags and one “must try” special.
+- Stage cards: the stage-select preview in a Newsprint frame on the ink band, a rotated name strip with an orange offset, and a one-line Space Mono joke about the setting only.
+
+### Report form
+- The feedback form is a “match report” card: optional topic chips, a large message field with a live counter, portrait tiles for the favorite fighter (desaturated until chosen), collapsible 1–5 ratings, and an optional name. Drafts persist locally; success replaces the form with a stamped confirmation.
 
 ### Presence Band
-- A full-width Soot strip with reversed Newsprint status copy and a glowing Acid dot.
-- Player names align to the far edge on desktop and wrap beneath the status on mobile.
+- A full-width Soot strip with reversed Newsprint status copy and a glowing Action Yellow dot.
+- Player names follow the status; a Discord link sits at the far edge on desktop and wraps beneath the status on mobile.
 - A confirmed empty response invites a friend or Discord match; a failed or malformed response says live status is unavailable and does not claim zero players.
 
 ### Section Titles
-- Oversized Archivo Black headings carry each section without decorative sequence numbers; access answers are not a numbered installation walkthrough.
+- Oversized Archivo Black headings carry each section without decorative sequence numbers. Numbers appear only where order matters: the three access steps and each fighter's game plan, set in Corner Orange or on Soot squares.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** build with Newsprint and Soot before assigning Acid or Corner Orange.
-- **Do** use Archivo Black for declarations and Space Mono for instructions, labels, and status.
+- **Do** build with Newsprint and Soot before assigning Action Yellow or Corner Orange.
+- **Do** use Archivo Black for the mark and declarations; use Space Mono for concise marketing utility copy.
 - **Do** keep square corners and two-pixel structural rules across controls and panels.
-- **Do** let one rotated or offset element disrupt an otherwise disciplined composition.
+- **Do** let authored asymmetry and controlled print offsets disrupt an otherwise disciplined composition.
+- **Do** preserve character identity, proportions, and chunky low-poly forms in artwork.
 - **Do** collapse asymmetric desktop grids into a clear single-column mobile reading order.
 - **Do** preserve visible keyboard focus and reduced-motion behavior.
 
 ### Don't:
 - **Don't** introduce neon gradients, glass panels, glossy chrome, or generic esports spectacle.
 - **Don't** soften the system with rounded cards, pill-shaped buttons, or diffuse ambient card shadows.
-- **Don't** use Acid as general decoration; it signals action or live state.
+- **Don't** use Action Yellow as general decoration or recolor characters, team colors, or blue specials.
 - **Don't** scatter rotations, annotations, or hard shadows across every element.
-- **Don't** replace real character renders with generic gaming icons or abstract hero decoration.
-- **Don't** add decorative colors outside the four-ink hierarchy.
+- **Don't** replace real character renders with generic gaming icons, altered model proportions, or abstract hero decoration.
+- **Don't** add decorative colors outside the local palette hierarchy.

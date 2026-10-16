@@ -1,0 +1,343 @@
+---
+import { Image, getImage } from 'astro:assets'
+import Base from '../layouts/Base.astro'
+import SteamCta from '../components/SteamCta.astro'
+import SteamHelp from '../components/SteamHelp.astro'
+import Presence from '../components/Presence.astro'
+import VideoFacade from '../components/VideoFacade.astro'
+import FighterCard from '../components/FighterCard.astro'
+import Icon from '../components/Icon.astro'
+import { fighters } from '../data/fighters'
+import { stages } from '../data/stages'
+import { getDocs } from '../lib/docs'
+import { links, steamAppId } from '../config'
+import { href, type Lang } from '../i18n'
+import heroShot from '../assets/screens/wibou-vs-bonk.jpg'
+import poster from '../assets/screens/fightguy-vs-manki-city.jpg'
+import shotPit from '../assets/screens/manki-vs-wibou.jpg'
+import shotPool from '../assets/screens/fightguy-vs-manki-pool.jpg'
+import shotBonk from '../assets/screens/bonk-vs-fightguy.jpg'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+
+const copy = {
+  en: {
+    title: 'SLOPArena · Free 3D platform fighter',
+    description: 'SLOPArena is a free 3D platform fighter in early playtest. Build damage, send your friends flying, and request playtest access on Steam.',
+    strip: 'Free 3D platform fighter · Steam playtest',
+    pitch: 'Smash-style chaos in 3D. Build damage, send your friends flying, <em>argue about balance</em>.',
+    trailer: 'Watch the trailer',
+    stamp: 'Not a render',
+    heroCaption: ['Wibou vs Bonk', 'From the playtest'],
+    rosterLabel: 'The roster',
+    intro: {
+      kicker: 'What is this?',
+      title: 'Smash rules. 3D arenas. Friends, airborne.',
+      lede: 'SLOPArena is a free platform fighter played in full 3D. Hit people to build their damage. The higher it gets, the farther they fly. Knock them out of the arena to take a stock. Last one standing wins.',
+      play: 'Play the SLOPArena playtest trailer',
+      caption: 'Playtest trailer',
+      pillars: [
+        { mark: '%', title: 'Damage = distance', text: 'Every hit raises your percent. At 0% you shrug it off. At 150% a sneeze sends you into orbit.' },
+        { mark: '12', title: 'Twelve moves, one grid', text: 'Every fighter gets eight normals (1–4, on the ground and in the air) and four specials on cooldowns (A, E, R, F). Learn one, read them all.' },
+        { mark: '4P', title: 'Rooms for up to four', text: 'Make a room, bring friends, fight, rematch. The netcode is still mid-surgery, so expect weirdness and please report it.' },
+        { mark: '0€', title: 'Free and open source', text: 'Free on Steam, MIT-licensed on GitHub. Built by one developer with AI agents, asset packs and questionable decisions.' },
+      ],
+      gallery: 'Screenshots from the playtest',
+      shots: ['Manki blows up the floor next to Wibou', 'FightGuy kicks Manki on a pool deck', 'FightGuy and Manki on a neon rooftop', 'Bonk swings at FightGuy'],
+    },
+    roster: {
+      kicker: 'The roster',
+      title: 'Pick your poison.',
+      lede: 'Four fighters, each with eight normals and four specials. Every kit is still being tuned, so your main might get nerfed by Tuesday.',
+      all: 'All fighters',
+    },
+    stages: {
+      kicker: 'Stages',
+      title: 'Six stages. No safety inspections.',
+      lede: 'Rooftops, boats, birthday cakes. Every stage is a 3D arena with edges to fall off and blast zones to fly into.',
+    },
+    access: {
+      kicker: 'How to get in',
+      title: 'Get in the slop.',
+      steps: [
+        { title: 'Request access', text: 'Open SLOPArena on Steam and hit Request Access under “Join the SLOPArena Playtest”. It’s free.' },
+        { title: 'Watch your inbox', text: 'Steam emails you when the next wave of testers gets in. Wishlist the game while you’re there.' },
+        { title: 'Install and fight', text: 'Find SLOPArena Playtest in your Steam library. Windows, with keyboard and mouse or a controller.' },
+      ],
+      discord: 'No one to fight? Join the Discord',
+      guide: 'Controls and the basics',
+    },
+    feedback: {
+      kicker: 'After the match',
+      title: 'How was the slop?',
+      text: 'Played a match? Tell me what broke, what felt great and who needs a nerf. One sentence is enough, and it goes straight to the developer.',
+      cta: 'Write a match report',
+      discord: 'Yell on Discord',
+    },
+    made: {
+      kicker: 'Behind the slop',
+      title: 'One dev. A pile of AI agents. All of it open source.',
+      lede: 'SLOPArena is built in the open: Unity 6, a deterministic C# simulation shared by the game and its servers, and public workflows for the AI agents that help build it.',
+      all: 'All docs',
+      read: 'Read',
+    },
+  },
+  fr: {
+    title: 'SLOPArena · Jeu de combat de plateforme 3D gratuit',
+    description: 'SLOPArena est un jeu de combat de plateforme 3D gratuit en playtest. Accumulez les dégâts, envoyez vos amis valser et demandez l’accès au playtest sur Steam.',
+    strip: 'Combat de plateforme 3D gratuit · Playtest Steam',
+    pitch: 'Le chaos façon Smash, en 3D. Accumulez les dégâts, envoyez vos amis valser, <em>râlez sur l’équilibrage</em>.',
+    trailer: 'Voir la bande-annonce',
+    stamp: 'Pas un rendu',
+    heroCaption: ['Wibou contre Bonk', 'Capture du playtest'],
+    rosterLabel: 'Le roster',
+    intro: {
+      kicker: 'C’est quoi ?',
+      title: 'Les règles de Smash. Des arènes 3D. Vos amis dans les airs.',
+      lede: 'SLOPArena est un jeu de combat de plateforme gratuit, entièrement en 3D. Frappez pour faire grimper les dégâts de vos adversaires : plus ils sont hauts, plus ils volent loin. Éjectez-les de l’arène pour leur prendre une vie. Le dernier debout gagne.',
+      play: 'Lire la bande-annonce du playtest SLOPArena',
+      caption: 'Bande-annonce du playtest',
+      pillars: [
+        { mark: '%', title: 'Dégâts = distance', text: 'Chaque coup fait grimper votre pourcentage. À 0 %, vous encaissez. À 150 %, un éternuement vous envoie en orbite.' },
+        { mark: '12', title: 'Douze coups, une grille', text: 'Chaque combattant a huit coups normaux (1–4, au sol et en l’air) et quatre spéciales avec temps de recharge (A, E, R, F). Apprenez-en un, lisez-les tous.' },
+        { mark: '4P', title: 'Des salons jusqu’à quatre', text: 'Créez un salon, invitez vos amis, combattez, rejouez. Le netcode est encore en pleine opération : attendez-vous à des bizarreries, et signalez-les.' },
+        { mark: '0€', title: 'Gratuit et open source', text: 'Gratuit sur Steam, sous licence MIT sur GitHub. Fait par un seul développeur, avec des agents IA, des packs d’assets et des décisions discutables.' },
+      ],
+      gallery: 'Captures du playtest',
+      shots: ['Manki fait exploser le sol à côté de Wibou', 'FightGuy frappe Manki au bord d’un bassin', 'FightGuy et Manki sur un toit sous les néons', 'Bonk tente de frapper FightGuy'],
+    },
+    roster: {
+      kicker: 'Le roster',
+      title: 'Choisissez votre poison.',
+      lede: 'Quatre combattants, chacun avec huit coups normaux et quatre spéciales. Tous les kits sont encore en réglage : votre main peut se faire nerfer d’ici mardi.',
+      all: 'Tous les combattants',
+    },
+    stages: {
+      kicker: 'Arènes',
+      title: 'Six arènes. Aucune inspection de sécurité.',
+      lede: 'Des toits, des bateaux, des gâteaux d’anniversaire. Chaque arène est un terrain 3D avec des bords d’où tomber et des zones d’éjection où s’envoler.',
+    },
+    access: {
+      kicker: 'Comment entrer',
+      title: 'Plongez dans le slop.',
+      steps: [
+        { title: 'Demandez l’accès', text: 'Ouvrez la page SLOPArena sur Steam et demandez l’accès au playtest, juste sous le bouton de liste de souhaits. C’est gratuit.' },
+        { title: 'Surveillez vos e-mails', text: 'Steam vous écrit quand la prochaine vague de testeurs est acceptée. Ajoutez le jeu à votre liste de souhaits au passage.' },
+        { title: 'Installez et combattez', text: 'Retrouvez SLOPArena Playtest dans votre bibliothèque Steam. Sur Windows, au clavier-souris ou à la manette.' },
+      ],
+      discord: 'Personne à affronter ? Rejoignez le Discord',
+      guide: 'Commandes et bases',
+    },
+    feedback: {
+      kicker: 'Après le match',
+      title: 'Alors, ce slop ?',
+      text: 'Vous avez joué ? Dites-moi ce qui a cassé, ce qui était génial et qui mérite un nerf. Une phrase suffit, et elle arrive directement chez le développeur.',
+      cta: 'Écrire un rapport de match',
+      discord: 'Râler sur Discord',
+    },
+    made: {
+      kicker: 'Dans les coulisses',
+      title: 'Un dev. Une pile d’agents IA. Tout en open source.',
+      lede: 'SLOPArena se construit à découvert : Unity 6, une simulation C# déterministe partagée par le jeu et ses serveurs, et des workflows publics pour les agents IA qui aident à le construire.',
+      all: 'Toutes les docs',
+      read: 'Lire',
+    },
+  },
+}[lang]
+
+const gallery = await Promise.all(
+  [shotPit, shotPool, poster, shotBonk].map(async (src, index) => ({
+    src,
+    alt: copy.intro.shots[index],
+    full: (await getImage({ src, width: 1920, format: 'webp' })).src,
+  })),
+)
+const docs = (await getDocs(lang)).filter((doc) => doc.entry.data.section === 'build').slice(0, 3)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoGame',
+  name: 'SLOPArena',
+  description: copy.description,
+  url: Astro.site?.href,
+  genre: ['Platform fighter', 'Fighting'],
+  gamePlatform: 'Windows',
+  playMode: ['MultiPlayer', 'SinglePlayer'],
+  author: { '@type': 'Person', name: 'Binoui' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  sameAs: [`https://store.steampowered.com/app/${steamAppId}/`, links.github],
+}
+---
+<Base lang={lang} route="" title={copy.title} description={copy.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="strip">{copy.strip}</p>
+        <h1>
+          <span class="sr-only">SLOPArena</span>
+          <span class="nameplate" aria-hidden="true"><span>SLOP</span><span>ARENA</span></span>
+        </h1>
+        <p class="hero__pitch" set:html={copy.pitch} />
+        <div class="hero__actions">
+          <SteamCta lang={lang} />
+          <a class="text-link" href="#trailer">▶ {copy.trailer}</a>
+        </div>
+        <SteamHelp lang={lang} />
+      </div>
+      <div class="hero__visual">
+        <span class="sticker hero__stamp">{copy.stamp}</span>
+        <figure class="shot-frame">
+          <Image src={heroShot} alt={fighters[2].shotAlt[lang]} widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 92vw, 600px" loading="eager" fetchpriority="high" />
+          <figcaption><span>{copy.heroCaption[0]}</span><span>{copy.heroCaption[1]}</span></figcaption>
+        </figure>
+        <ul class="hero__cards" aria-label={copy.rosterLabel}>
+          {fighters.map((fighter) => (
+            <li style={`--accent: ${fighter.accent}`}>
+              <a class="mini-card" href={href(lang, `fighters/${fighter.id}/`)}>
+                <Image src={fighter.portrait} alt="" widths={[128, 256]} sizes="116px" loading="eager" />
+                <span>{fighter.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Presence lang={lang} />
+
+  <section class="section" id="trailer">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">{copy.intro.kicker}</p>
+        <h2>{copy.intro.title}</h2>
+        <p class="lede">{copy.intro.lede}</p>
+      </div>
+      <div class="intro__grid">
+        <VideoFacade poster={poster} playLabel={copy.intro.play} caption={copy.intro.caption} />
+        <ul class="pillars">
+          {copy.intro.pillars.map((pillar) => (
+            <li>
+              <span class="pillars__mark" aria-hidden="true">{pillar.mark}</span>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <ul class="gallery" aria-label={copy.intro.gallery}>
+        {gallery.map((shot) => (
+          <li>
+            <a href={shot.full} target="_blank" rel="noopener">
+              <Image src={shot.src} alt={shot.alt} widths={[400, 640]} sizes="(max-width: 760px) 45vw, 270px" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="kicker">{copy.roster.kicker}</p>
+          <h2>{copy.roster.title}</h2>
+          <p class="lede">{copy.roster.lede}</p>
+        </div>
+        <a class="text-link" href={href(lang, 'fighters/')}>{copy.roster.all} →</a>
+      </div>
+      <ul class="roster">
+        {fighters.map((fighter) => <li><FighterCard fighter={fighter} lang={lang} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section band-ink">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">{copy.stages.kicker}</p>
+        <h2>{copy.stages.title}</h2>
+        <p class="lede">{copy.stages.lede}</p>
+      </div>
+      <ul class="stage-grid">
+        {stages.map((stage) => (
+          <li class="stage">
+            <div class="stage__img">
+              <Image src={stage.image} alt="" widths={[400, 640]} sizes="(max-width: 600px) 90vw, (max-width: 900px) 45vw, 370px" />
+            </div>
+            <h3 class="stage__name">{stage.name}</h3>
+            <p>{stage.blurb[lang]}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">{copy.access.kicker}</p>
+        <h2>{copy.access.title}</h2>
+      </div>
+      <ol class="steps">
+        {copy.access.steps.map((step) => (
+          <li>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="access__cta">
+        <SteamCta lang={lang} />
+        <a class="btn btn--ink" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />{copy.access.discord}</a>
+        <a class="text-link" href={href(lang, 'play/')}>{copy.access.guide} →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-orange">
+    <div class="wrap callout">
+      <div>
+        <p class="kicker">{copy.feedback.kicker}</p>
+        <h2>{copy.feedback.title}</h2>
+      </div>
+      <div>
+        <p>{copy.feedback.text}</p>
+        <div class="callout__actions">
+          <a class="btn btn--ink" href={href(lang, 'feedback/')}>{copy.feedback.cta} →</a>
+          <a class="btn" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />{copy.feedback.discord}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="kicker">{copy.made.kicker}</p>
+          <h2>{copy.made.title}</h2>
+          <p class="lede">{copy.made.lede}</p>
+        </div>
+        <a class="text-link" href={href(lang, 'docs/')}>{copy.made.all} →</a>
+      </div>
+      <ul class="link-cards">
+        {docs.map((doc) => (
+          <li>
+            <a class="link-card" href={href(lang, `docs/${doc.slug}/`)}>
+              <h3>{doc.entry.data.title}</h3>
+              <p>{doc.entry.data.description}</p>
+              <span class="label">{copy.made.read} →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

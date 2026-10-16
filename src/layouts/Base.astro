@@ -1,0 +1,94 @@
+---
+import '@fontsource/archivo-black/400.css'
+import '@fontsource/space-mono/400.css'
+import '@fontsource/space-mono/700.css'
+import '@fontsource-variable/archivo/wght.css'
+import '../styles/global.css'
+import displayFont from '@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2?url'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import { asset, canonical, defaultLang, href, langs, storageKey, type Lang } from '../i18n'
+import { ui } from '../i18n/ui'
+
+interface Props {
+  lang: Lang
+  /** Language-independent route, e.g. 'fighters/manki/'. */
+  route: string
+  title: string
+  description: string
+  /** Error pages: no canonical links and no language redirect. */
+  noindex?: boolean
+}
+
+const { lang, route, title, description, noindex = false } = Astro.props
+const t = ui[lang]
+const fullTitle = route === '' && !noindex ? title : `${title} · SLOPArena`
+const url = canonical(Astro.site, lang, route)
+// Versioned so Cloudflare and link-preview caches pick up a regenerated card.
+const image = new URL('/social-preview.png?v=2', Astro.site).href
+const locales = { en: 'en_US', fr: 'fr_FR' }
+const frHref = href('fr', route)
+const enHref = href('en', route)
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {!noindex && <script is:inline define:vars={{ lang, frHref, enHref, storageKey }}>
+      // First visit: French browsers get the French page. After that the manual switch wins.
+      try {
+        var saved = localStorage.getItem(storageKey)
+        var browser = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language]
+        var prefersFr = browser.some(function (value) { return /^fr\b/i.test(value || '') })
+        var wanted = saved === 'en' || saved === 'fr' ? saved : (lang === 'en' && prefersFr ? 'fr' : lang)
+        if (wanted !== lang) location.replace((wanted === 'fr' ? frHref : enHref) + location.search + location.hash)
+      } catch (error) {}
+    </script>}
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#171814" />
+    {noindex ? <meta name="robots" content="noindex" /> : (
+      <>
+        <link rel="canonical" href={url} />
+        {langs.map((code) => <link rel="alternate" hreflang={code} href={canonical(Astro.site, code, route)} />)}
+        <link rel="alternate" hreflang="x-default" href={canonical(Astro.site, defaultLang, route)} />
+      </>
+    )}
+    <link rel="icon" href={asset('favicon.svg')} type="image/svg+xml" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SLOPArena" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locales[lang]} />
+    {langs.filter((code) => code !== lang).map((code) => <meta property="og:locale:alternate" content={locales[code]} />)}
+    <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.skip}</a>
+    <Header lang={lang} route={route} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script>
+      import { storageKey } from '../i18n'
+
+      document.addEventListener('click', (event) => {
+        const link = (event.target as Element | null)?.closest?.('[data-lang-switch]')
+        if (!link) return
+        try {
+          localStorage.setItem(storageKey, link.getAttribute('data-lang-switch') || 'en')
+        } catch {
+          // Storage can be blocked; the link still switches language for this visit.
+        }
+      })
+    </script>
+  </body>
+</html>

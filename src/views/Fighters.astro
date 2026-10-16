@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro'
+import FighterCard from '../components/FighterCard.astro'
+import { fighters, jumpHeight } from '../data/fighters'
+import { formatNumber } from '../lib/format'
+import { href, type Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Fighters',
+    description: 'Meet the SLOPArena roster: FightGuy, Manki, Wibou and Bonk. Kits, specials, strengths and weaknesses.',
+    kicker: 'The roster',
+    lede: 'Four kits, one control scheme. Every fighter has eight normals on 1–4 (different on the ground and in the air) and four specials on A, E, R and F, each with its own cooldown. E is always the move that gets you back on stage.',
+    compare: 'Side by side',
+    columns: ['Fighter', 'Style', 'Recovery (E)', 'Run', 'Air', 'Jump'],
+    note: 'Movement from the playtest tuning. Jump height is estimated from jump speed and gravity.',
+  },
+  fr: {
+    title: 'Combattants',
+    description: 'Le roster de SLOPArena : FightGuy, Manki, Wibou et Bonk. Kits, spéciales, points forts et points faibles.',
+    kicker: 'Le roster',
+    lede: 'Quatre kits, un seul schéma de commandes. Chaque combattant a huit coups normaux sur 1–4 (différents au sol et en l’air) et quatre spéciales sur A, E, R et F, chacune avec son temps de recharge. E sert toujours à revenir sur le terrain.',
+    compare: 'Côte à côte',
+    columns: ['Combattant', 'Style', 'Remontée (E)', 'Course', 'Air', 'Saut'],
+    note: 'Déplacements issus des réglages du playtest. La hauteur de saut est estimée à partir de la vitesse de saut et de la gravité.',
+  },
+}[lang]
+
+const n = (value: number) => formatNumber(lang, value)
+---
+<Base lang={lang} route="fighters/" title={copy.title} description={copy.description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">{copy.kicker}</p>
+      <h1>{copy.title}</h1>
+      <p class="lede">{copy.lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="roster">
+        {fighters.map((fighter) => <li><FighterCard fighter={fighter} lang={lang} heading="h2" /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="h3-title">{copy.compare}</h2>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>{copy.columns.map((column) => <th scope="col">{column}</th>)}</tr>
+          </thead>
+          <tbody>
+            {fighters.map((fighter) => (
+              <tr>
+                <th scope="row"><a href={href(lang, `fighters/${fighter.id}/`)}>{fighter.name}</a></th>
+                <td>{fighter.tags[lang].join(' · ')}</td>
+                <td>{fighter.specials.find((special) => special.slot === 'E')!.name}</td>
+                <td>{n(fighter.movement.run)} m/s</td>
+                <td>{n(fighter.movement.air)} m/s</td>
+                <td>≈{n(jumpHeight(fighter.movement))} m</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="fine-print">{copy.note}</p>
+    </div>
+  </section>
+</Base>

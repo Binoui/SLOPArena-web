@@ -8,9 +8,12 @@ const DATA_DIR = process.env.DATA_DIR || './data'
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*'
 const MAX_BODY_BYTES = 32 * 1024
 const languages = new Set(['en', 'fr'])
-const characters = new Set(['manki', 'fightguy', 'none', 'unsure', null])
+const characters = new Set(['fightguy', 'manki', 'wibou', 'bonk', 'none', 'unsure', null])
+const topics = new Set(['bug', 'balance', 'love', 'idea', 'other', null])
 const ratingKeys = ['fun', 'hitDifficulty', 'camera', 'lockOn']
 const requiredKeys = new Set(['language', 'name', 'message', 'ratings', 'favoriteCharacter'])
+// Optional so reports from older pages without a topic stay valid.
+const optionalKeys = new Set(['topic'])
 
 const json = (response, status, body, headers = {}) => {
   response.writeHead(status, {
@@ -41,7 +44,7 @@ const rating = (value, field) => {
 const validate = (input) => {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('body must be an object')
   const keys = Object.keys(input)
-  if (keys.some((key) => !requiredKeys.has(key)) || [...requiredKeys].some((key) => !Object.hasOwn(input, key))) {
+  if (keys.some((key) => !requiredKeys.has(key) && !optionalKeys.has(key)) || [...requiredKeys].some((key) => !Object.hasOwn(input, key))) {
     throw new Error('body has unknown or missing fields')
   }
   if (!languages.has(input.language)) throw new Error('language must be en or fr')
@@ -54,6 +57,8 @@ const validate = (input) => {
   }
   const ratings = Object.fromEntries(ratingKeys.map((key) => [key, rating(input.ratings[key], key)]))
   if (!characters.has(input.favoriteCharacter)) throw new Error('favoriteCharacter is invalid')
+  const topic = input.topic ?? null
+  if (!topics.has(topic)) throw new Error('topic is invalid')
   return {
     language: input.language,
     anonymous: name === null,
@@ -61,8 +66,9 @@ const validate = (input) => {
     message,
     ratings,
     favoriteCharacter: input.favoriteCharacter,
+    topic,
     receivedAt: new Date().toISOString(),
-    questionnaireVersion: 2,
+    questionnaireVersion: 3,
   }
 }
 
@@ -108,4 +114,4 @@ const server = createServer(async (request, response) => {
   }
 })
 
-server.listen(PORT, HOST, () => console.log(`Feedback API listening on ${HOST}:${PORT}`))
+server.listen(PORT, HOST, () => console.log(`Feedback API listening on ${HOST}:${server.address().port}`))

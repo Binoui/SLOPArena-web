@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro'
+import { getDocs } from '../lib/docs'
+import { links } from '../config'
+import { href, type Lang } from '../i18n'
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Docs',
+    description: 'How SLOPArena is made, how a match runs under the hood, and how to contribute.',
+    kicker: 'Docs',
+    heading: 'The manual, the workshop and the receipts.',
+    lede: 'How the game is built, how it runs, and how to help. For playing, start with the field guide.',
+    play: 'How to play',
+    playText: 'Getting access, controls, the basics and the modes.',
+    sections: { play: 'Playing', build: 'Behind the slop' },
+    read: 'Read',
+    repo: 'In the game repository',
+    repoLinks: [
+      { title: 'Documentation map', text: 'Every system, plan and decision record in the game repository.', href: links.githubDocs },
+      { title: 'Architecture overview', text: 'The components, their trust boundaries and the main runtime path.', href: 'https://github.com/Binoui/SLOPArena/blob/main/docs/architecture-overview.md' },
+      { title: 'Contributing guide', text: 'Setting up .NET, Unity and the local stack.', href: 'https://github.com/Binoui/SLOPArena/blob/main/CONTRIBUTING.md' },
+    ],
+    english: 'In English',
+  },
+  fr: {
+    title: 'Docs',
+    description: 'Comment SLOPArena est fabriqué, comment tourne un match sous le capot, et comment contribuer.',
+    kicker: 'Docs',
+    heading: 'Le manuel, l’atelier et les preuves.',
+    lede: 'Comment le jeu est construit, comment il tourne, et comment aider. Pour jouer, commencez par le guide de terrain.',
+    play: 'Comment jouer',
+    playText: 'Obtenir l’accès, les commandes, les bases et les modes.',
+    sections: { play: 'Jouer', build: 'Dans les coulisses' },
+    read: 'Lire',
+    repo: 'Dans le dépôt du jeu',
+    repoLinks: [
+      { title: 'Plan de la documentation', text: 'Chaque système, plan et décision d’architecture du dépôt du jeu.', href: links.githubDocs },
+      { title: 'Vue d’ensemble de l’architecture', text: 'Les composants, leurs frontières de confiance et le chemin principal à l’exécution.', href: 'https://github.com/Binoui/SLOPArena/blob/main/docs/architecture-overview.md' },
+      { title: 'Guide de contribution', text: 'Installer .NET, Unity et la pile locale.', href: 'https://github.com/Binoui/SLOPArena/blob/main/CONTRIBUTING.md' },
+    ],
+    english: 'En anglais',
+  },
+}[lang]
+
+const docs = await getDocs(lang)
+const sections = (['play', 'build'] as const)
+  .map((section) => ({ section, docs: docs.filter((doc) => doc.entry.data.section === section) }))
+  .filter((group) => group.docs.length > 0)
+---
+<Base lang={lang} route="docs/" title={copy.title} description={copy.description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">{copy.kicker}</p>
+      <h1>{copy.heading}</h1>
+      <p class="lede">{copy.lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="doc-list">
+        <li>
+          <a class="link-card" href={href(lang, 'play/')}>
+            <span class="label">{copy.sections.play}</span>
+            <h2>{copy.play}</h2>
+            <p>{copy.playText}</p>
+            <span class="label">{copy.read} →</span>
+          </a>
+        </li>
+      </ul>
+      {sections.map((group) => (
+        <>
+          <h2 class="h3-title">{copy.sections[group.section]}</h2>
+          <ul class="doc-list">
+            {group.docs.map((doc) => (
+              <li>
+                <a class="link-card" href={href(lang, `docs/${doc.slug}/`)}>
+                  <h3>{doc.entry.data.title}</h3>
+                  <p>{doc.entry.data.description}</p>
+                  <span class="label">{copy.read} →{doc.fallback && ` · ${copy.english}`}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ))}
+      <h2 class="h3-title">{copy.repo}</h2>
+      <ul class="link-cards">
+        {copy.repoLinks.map((link) => (
+          <li>
+            <a class="link-card" href={link.href} target="_blank" rel="noopener">
+              <h3>{link.title}</h3>
+              <p>{link.text}</p>
+              <span class="label">GitHub ↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

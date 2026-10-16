@@ -1,0 +1,9 @@
+---
+import Fighter from '../../../views/Fighter.astro'
+import { fighters } from '../../../data/fighters'
+
+export const getStaticPaths = () => fighters.map((fighter) => ({ params: { id: fighter.id }, props: { fighter } }))
+
+const { fighter } = Astro.props
+---
+<Fighter lang="fr" fighter={fighter} />
