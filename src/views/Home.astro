@@ -18,6 +18,7 @@ import shotManki from '../assets/screens/manki-bazooka-rooftop.jpg'
 import shotFightGuy from '../assets/screens/fightguy-fist-of-fury.jpg'
 import shotBonk from '../assets/screens/bonk-cake-slam.jpg'
 import poster from '../assets/key-art/trailer-poster.jpg'
+import nameplate from '../assets/key-art/nameplate.png'
 
 interface Props {
   lang: Lang
@@ -183,7 +184,7 @@ const jsonLd = {
         <p class="strip">{copy.strip}</p>
         <h1>
           <span class="sr-only">SLOPArena</span>
-          <span class="nameplate" aria-hidden="true">SLOPArena</span>
+          <Image class="nameplate" src={nameplate} alt="" aria-hidden="true" widths={[600, 1200]} sizes="(max-width: 1100px) 92vw, 560px" loading="eager" />
         </h1>
         <p class="hero__pitch" set:html={copy.pitch} />
         <div class="hero__actions">
