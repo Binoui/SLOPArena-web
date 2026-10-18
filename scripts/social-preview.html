@@ -15,8 +15,7 @@
   body::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E"); }
   .ring { position: absolute; right: -150px; top: -170px; width: 560px; height: 560px; border: 2px solid rgba(23, 24, 20, .28); border-radius: 50%; }
   .strip { position: absolute; left: 62px; top: 58px; padding: 8px 16px 7px; background: #f4efe3; border: 3px solid #171814; font: 700 20px/1 'Space Mono', monospace; letter-spacing: .12em; transform: rotate(-2deg); }
-  .plate { position: absolute; left: 50px; top: 110px; padding: 22px 34px 12px 26px; background: #ffcc22 radial-gradient(rgba(23, 24, 20, .14) 1px, transparent 1.6px); background-size: auto, 8px 8px; font-size: 148px; line-height: .84; letter-spacing: -.055em; clip-path: polygon(0 3%, 6% 0, 19% 2.4%, 33% .4%, 47% 2.2%, 62% 0, 78% 2%, 91% .2%, 100% 1.8%, 98.6% 19%, 100% 37%, 98.4% 56%, 100% 76%, 98.8% 100%, 84% 97.6%, 70% 100%, 54% 97.8%, 39% 100%, 23% 98%, 9% 100%, 0 97.2%, 1.4% 79%, 0 58%, 1.2% 37%, .2% 18%); transform: rotate(-1.6deg); }
-  .plate span { display: block; }
+  .plate { position: absolute; left: 50px; top: 196px; padding: 22px 30px 12px 22px; background: #ffcc22 radial-gradient(rgba(23, 24, 20, .14) 1px, transparent 1.6px); background-size: auto, 8px 8px; font-size: 100px; line-height: .84; letter-spacing: -.045em; white-space: nowrap; clip-path: polygon(0 3%, 6% 0, 19% 2.4%, 33% .4%, 47% 2.2%, 62% 0, 78% 2%, 91% .2%, 100% 1.8%, 98.6% 19%, 100% 37%, 98.4% 56%, 100% 76%, 98.8% 100%, 84% 97.6%, 70% 100%, 54% 97.8%, 39% 100%, 23% 98%, 9% 100%, 0 97.2%, 1.4% 79%, 0 58%, 1.2% 37%, .2% 18%); transform: rotate(-1.6deg); }
   .cards { position: absolute; right: 44px; top: 96px; display: grid; grid-template-columns: repeat(2, 214px); gap: 24px 22px; }
   .card { background: #f4efe3; border: 3px solid #171814; box-shadow: 7px 7px 0 #171814; }
   .card img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-bottom: 7px solid var(--accent); }
@@ -35,7 +34,7 @@
 </head>
 <body>
   <div class="ring"></div>
-  <h1 class="plate"><span>SLOP</span><span>ARENA</span></h1>
+  <h1 class="plate">SLOPArena</h1>
   <div class="footer"><span>STEAM PLAYTEST</span><span>OPEN SOURCE</span></div>
   <div class="cards">
     <div class="card" style="--accent:#3a8dde"><img src="../src/assets/fighters/fightguy-portrait.png" alt="" /><b>FIGHTGUY</b></div>

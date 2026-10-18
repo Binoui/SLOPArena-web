@@ -12,11 +12,12 @@ import { stages } from '../data/stages'
 import { getDocs } from '../lib/docs'
 import { links, steamAppId } from '../config'
 import { href, type Lang } from '../i18n'
-import heroShot from '../assets/screens/wibou-vs-bonk.jpg'
-import poster from '../assets/screens/fightguy-vs-manki-city.jpg'
-import shotPit from '../assets/screens/manki-vs-wibou.jpg'
-import shotPool from '../assets/screens/fightguy-vs-manki-pool.jpg'
-import shotBonk from '../assets/screens/bonk-vs-fightguy.jpg'
+import heroShot from '../assets/screens/bonk-launches-wibou.jpg'
+import shotFourWay from '../assets/screens/four-way-slop-pit.jpg'
+import shotManki from '../assets/screens/manki-bazooka-rooftop.jpg'
+import shotFightGuy from '../assets/screens/fightguy-fist-of-fury.jpg'
+import shotBonk from '../assets/screens/bonk-cake-slam.jpg'
+import poster from '../assets/key-art/trailer-poster.jpg'
 
 interface Props {
   lang: Lang
@@ -32,7 +33,8 @@ const copy = {
     pitch: 'Smash-style chaos in 3D. Build damage, send your friends flying, <em>argue about balance</em>.',
     trailer: 'Watch the trailer',
     stamp: 'Not a render',
-    heroCaption: ['Wibou vs Bonk', 'From the playtest'],
+    heroCaption: ['Bonk vs Wibou', 'From the playtest'],
+    heroAlt: 'Bonk’s greatsword launches Wibou at 157% off a painted boat deck.',
     rosterLabel: 'The roster',
     intro: {
       kicker: 'What is this?',
@@ -47,7 +49,7 @@ const copy = {
         { mark: '0€', title: 'Free and open source', text: 'Free on Steam, MIT-licensed on GitHub. Built by one developer with AI agents, asset packs and questionable decisions.' },
       ],
       gallery: 'Screenshots from the playtest',
-      shots: ['Manki blows up the floor next to Wibou', 'FightGuy kicks Manki on a pool deck', 'FightGuy and Manki on a neon rooftop', 'Bonk swings at FightGuy'],
+      shots: ['Manki’s bazooka sends FightGuy flying on a neon rooftop', 'FightGuy’s Fist of Fury launches Bonk', 'All four fighters collide in the Slop Pit', 'Bonk’s jump slam sends Manki off a birthday cake'],
     },
     roster: {
       kicker: 'The roster',
@@ -93,7 +95,8 @@ const copy = {
     pitch: 'Le chaos façon Smash, en 3D. Accumulez les dégâts, envoyez vos amis valser, <em>râlez sur l’équilibrage</em>.',
     trailer: 'Voir la bande-annonce',
     stamp: 'Pas un rendu',
-    heroCaption: ['Wibou contre Bonk', 'Capture du playtest'],
+    heroCaption: ['Bonk contre Wibou', 'Capture du playtest'],
+    heroAlt: 'L’épée de Bonk envoie Wibou valser à 157 % depuis le pont d’un bateau peint.',
     rosterLabel: 'Le roster',
     intro: {
       kicker: 'C’est quoi ?',
@@ -108,7 +111,7 @@ const copy = {
         { mark: '0€', title: 'Gratuit et open source', text: 'Gratuit sur Steam, sous licence MIT sur GitHub. Fait par un seul développeur, avec des agents IA, des packs d’assets et des décisions discutables.' },
       ],
       gallery: 'Captures du playtest',
-      shots: ['Manki fait exploser le sol à côté de Wibou', 'FightGuy frappe Manki au bord d’un bassin', 'FightGuy et Manki sur un toit sous les néons', 'Bonk tente de frapper FightGuy'],
+      shots: ['Le bazooka de Manki envoie FightGuy valser sur un toit sous les néons', 'Le Fist of Fury de FightGuy fait décoller Bonk', 'Les quatre combattants s’affrontent dans le Slop Pit', 'Le saut écrasant de Bonk éjecte Manki d’un gâteau d’anniversaire'],
     },
     roster: {
       kicker: 'Le roster',
@@ -150,7 +153,7 @@ const copy = {
 }[lang]
 
 const gallery = await Promise.all(
-  [shotPit, shotPool, poster, shotBonk].map(async (src, index) => ({
+  [shotManki, shotFightGuy, shotFourWay, shotBonk].map(async (src, index) => ({
     src,
     alt: copy.intro.shots[index],
     full: (await getImage({ src, width: 1920, format: 'webp' })).src,
@@ -180,7 +183,7 @@ const jsonLd = {
         <p class="strip">{copy.strip}</p>
         <h1>
           <span class="sr-only">SLOPArena</span>
-          <span class="nameplate" aria-hidden="true"><span>SLOP</span><span>ARENA</span></span>
+          <span class="nameplate" aria-hidden="true">SLOPArena</span>
         </h1>
         <p class="hero__pitch" set:html={copy.pitch} />
         <div class="hero__actions">
@@ -192,7 +195,7 @@ const jsonLd = {
       <div class="hero__visual">
         <span class="sticker hero__stamp">{copy.stamp}</span>
         <figure class="shot-frame">
-          <Image src={heroShot} alt={fighters[2].shotAlt[lang]} widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 92vw, 600px" loading="eager" fetchpriority="high" />
+          <Image src={heroShot} alt={copy.heroAlt} widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 92vw, 600px" loading="eager" fetchpriority="high" />
           <figcaption><span>{copy.heroCaption[0]}</span><span>{copy.heroCaption[1]}</span></figcaption>
         </figure>
         <ul class="hero__cards" aria-label={copy.rosterLabel}>

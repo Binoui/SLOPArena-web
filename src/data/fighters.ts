@@ -4,10 +4,10 @@ import fightguyPortrait from '../assets/fighters/fightguy-portrait.png'
 import mankiPortrait from '../assets/fighters/manki-portrait.png'
 import wibouPortrait from '../assets/fighters/wibou-portrait.png'
 import bonkPortrait from '../assets/fighters/bonk-portrait.png'
-import fightguyShot from '../assets/screens/fightguy-vs-manki-pool.jpg'
-import mankiShot from '../assets/screens/manki-vs-wibou.jpg'
-import wibouShot from '../assets/screens/wibou-vs-bonk.jpg'
-import bonkShot from '../assets/screens/bonk-vs-fightguy.jpg'
+import fightguyShot from '../assets/screens/fightguy-fist-of-fury.jpg'
+import mankiShot from '../assets/screens/manki-bazooka-rooftop.jpg'
+import wibouShot from '../assets/screens/wibou-skyfall.jpg'
+import bonkShot from '../assets/screens/bonk-cake-slam.jpg'
 
 type Text = Record<Lang, string>
 type List = Record<Lang, string[]>
@@ -53,8 +53,8 @@ export const fighters: Fighter[] = [
     portrait: fightguyPortrait,
     shot: fightguyShot,
     shotAlt: {
-      en: 'FightGuy lands a flying kick on Manki on a teal pool deck.',
-      fr: 'FightGuy place un coup de pied sauté sur Manki au bord d’un bassin turquoise.',
+      en: 'FightGuy’s Fist of Fury finisher launches Bonk across the Slop Pit.',
+      fr: 'Le coup final du Fist of Fury de FightGuy envoie Bonk valser à travers le Slop Pit.',
     },
     epithet: { en: 'The all-rounder', fr: 'Le polyvalent' },
     pitch: {
@@ -126,8 +126,8 @@ export const fighters: Fighter[] = [
     portrait: mankiPortrait,
     shot: mankiShot,
     shotAlt: {
-      en: 'Manki sets off an explosion next to Wibou in a dark warehouse arena.',
-      fr: 'Manki déclenche une explosion à côté de Wibou dans un entrepôt sombre.',
+      en: 'Manki’s bazooka blast sends FightGuy flying off a neon rooftop dance floor.',
+      fr: 'L’explosion du bazooka de Manki envoie FightGuy valser depuis la piste de danse d’un toit sous les néons.',
     },
     epithet: { en: 'The mad bomber monkey', fr: 'Le singe artificier' },
     pitch: {
@@ -199,8 +199,8 @@ export const fighters: Fighter[] = [
     portrait: wibouPortrait,
     shot: wibouShot,
     shotAlt: {
-      en: 'Wibou leaps with a green sword slash toward Bonk on a wooden deck.',
-      fr: 'Wibou bondit avec un coup d’épée vert vers Bonk sur un pont en bois.',
+      en: 'Wibou’s Skyfall slashes down at FightGuy in a forest campsite at sunset.',
+      fr: 'Le Skyfall de Wibou s’abat sur FightGuy dans un camping en forêt, au coucher du soleil.',
     },
     epithet: { en: 'The sword duelist', fr: 'Le duelliste' },
     pitch: {
@@ -272,8 +272,8 @@ export const fighters: Fighter[] = [
     portrait: bonkPortrait,
     shot: bonkShot,
     shotAlt: {
-      en: 'Bonk swings a huge greatsword across a dark warehouse floor while FightGuy stays out of reach.',
-      fr: 'Bonk balaie le sol d’un entrepôt avec son énorme épée pendant que FightGuy garde ses distances.',
+      en: 'Bonk’s jump slam lands on a birthday cake and sends Manki flying toward a bunk bed.',
+      fr: 'Le saut écrasant de Bonk atterrit sur un gâteau d’anniversaire et envoie Manki valser vers des lits superposés.',
     },
     epithet: { en: 'The greatsword', fr: 'Le colosse' },
     pitch: {
