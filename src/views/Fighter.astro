@@ -79,7 +79,7 @@ const route = `fighters/${fighter.id}/`
         </figure>
         <div>
           <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href(lang, 'fighters/')}>{copy.crumbs}</a> / {fighter.name}</nav>
-          <h1>{fighter.name}</h1>
+          <h1 class:list={{ 'fighter-hero__name--long': fighter.name.length > 6 }}>{fighter.name}</h1>
           <p class="strip">{fighter.epithet[lang]}</p>
           <p class="fighter-hero__pitch">{fighter.pitch[lang]}</p>
           <ul class="tags">{fighter.tags[lang].map((tag) => <li class="tag">{tag}</li>)}</ul>

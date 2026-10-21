@@ -12,11 +12,12 @@ import { stages } from '../data/stages'
 import { getDocs } from '../lib/docs'
 import { links, steamAppId } from '../config'
 import { href, type Lang } from '../i18n'
-import heroShot from '../assets/screens/wibou-vs-bonk.jpg'
-import poster from '../assets/screens/fightguy-vs-manki-city.jpg'
-import shotPit from '../assets/screens/manki-vs-wibou.jpg'
-import shotPool from '../assets/screens/fightguy-vs-manki-pool.jpg'
-import shotBonk from '../assets/screens/bonk-vs-fightguy.jpg'
+import heroShot from '../assets/screens/splash-deck-bonk.png'
+import poster from '../assets/screens/after-hours-bazooka.png'
+import shotPit from '../assets/screens/slop-pit-four-way.png'
+import shotTutorial from '../assets/screens/tutorial-passed.jpg'
+import shotSlopball from '../assets/screens/slopball-bazooka.png'
+import shotCourse from '../assets/screens/sanctuary-all-clear.png'
 
 interface Props {
   lang: Lang
@@ -32,7 +33,7 @@ const copy = {
     pitch: 'Smash-style chaos in 3D. Build damage, send your friends flying, <em>argue about balance</em>.',
     trailer: 'Watch the trailer',
     stamp: 'Not a render',
-    heroCaption: ['Wibou vs Bonk', 'From the playtest'],
+    heroCaption: ['Bonk vs Wibou', 'Splash Deck · Playtest'],
     rosterLabel: 'The roster',
     intro: {
       kicker: 'What is this?',
@@ -47,7 +48,7 @@ const copy = {
         { mark: '0€', title: 'Free and open source', text: 'Free on Steam, MIT-licensed on GitHub. Built by one developer with AI agents, asset packs and questionable decisions.' },
       ],
       gallery: 'Screenshots from the playtest',
-      shots: ['Manki blows up the floor next to Wibou', 'FightGuy kicks Manki on a pool deck', 'FightGuy and Manki on a neon rooftop', 'Bonk swings at FightGuy'],
+      shots: ['All four fighters clash in the Slop Pit ring, with punches, flames and sword swings', 'FightGuy earns the PASSED stamp in the Tutorial’s Specials lesson', 'Manki’s bazooka meets the ball on the Slopball Night Court', 'FightGuy breaks the last Sanctuary target: ALL CLEAR!, 20/20'],
     },
     roster: {
       kicker: 'The roster',
@@ -93,7 +94,7 @@ const copy = {
     pitch: 'Le chaos façon Smash, en 3D. Accumulez les dégâts, envoyez vos amis valser, <em>râlez sur l’équilibrage</em>.',
     trailer: 'Voir la bande-annonce',
     stamp: 'Pas un rendu',
-    heroCaption: ['Wibou contre Bonk', 'Capture du playtest'],
+    heroCaption: ['Bonk contre Wibou', 'Splash Deck · Playtest'],
     rosterLabel: 'Le roster',
     intro: {
       kicker: 'C’est quoi ?',
@@ -108,7 +109,7 @@ const copy = {
         { mark: '0€', title: 'Gratuit et open source', text: 'Gratuit sur Steam, sous licence MIT sur GitHub. Fait par un seul développeur, avec des agents IA, des packs d’assets et des décisions discutables.' },
       ],
       gallery: 'Captures du playtest',
-      shots: ['Manki fait exploser le sol à côté de Wibou', 'FightGuy frappe Manki au bord d’un bassin', 'FightGuy et Manki sur un toit sous les néons', 'Bonk tente de frapper FightGuy'],
+      shots: ['Les quatre combattants s’affrontent dans le ring de Slop Pit, entre poings, flammes et épées', 'FightGuy décroche le tampon PASSED dans la leçon Spéciales du tutoriel', 'Le bazooka de Manki rencontre la balle sur le Night Court de Slopball', 'FightGuy détruit la dernière cible du Sanctuaire : ALL CLEAR!, 20/20'],
     },
     roster: {
       kicker: 'Le roster',
@@ -150,7 +151,7 @@ const copy = {
 }[lang]
 
 const gallery = await Promise.all(
-  [shotPit, shotPool, poster, shotBonk].map(async (src, index) => ({
+  [shotPit, shotTutorial, shotSlopball, shotCourse].map(async (src, index) => ({
     src,
     alt: copy.intro.shots[index],
     full: (await getImage({ src, width: 1920, format: 'webp' })).src,
@@ -192,7 +193,7 @@ const jsonLd = {
       <div class="hero__visual">
         <span class="sticker hero__stamp">{copy.stamp}</span>
         <figure class="shot-frame">
-          <Image src={heroShot} alt={fighters[2].shotAlt[lang]} widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 92vw, 600px" loading="eager" fetchpriority="high" />
+          <Image src={heroShot} alt={fighters[3].shotAlt[lang]} widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 92vw, 600px" loading="eager" fetchpriority="high" />
           <figcaption><span>{copy.heroCaption[0]}</span><span>{copy.heroCaption[1]}</span></figcaption>
         </figure>
         <ul class="hero__cards" aria-label={copy.rosterLabel}>
