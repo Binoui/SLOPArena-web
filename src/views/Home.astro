@@ -32,6 +32,7 @@ const copy = {
     description: 'SLOPArena is a free 3D platform fighter in early playtest. Build damage, send your friends flying, and request playtest access on Steam.',
     strip: 'Free 3D platform fighter · Steam playtest',
     pitch: 'Smash-style chaos in 3D. Build damage, send your friends flying, <em>argue about balance</em>.',
+    demo: 'Play the demo in your browser',
     trailer: 'Watch the trailer',
     stamp: 'Not a render',
     heroCaption: ['Nyxxie vs FightGuy', 'From the playtest'],
@@ -94,6 +95,7 @@ const copy = {
     description: 'SLOPArena est un jeu de combat de plateforme 3D gratuit en playtest. Accumulez les dégâts, envoyez vos amis valser et demandez l’accès au playtest sur Steam.',
     strip: 'Combat de plateforme 3D gratuit · Playtest Steam',
     pitch: 'Le chaos façon Smash, en 3D. Accumulez les dégâts, envoyez vos amis valser, <em>râlez sur l’équilibrage</em>.',
+    demo: 'Jouer à la démo dans le navigateur',
     trailer: 'Voir la bande-annonce',
     stamp: 'Pas un rendu',
     heroCaption: ['Nyxxie contre FightGuy', 'Capture du playtest'],
@@ -189,6 +191,7 @@ const jsonLd = {
         <p class="hero__pitch" set:html={copy.pitch} />
         <div class="hero__actions">
           <SteamCta lang={lang} />
+          <a class="btn" href={links.demo}>▶ {copy.demo}</a>
           <a class="text-link" href="#trailer">▶ {copy.trailer}</a>
         </div>
         <SteamHelp lang={lang} />
@@ -299,6 +302,7 @@ const jsonLd = {
       </ol>
       <div class="access__cta">
         <SteamCta lang={lang} />
+        <a class="btn" href={links.demo}>▶ {copy.demo}</a>
         <a class="btn btn--ink" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />{copy.access.discord}</a>
         <a class="text-link" href={href(lang, 'play/')}>{copy.access.guide} →</a>
       </div>

@@ -9,6 +9,8 @@ export const links = {
   steam: env('VITE_STEAM_URL') || `https://store.steampowered.com/app/${steamAppId}/`,
   // Opens the installed playtest directly; only useful once access is granted.
   steamLaunch: `steam://run/${steamPlaytestAppId}`,
+  // Browser demo, proxied from the sloparena-play Pages project (functions/demo).
+  demo: '/demo',
   discord: 'https://discord.gg/VvfaxDCF6Z',
   reddit: 'https://www.reddit.com/r/sloparena',
   youtube: 'https://www.youtube.com/@SLOPArena',
