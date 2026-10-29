@@ -11,21 +11,23 @@ interface Props {
 }
 
 const { fighter, lang, heading: Heading = 'h3' } = Astro.props
+const t = ui[lang]
 const signature = fighter.specials.find((special) => special.slot === fighter.signature)!
 ---
 <a class="fighter-card" href={href(lang, `fighters/${fighter.id}/`)} style={`--accent: ${fighter.accent}`}>
   <div class="fighter-card__art">
     <Image src={fighter.portrait} alt="" widths={[300, 512]} sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 280px" />
+    {fighter.wip && <span class="sticker fighter-card__slot" title={t.common.wipTitle}>{t.common.wip}</span>}
   </div>
   <div class="fighter-card__body">
-    <Heading class="fighter-card__name">{fighter.name}</Heading>
+    <Heading class="fighter-card__name" style={`--chars: ${fighter.name.length}`}>{fighter.name}</Heading>
     <p class="fighter-card__epithet">{fighter.epithet[lang]}</p>
     <p class="fighter-card__pitch">{fighter.pitch[lang]}</p>
     <ul class="tags">
       {fighter.tags[lang].map((tag) => <li class="tag">{tag}</li>)}
     </ul>
     <p class="fighter-card__signature">
-      {ui[lang].common.mustTry} <span class="key">{signature.slot}</span>
+      {t.common.mustTry} <span class="key">{t.specialKeys[signature.slot]}</span>
       <b>{signature.name}</b>
     </p>
   </div>

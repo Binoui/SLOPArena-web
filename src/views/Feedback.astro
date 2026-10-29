@@ -33,7 +33,7 @@ const copy = {
     topics: { bug: 'Something broke', balance: 'Balance', love: 'Felt great', idea: 'Idea', other: 'Other' },
     message: 'What happened?',
     messageHint: 'One sentence is enough.',
-    placeholder: 'e.g. “Bonk felt way too slow, and the camera got lost on Splash Deck.”',
+    placeholder: 'e.g. “Sir Bonk felt way too slow, and the camera got lost on Splash Deck.”',
     favorite: 'Favorite fighter',
     noFavorite: 'No favorite',
     unsure: 'Not sure',
@@ -86,7 +86,7 @@ const copy = {
     topics: { bug: 'Un truc a cassé', balance: 'Équilibrage', love: 'C’était génial', idea: 'Idée', other: 'Autre' },
     message: 'Qu’est-ce qui s’est passé ?',
     messageHint: 'Une phrase suffit.',
-    placeholder: 'ex. « Bonk est bien trop lent, et la caméra s’est perdue sur Splash Deck. »',
+    placeholder: 'ex. « Sir Bonk est bien trop lent, et la caméra s’est perdue sur Splash Deck. »',
     favorite: 'Combattant préféré',
     noFavorite: 'Aucun',
     unsure: 'Je ne sais pas',
@@ -236,9 +236,10 @@ const questions = Object.entries(copy.questions)
 </Base>
 
 <script>
+  import { fighterIds } from '../lib/feedback.js'
+
   const draftKey = 'sloparena-feedback-draft'
   const ratingKeys = ['fun', 'hitDifficulty', 'camera', 'lockOn'] as const
-  const fighterIds = ['fightguy', 'manki', 'wibou', 'bonk']
 
   const form = document.querySelector<HTMLFormElement>('#report')
   if (form) {

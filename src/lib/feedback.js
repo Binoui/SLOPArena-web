@@ -1,6 +1,7 @@
 export const MAX_BODY_BYTES = 32 * 1024
 const languages = new Set(['en', 'fr'])
-const characters = new Set(['fightguy', 'manki', 'wibou', 'bonk', 'none', 'unsure', null])
+export const fighterIds = ['fightguy', 'manki', 'wibou', 'bonk', 'bashie', 'salamander', 'nyx']
+const characters = new Set([...fighterIds, 'none', 'unsure', null])
 const topics = new Set(['bug', 'balance', 'love', 'idea', 'other', null])
 const ratingKeys = ['fun', 'hitDifficulty', 'camera', 'lockOn']
 const requiredKeys = new Set(['language', 'name', 'message', 'ratings', 'favoriteCharacter'])

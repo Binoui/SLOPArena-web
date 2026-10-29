@@ -10,7 +10,7 @@ SLOPArena is made by one developer, in public, with a lot of help from AI coding
 
 ## The loop
 
-1. **Design a kit.** Every fighter starts as a short design doc: who they are, how they win, what they’re bad at. Every kit fits the same grid of eight normals and four specials. See the [kit design principles ↗](https://github.com/Binoui/SLOPArena/blob/main/docs/characters/character-kit-design-principles.md).
+1. **Design a kit.** Every fighter starts as a short design doc: who they are, how they win, what they’re bad at. Every kit fits the same grid of six normals (three keys, on the ground and in the air) and four specials. See the [kit design principles ↗](https://github.com/Binoui/SLOPArena/blob/main/docs/characters/character-kit-design-principles.md).
 2. **Author a character package.** A fighter is a package: `character.json` holds the gameplay, an asset catalog binds the model and animations. Those files are editing input, never what the game actually runs.
 3. **Tune it in Ability Lab.** A Unity tool scrubs a move frame by frame and shows the real hitboxes and hurtboxes, computed by the same code the server uses. What you see in the Lab is what the server will compute.
 4. **Cook it.** A compiler turns the package into an immutable, hashed artifact. Matches pin exact versions and hashes, so the game and the server always agree on what a move does.

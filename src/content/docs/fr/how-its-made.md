@@ -10,7 +10,7 @@ SLOPArena est fait par un seul développeur, en public, avec beaucoup d’aide d
 
 ## La boucle
 
-1. **Concevoir un kit.** Chaque combattant commence par une courte doc de design : qui il est, comment il gagne, ce qu’il fait mal. Tous les kits tiennent dans la même grille de huit coups normaux et quatre spéciales. Voir les [principes de design des kits ↗](https://github.com/Binoui/SLOPArena/blob/main/docs/characters/character-kit-design-principles.md) (en anglais).
+1. **Concevoir un kit.** Chaque combattant commence par une courte doc de design : qui il est, comment il gagne, ce qu’il fait mal. Tous les kits tiennent dans la même grille de six coups normaux (trois touches, au sol et en l’air) et quatre spéciales. Voir les [principes de design des kits ↗](https://github.com/Binoui/SLOPArena/blob/main/docs/characters/character-kit-design-principles.md) (en anglais).
 2. **Écrire un package de personnage.** Un combattant est un package : `character.json` contient le gameplay, un catalogue d’assets relie le modèle et les animations. Ces fichiers servent à l’édition, jamais à ce que le jeu exécute réellement.
 3. **Régler dans Ability Lab.** Un outil Unity fait défiler un coup image par image et affiche les vraies hitbox et hurtbox, calculées par le même code que le serveur. Ce que vous voyez dans le Lab, c’est ce que le serveur calculera.
 4. **Le « cuire ».** Un compilateur transforme le package en artefact immuable et hashé. Chaque match fige les versions et les hashes exacts : le jeu et le serveur sont toujours d’accord sur ce que fait un coup.

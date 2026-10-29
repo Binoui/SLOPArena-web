@@ -32,15 +32,15 @@ SLOPArena is a transparent, solo-developed, open-source pre-alpha built with AI 
 
 - The product is a small, chaotic free 3D online platform fighter for friends.
 - The public experience supports English and French, including automatic language selection and a persistent manual switch.
-- The roster on the site is FightGuy, Manki, Wibou and Bonk, with kits, cooldowns and movement copied from the game's character packages; the snapshot date lives in `src/data/fighters.ts`.
+- The roster on the site is FightGuy, Manki, Wibou, Sir Bonk, Bashie, Salamander and Nyx (Bashie, Salamander and Nyx tagged work in progress), with kits, cooldowns and movement copied from the game's character packages; the snapshot date lives in `src/data/fighters.ts`.
 - The primary CTA links to the Steam store page and explains access by request. Do not invent download routes or claim instant access.
-- The feedback flow requires only a nonblank message; blank name means anonymous, a topic is optional, four ratings can be unselected, scored, or explicitly marked `notTried`, and the favorite fighter covers all four fighters.
+- The feedback flow requires only a nonblank message; blank name means anonymous, a topic is optional, four ratings can be unselected, scored, or explicitly marked `notTried`, and the favorite fighter covers every fighter on the roster.
 - The site must remain usable when live presence is unavailable.
 - The project is an Astro static site deployed through Cloudflare Pages at https://playsloparena.com, with a Pages Function and D1 for feedback. Docs are Markdown in `src/content/docs/<lang>/`; a missing French page falls back to English.
 
 ## Brand Commitments
 
-Preserve the SLOPArena name (player-facing spelling; shorthand SLOPA), the four fighters, the candid early-playtest status, and self-aware humor about questionable balance. The shared visual north star is “Low-poly underground toy-fight-club, with DIY internet-game energy”: chunky low-poly forms, exaggerated silhouettes, curated asset-pack collage, and toy as scavenged construction—not literal plastic or mandatory cuteness. Be cool first, joke second, slightly crappy on purpose, and extremely readable. Use Action Yellow `#FFCC22` for graphic primary actions and selection; preserve character/team colors and blue specials. Archivo Black is the shared name-mark and native menu display voice; keep Archivo Black + Space Mono for marketing, with readable sans-serif for dense HUD/settings. Preserve character identity, proportions, and chunky model forms in art. Adapt the graphic treatment to the setting rather than forcing warehouse stages or decoration-only generic grit.
+Preserve the SLOPArena name (player-facing spelling; shorthand SLOPA), the roster, the candid early-playtest status, and self-aware humor about questionable balance. The shared visual north star is “Low-poly underground toy-fight-club, with DIY internet-game energy”: chunky low-poly forms, exaggerated silhouettes, curated asset-pack collage, and toy as scavenged construction—not literal plastic or mandatory cuteness. Be cool first, joke second, slightly crappy on purpose, and extremely readable. Use Action Yellow `#FFCC22` for graphic primary actions and selection; preserve character/team colors and blue specials. Archivo Black is the shared name-mark and native menu display voice; keep Archivo Black + Space Mono for marketing, with readable sans-serif for dense HUD/settings. Preserve character identity, proportions, and chunky model forms in art. Adapt the graphic treatment to the setting rather than forcing warehouse stages or decoration-only generic grit.
 
 The website flyer is the strongest existing graphic reference. Source hierarchy: usability/readability first; shared guide `../SlopArena/docs/design/visual-language.md` is brand authority, art conventions owns 3D/assets, this local DESIGN document realizes the website surface, and `.impeccable/design.json` mirrors it rather than acting as a separate guide. The website now ships Action Yellow and the Archivo family; native UI migration is tracked in the game repository.
 
@@ -49,14 +49,14 @@ Preserve the free 3D fighter pitch, real gameplay media, bilingual copy, video, 
 ## Evidence on Hand
 
 - `src/assets/fighters/*-portrait.png`: the game's illustrated fighter portraits (from the Unity client's `Resources/UI/Portraits`), also used as Steam key art.
-- `src/assets/screens/`: five gameplay screenshots published on the Steam store page.
-- `src/assets/stages/`: stage-select previews of the six curated PvP stages.
-- `https://youtu.be/LFdEtBUN6wU`: “SLOPArena Playtest OUT !!!”, embedded on the home page behind a click-to-load facade.
+- `src/assets/screens/`: real gameplay stills from the Steam store shoot, the 2026-10-28 promo clips and in-game captures; sources in its README.
+- `src/assets/stages/`: stage-select previews of the seven PvP picker stages.
+- `https://youtu.be/2_6SbaZ5sA8`: “SLOPArena Playtest Trailer” (16:9, 2026-10-28), embedded on the home page behind a click-to-load facade.
 - `src/views/` and `src/data/`: complete English and French copy, roster data, access, controls and feedback content.
 - `README.md`: development, deployment, Steam, feedback, and presence behavior.
 - `src/lib/feedback.js` and `functions/api/feedback.js`: strict v3 feedback record contract and D1 storage.
 - There is no committed testimonial, player count, benchmark, press quote, pricing plan, or other third-party proof. Future work must not fabricate these.
-- `public/social-preview.png`: 1200×630 language-neutral share card with the name plate and the four portraits, generated from `scripts/social-preview.html`.
+- `public/social-preview.png`: 1200×630 language-neutral share card with the name plate and four of the portraits (FightGuy, Manki, Wibou, Sir Bonk), generated from `scripts/social-preview.html`.
 
 ## Product Principles
 

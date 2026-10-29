@@ -6,6 +6,7 @@ import slopPit from '../assets/stages/slop-pit.png'
 import afterHours from '../assets/stages/after-hours.png'
 import lastStop from '../assets/stages/last-stop.png'
 import logOff from '../assets/stages/log-off.png'
+import hamsterHabitat from '../assets/stages/hamster-habitat.png'
 
 export interface Stage {
   id: string
@@ -14,7 +15,7 @@ export interface Stage {
   blurb: Record<Lang, string>
 }
 
-// The curated PvP stage picker in the game (StageSelectController).
+// The PvP stage picker in the game (client/Unity/Assets/Resources/Stages/roster.json).
 export const stages: Stage[] = [
   {
     id: 'slop-pit', name: 'Slop Pit', image: slopPit,
@@ -39,5 +40,9 @@ export const stages: Stage[] = [
   {
     id: 'log-off', name: 'Log Off', image: logOff,
     blurb: { en: 'A tree stump at a campsite. No Wi-Fi, just logs.', fr: 'Une souche dans un camping. Pas de Wi-Fi, que du bois.' },
+  },
+  {
+    id: 'hamster-habitat', name: 'Hamster Habitat', image: hamsterHabitat,
+    blurb: { en: 'Two cages and a tube. The landlord is watching.', fr: 'Deux cages et un tube. Le proprio vous regarde.' },
   },
 ]

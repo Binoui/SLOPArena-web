@@ -26,6 +26,6 @@ export const endpoints = {
 }
 
 export const trailer = {
-  youtubeId: 'LFdEtBUN6wU',
-  title: 'SLOPArena Playtest OUT !!!',
+  youtubeId: '2_6SbaZ5sA8',
+  title: 'SLOPArena Playtest Trailer',
 }

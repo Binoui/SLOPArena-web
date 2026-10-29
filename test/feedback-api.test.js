@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { DatabaseSync } from 'node:sqlite'
 import { test } from 'node:test'
 import { onRequest } from '../functions/api/feedback.js'
-import { MAX_BODY_BYTES, validateFeedback } from '../src/lib/feedback.js'
+import { MAX_BODY_BYTES, fighterIds, validateFeedback } from '../src/lib/feedback.js'
 
 const report = (overrides = {}) => ({
   language: 'en',
@@ -76,7 +76,16 @@ test('shared validator preserves normalization, optional fields and rating value
   assert.equal(record.topic, null)
   assert.deepEqual(record.ratings, report().ratings)
   assert.equal(validateFeedback(report({ name: '   ' })).anonymous, true)
-  for (const favoriteCharacter of ['fightguy', 'manki', 'wibou', 'bonk', 'none', 'unsure', null]) {
+  for (const favoriteCharacter of [...fighterIds, 'none', 'unsure', null]) {
+    assert.equal(validateFeedback(report({ favoriteCharacter })).favoriteCharacter, favoriteCharacter)
+  }
+})
+
+test('every fighter on the site can be picked as a favorite', () => {
+  const roster = readFileSync(new URL('../src/data/fighters.ts', import.meta.url), 'utf8')
+  const ids = [...roster.matchAll(/^    id: '([a-z]+)',$/gm)].map((match) => match[1])
+  assert.ok(ids.length >= 7, 'fighter ids found in src/data/fighters.ts')
+  for (const favoriteCharacter of ids) {
     assert.equal(validateFeedback(report({ favoriteCharacter })).favoriteCharacter, favoriteCharacter)
   }
 })

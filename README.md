@@ -1,6 +1,6 @@
 # SLOPArena Web
 
-The bilingual (English/French) website for SLOPArena, a free 3D platform fighter in early playtest: what the game is, the four fighters, how to get in and play, a feedback form, and docs about how the game is made.
+The bilingual (English/French) website for SLOPArena, a free 3D platform fighter in early playtest: what the game is, the seven fighters, how to get in and play, a feedback form, and docs about how the game is made.
 
 SLOPArena has a public [Steam store page](https://store.steampowered.com/app/5324910/) (app `5324910`, listed as coming soon, wishlistable) with a limited **Steam Playtest** (app `5325920`). Players request access on the store page and Steam emails them when they are let in. The 2026-10-04 rollout activated `0.2.0-playtest.5` on the Playtest default branch, BuildID `25702912`, alongside the compatible VPS backend; release and backend proof lives in the game repository's [`docs/testing.md`](https://github.com/Binoui/SLOPArena/blob/main/docs/testing.md).
 
@@ -39,14 +39,16 @@ To add a doc, drop `src/content/docs/en/<slug>.md` (and optionally `fr/<slug>.md
 Fighter move names, cooldowns and movement numbers are copied from each package's `character.json` in the game repository (snapshot date in `src/data/fighters.ts`). Update them when kits change.
 
 The portraits match the game’s current roster art. Gameplay images come from the
-18 October store shoot and the latest **New this patch** video; their sources are
-recorded in [`src/assets/screens/README.md`](src/assets/screens/README.md).
+18 October store shoot, the 28 October promo clips and later in-game captures; their
+sources are recorded in [`src/assets/screens/README.md`](src/assets/screens/README.md).
+Fighters still being built carry `wip: true` in `src/data/fighters.ts`, mirroring the
+game’s `MenuRoster.IsWorkInProgress`.
 
 First-time French browsers are redirected to the French pages; after that the manual EN/FR switch wins and is remembered.
 
 ## Feedback API
 
-The form submits `{language, name, message, ratings, favoriteCharacter, topic}` as JSON to same-origin `POST /api/feedback`. A nonblank message (up to 2000 characters) is required; name is optional (blank means anonymous). Each of the four rating values is an integer from 1 to 5, `null` (unanswered) or `"notTried"`. `favoriteCharacter` is `fightguy`, `manki`, `wibou`, `bonk`, `none`, `unsure` or `null`. `topic` is optional: `bug`, `balance`, `love`, `idea`, `other` or `null`.
+The form submits `{language, name, message, ratings, favoriteCharacter, topic}` as JSON to same-origin `POST /api/feedback`. A nonblank message (up to 2000 characters) is required; name is optional (blank means anonymous). Each of the four rating values is an integer from 1 to 5, `null` (unanswered) or `"notTried"`. `favoriteCharacter` is one of the fighter ids in `fighterIds` (`src/lib/feedback.js`: `fightguy`, `manki`, `wibou`, `bonk`, `bashie`, `salamander`, `nyx`), `none`, `unsure` or `null`. `topic` is optional: `bug`, `balance`, `love`, `idea`, `other` or `null`.
 
 The shared validator in `src/lib/feedback.js` rejects unknown fields and preserves the previous API's version 3 record format, including `receivedAt`, `anonymous` and `questionnaireVersion`. Reports from older pages without `topic` are still accepted and stored with `topic: null`. Bodies over 32 KiB are rejected. Successful submissions return HTTP 201 `{ "ok": true }`; invalid submissions return 400 and database failures return 500.
 
