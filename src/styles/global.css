@@ -522,7 +522,7 @@ p { margin: 0; }
 .prose .queue__gate small { margin-top: 6px; font: 700 11px/1.3 var(--mono); text-transform: none; }
 .prose .queue__editor { padding: 22px 14px; border: 2px solid var(--paper); font: 20px/1.05 var(--display); text-transform: uppercase; text-align: center; }
 @media (max-width: 640px) { .prose .queue { grid-template-columns: 1fr; } }
-.prose .credits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 14px; background: var(--ink); color: var(--paper); font: 700 12px/1.4 var(--mono); letter-spacing: 0.03em; }
+.prose .credits { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; padding: 14px; background: var(--ink); color: var(--paper); font: 700 12px/1.4 var(--mono); letter-spacing: 0.03em; }
 .prose .credits b { display: block; margin-bottom: 4px; font: 19px/1.05 var(--display); color: var(--yellow); }
 .prose .credits p { grid-column: 1 / -1; margin: 4px 0 0; font-size: 13px; }
 .prose .credits a { color: var(--yellow); }

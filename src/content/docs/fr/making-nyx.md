@@ -31,6 +31,7 @@ Le 28 octobre à 19 h 41, ce n’était qu’une idée d’une ligne dans un cha
 <div class="credits">
 <div><b>Claude Opus</b>a mené le projet et écrit les animations via GenRA</div>
 <div><b>Codex</b>a dessiné les concepts, écrit l’essentiel du code et les effets</div>
+<div><b>GenRA</b>de MacPaw, la recherche dont notre outil d’animation est un fork</div>
 <div><b>Tripo</b>a fait les modèles</div>
 <div><b>Mixamo</b>les a riggés</div>
 <p>Le tout dans une seule fenêtre <a href="#t3-code--une-fenêtre-pour-tous-les-agents">T3 Code</a>.</p>
@@ -163,9 +164,11 @@ Le 29 octobre, voici ce trafic d’après les transcriptions, Nyx et les autres 
 
 ### GenRA : une IA qui anime avec du code
 
-Personne n’anime ses mouvements à la main. Notre boîte à outils d’animation (on l’appelle toujours GenRA, d’après le [projet de MacPaw ↗](https://github.com/MacPaw/GenRA) dont elle est issue) fait écrire chaque coup à Claude Opus sous forme d’un petit programme, sur son vrai squelette : des poses clés, des bras et des jambes résolus pour que les articulations ne plient que dans le bon sens, puis le mouvement entre les poses.
+Personne n’anime ses mouvements à la main. Notre boîte à outils d’animation est un fork de [GenRA ↗](https://github.com/MacPaw/GenRA), une recherche de MacPaw signée Andrii Yaroshevych, Pavlo Kryven, Mariya Hirna et Maksym Shamrai (ECCV Workshops 2026). Leur idée, un modèle de langage qui anime un vrai rig articulation par articulation et écrit des fichiers prêts pour la production, est ce qui a rendu l’animation possible pour un jeu fait par une seule personne. Elle a débloqué tout le projet, et c’est pour ça que leur nom est à côté de Tripo et Mixamo en haut de cette page.
 
-Ensuite, elle vérifie son propre travail. Des os qui s’étirent, des genoux qui plient à l’envers, des membres qui sautent, des mains qui traversent le corps, et ce qu’on appelle le flow : les arrêts raides et les poses mortes qui donnent un mouvement de robot. Elle fait un rendu du coup, regarde les images et corrige ce qu’elle voit. Ce qui m’arrive, c’est le tableau plus haut : chaque coup sous trois angles avec ses résultats de vérification. Un coup coûte entre un et trois dollars. Sur notre coup de référence, ça prend deux à quatre minutes pour bien moins d’un dollar, là où la méthode par prompt de GenRA prenait 25 minutes et sept dollars, et ratait encore deux vérifications.
+Notre version fait écrire chaque coup à Claude Opus sous forme d’un petit programme, sur son vrai squelette : des poses clés, des bras et des jambes résolus pour que les articulations ne plient que dans le bon sens, puis le mouvement entre les poses.
+
+Ensuite, elle vérifie son propre travail. Des os qui s’étirent, des genoux qui plient à l’envers, des membres qui sautent, des mains qui traversent le corps, et ce qu’on appelle le flow : les arrêts raides et les poses mortes qui donnent un mouvement de robot. Elle fait un rendu du coup, regarde les images et corrige ce qu’elle voit. Ce qui m’arrive, c’est le tableau plus haut : chaque coup sous trois angles avec ses résultats de vérification. Un coup coûte entre un et trois dollars.
 
 ### Et le design d’abord
 

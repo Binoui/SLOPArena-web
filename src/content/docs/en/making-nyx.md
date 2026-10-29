@@ -31,6 +31,7 @@ On 28 October at 19:41 she was a one-line idea in a chat. 22 hours later, 9 of t
 <div class="credits">
 <div><b>Claude Opus</b>ran the show and wrote the animations through GenRA</div>
 <div><b>Codex</b>drew the concept art, wrote most of the code and the effects</div>
+<div><b>GenRA</b>by MacPaw, the research our animation toolkit is forked from</div>
 <div><b>Tripo</b>made the models</div>
 <div><b>Mixamo</b>rigged them</div>
 <p>All in one <a href="#t3-code-one-window-for-every-agent">T3 Code</a> window.</p>
@@ -163,9 +164,11 @@ On 29 October, the transcripts show this traffic, Nyx's and other fighters' toge
 
 ### GenRA: an AI that animates with code
 
-Nobody hand-keys her animations. Our animation toolkit (we still call it GenRA, after the [MacPaw project ↗](https://github.com/MacPaw/GenRA) it grew out of) has Claude Opus write each move as a small program against her real skeleton: key poses, arms and legs solved so joints only bend the way joints bend, then the motion between them.
+Nobody hand-keys her animations. Our animation toolkit is a fork of [GenRA ↗](https://github.com/MacPaw/GenRA), research from MacPaw by Andrii Yaroshevych, Pavlo Kryven, Mariya Hirna and Maksym Shamrai (ECCV Workshops 2026). Their idea, a language model animating a real rig joint by joint and writing production-ready files, is what made animation possible for a one-person game. It unlocked this whole project, and that's why their name sits next to Tripo and Mixamo at the top of this page.
 
-Then it checks its own work. Bones that stretch, knees that bend backwards, limbs that snap, hands that go through the body, and what we call flow: stiff stops and dead holds that make motion look robotic. It renders the move, looks at the renders and fixes what it sees. What reaches me is the board above, every move from three angles with its check results. A move costs one to three dollars. On our benchmark move, this takes two to four minutes for well under a dollar, where GenRA's own prompting route took 25 minutes and seven dollars and still failed two checks.
+Our version has Claude Opus write each move as a small program against her real skeleton: key poses, arms and legs solved so joints only bend the way joints bend, then the motion between them.
+
+Then it checks its own work. Bones that stretch, knees that bend backwards, limbs that snap, hands that go through the body, and what we call flow: stiff stops and dead holds that make motion look robotic. It renders the move, looks at the renders and fixes what it sees. What reaches me is the board above, every move from three angles with its check results. A move costs one to three dollars.
 
 ### And the design came first
 
