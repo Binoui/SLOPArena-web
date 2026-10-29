@@ -40,9 +40,14 @@ const en = {
     air: 'Air',
     mustTry: 'Must try',
     newTab: '(opens in a new tab)',
+    wip: 'WIP',
+    wipTitle: 'Work in progress: kit and art still being built',
   },
   // Slot roles from the game's glossary (CONTEXT.md → Slot).
   slots: { A: 'Signature', E: 'Recovery', R: 'Playmaker', F: 'Power' },
+  // The game binds specials by physical key (ADR-0042): slot A is the key in the
+  // QWERTY Q position, which AZERTY keyboards label A.
+  specialKeys: { A: 'Q', E: 'E', R: 'R', F: 'F' },
 }
 
 export type UiStrings = typeof en
@@ -87,8 +92,11 @@ const fr: UiStrings = {
     air: 'En l’air',
     mustTry: 'À essayer',
     newTab: '(nouvel onglet)',
+    wip: 'En chantier',
+    wipTitle: 'En chantier : kit et graphismes encore en construction',
   },
   slots: { A: 'Signature', E: 'Remontée', R: 'Tactique', F: 'Puissance' },
+  specialKeys: { A: 'A', E: 'E', R: 'R', F: 'F' },
 }
 
 export const ui: Record<Lang, UiStrings> = { en, fr }
