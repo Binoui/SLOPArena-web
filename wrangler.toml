@@ -1,0 +1,10 @@
+name = "playsloparena"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-29"
+
+[[d1_databases]]
+binding = "FEEDBACK_DB"
+database_name = "sloparena-feedback"
+# The production D1 database.
+database_id = "a07adeab-c7f1-482b-9358-8d8bd1406b0f"
+migrations_dir = "migrations"

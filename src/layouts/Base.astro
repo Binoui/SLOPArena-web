@@ -25,7 +25,7 @@ const t = ui[lang]
 const fullTitle = route === '' && !noindex ? title : `${title} · SLOPArena`
 const url = canonical(Astro.site, lang, route)
 // Versioned so Cloudflare and link-preview caches pick up a regenerated card.
-const image = new URL('/social-preview.png?v=3', Astro.site).href
+const image = new URL('/social-preview.png?v=4', Astro.site).href
 const locales = { en: 'en_US', fr: 'fr_FR' }
 const frHref = href('fr', route)
 const enHref = href('en', route)

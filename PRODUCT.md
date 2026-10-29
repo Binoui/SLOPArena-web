@@ -36,7 +36,7 @@ SLOPArena is a transparent, solo-developed, open-source pre-alpha built with AI 
 - The primary CTA links to the Steam store page and explains access by request. Do not invent download routes or claim instant access.
 - The feedback flow requires only a nonblank message; blank name means anonymous, a topic is optional, four ratings can be unselected, scored, or explicitly marked `notTried`, and the favorite fighter covers all four fighters.
 - The site must remain usable when live presence is unavailable.
-- The project is an Astro static site deployed through GitHub Pages or as Docker services with nginx and the feedback API. Docs are Markdown in `src/content/docs/<lang>/`; a missing French page falls back to English.
+- The project is an Astro static site deployed through Cloudflare Pages at https://playsloparena.com, with a Pages Function and D1 for feedback. Docs are Markdown in `src/content/docs/<lang>/`; a missing French page falls back to English.
 
 ## Brand Commitments
 
@@ -54,7 +54,7 @@ Preserve the free 3D fighter pitch, real gameplay media, bilingual copy, video, 
 - `https://youtu.be/LFdEtBUN6wU`: “SLOPArena Playtest OUT !!!”, embedded on the home page behind a click-to-load facade.
 - `src/views/` and `src/data/`: complete English and French copy, roster data, access, controls and feedback content.
 - `README.md`: development, deployment, Steam, feedback, and presence behavior.
-- `server.js`: strict v3 feedback record contract and local newline-delimited storage.
+- `src/lib/feedback.js` and `functions/api/feedback.js`: strict v3 feedback record contract and D1 storage.
 - There is no committed testimonial, player count, benchmark, press quote, pricing plan, or other third-party proof. Future work must not fabricate these.
 - `public/social-preview.png`: 1200×630 language-neutral share card with the name plate and the four portraits, generated from `scripts/social-preview.html`.
 
