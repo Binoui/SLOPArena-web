@@ -1,6 +1,6 @@
 ---
 title: Making Nyx in a day
-description: One evening of concept art, one day of agents. How Nyx went from a goth-girl idea to a playable two-form fighter, with every prompt, agent task and mistake on one timeline.
+description: One evening of concept art, one day of agents. How Nyx went from a goth-girl idea to a playable two-form fighter, every prompt and mistake on one timeline, and the tools that let dozens of agents share one Unity Editor.
 section: build
 order: 15
 updated: 2026-10-29
@@ -30,7 +30,7 @@ On 28 October at 19:41 she was a one-line idea in a chat. 22 hours later, 9 of t
 
 ## How I work with the agents
 
-I talk to one coordinator thread (Claude). It doesn't build much itself. It writes briefs, hands them to other agent threads (OpenAI Codex or Claude, picked per job), then checks what comes back before showing it to me. On Nyx it ran 30 of those tasks and was itself busy for only about two hours of the 22. I give direction, say yes or no, and play the result.
+I talk to one coordinator thread (Claude). It doesn't build much itself. It writes briefs, hands them to other agent threads (OpenAI Codex or Claude, picked per job), then checks what comes back before showing it to me. On Nyx it ran 30 of those tasks and was itself busy for only about two hours of the 22. I give direction, say yes or no, and play the result. The tools that make this work are [at the end of the page](#the-tools-behind-it).
 
 ## The evening: finding her look
 
@@ -74,7 +74,7 @@ From 10:49 to about 16:15, 15 tasks ran, up to three at once.
 
 - **One body, two meshes.** Both forms share one skeleton, and swapping changes which mesh is drawn. The first package used FightGuy's animations as stand-ins, so the whole kit was playable in Training by lunchtime.
 - **The engine, in four phases.** Forms and the swap, then her normals and simple specials, then Grasp, Hex Crow and Selfie Grab, then the CPU, the HUD and Ability Lab. After the phases, the coordinator reran the tests and checked that the other fighters' data hadn't changed.
-- **Her own animations.** 24 moves through the [GenRA animation workflow](../how-its-made/), one round, $43 in total. 20 passed the automatic checks. I approved all 24 after one look.
+- **Her own animations.** 24 moves through [GenRA](#genra-an-ai-that-animates-with-code), one round, $43 in total. 20 passed the automatic checks. I approved all 24 after one look.
 - **Effects.** Painted as concepts over her own animation frames, approved, then built.
 
 <figure>
@@ -121,15 +121,46 @@ Every prompt, task and video, read back from the coordinator's own log. Hover th
 <figcaption>The three combos the kit was designed around, landing on the Training dummy.</figcaption>
 </figure>
 
-## Why it went this fast
+## The tools behind it
 
-Nyx took 21 prompts because the game had already taken thousands. Every part of her rode on something built for an earlier fighter:
+Nyx took 21 prompts because the game had already taken thousands. A fighter is data here, not new code, and every step of her build ran on tools made for the fighters before her. Four of them do most of the work.
 
-- the character package format and its cook, so a fighter is data and not new code;
-- the animation workflow, rig packs and automatic checks, built while animating the earlier fighters;
-- engine pieces she could reuse, like homing projectiles and Bashie's tether, which became Grasp;
-- Training captures, so I could judge every step from video on my phone.
+### T3 Code: one window for every agent
 
-And the design was settled before a single task started. When the agents know exactly what you want, they're fast. When they guess, you get a lampshade dress.
+[T3 Code ↗](https://github.com/pingdotgg/t3code) is an open-source app for running coding agents, made by the Ping.gg team. I run Claude and Codex threads side by side in it, all on the same copy of the game. Two things made the Nyx run possible. A thread can hand a task to a new thread on either provider, with the model and effort it chooses, and gets the report back when it's done. And pictures, pages and videos show up right in the conversation, so I review concept boards, animation takes and this timeline where I chat, often from my phone.
+
+### pstack: how the agents work
+
+[pstack ↗](https://github.com/backnotprop/pstack) is a free pack of agent skills by poteto, an engineer at Cursor. It gives agents a method instead of a blank page. A task gets routed to a playbook (investigate, build a feature, fix a bug), and every playbook carries principles like “prove it works on the real thing” and “fix the root cause, not the symptom”. It also decides which model does which job. On Nyx, Codex built most things and Claude Opus took the judgment calls and the hardest engine work. And it makes the coordinator keep a decision log: 40 lines of what it decided, why, and how it checked. Without that file, this page couldn't have been written.
+
+### The Unity gateway: many agents, one Editor
+
+How do this many agents not step on each other's toes? Almost everything they do ends up in one Unity Editor: importing models, cooking the fighter, playing Training, recording clips. Unity does one thing at a time. If one agent starts a recompile while another is recording a capture, both break.
+
+So I built a gateway in front of the Editor, on top of a fork of Unity's Pipeline package. Agents never drive Unity directly. An agent hands the gateway a batch, like “import these clips, cook Nyx, open Training, record the swap”, and gets a lease. Everyone else waits in line. The gateway checks who is asking, so no agent can run on another's lease, and it recompiles before every batch so nobody records stale code. When I want to play, a “Hold Editor for Me” switch puts me at the front of the line, and the agents wait until I'm done.
+
+<div class="queue" aria-hidden="true">
+<div class="queue__line"><span class="queue__me">Me · Play</span><span>Codex · import clips</span><span>Claude · cook Nyx</span><span>Codex · record the swap</span></div>
+<div class="queue__gate">Gateway<small>one lease at a time</small></div>
+<div class="queue__editor">Unity Editor</div>
+</div>
+
+On 29 October, the transcripts show this traffic, Nyx's and other fighters' together:
+
+<div class="stats">
+<div><b>~600</b>gateway requests</div>
+<div><b>47</b>agent sessions</div>
+<div><b>1</b>Unity Editor</div>
+</div>
+
+### GenRA: an AI that animates with code
+
+Nobody hand-keys her animations. Our animation toolkit (we still call it GenRA, after the [MacPaw project ↗](https://github.com/MacPaw/GenRA) it grew out of) has Claude Opus write each move as a small program against her real skeleton: key poses, arms and legs solved so joints only bend the way joints bend, then the motion between them.
+
+Then it checks its own work. Bones that stretch, knees that bend backwards, limbs that snap, hands that go through the body, and what we call flow: stiff stops and dead holds that make motion look robotic. It renders the move, looks at the renders and fixes what it sees. What reaches me is the board above, every move from three angles with its check results. A move costs one to three dollars. On our benchmark move, this takes two to four minutes for well under a dollar, where GenRA's own prompting route took 25 minutes and seven dollars and still failed two checks.
+
+### And the design came first
+
+None of this helps if the agents have to guess. Nyx's look and kit were settled before the first build task started. When the agents know exactly what you want, they're fast. When they guess, you get a lampshade dress.
 
 Nyx isn't in the playtest build yet. [Wishlist SLOPArena on Steam ↗](https://store.steampowered.com/app/5324910/) or join the [Discord ↗](https://discord.gg/VvfaxDCF6Z) to know when she lands.

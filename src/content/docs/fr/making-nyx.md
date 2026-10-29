@@ -1,6 +1,6 @@
 ---
 title: Nyx en une journée
-description: Une soirée de concept art, une journée d’agents. Comment Nyx est passée d’une idée de fille goth à une combattante jouable à deux formes, avec chaque prompt, chaque tâche d’agent et chaque raté sur une seule frise.
+description: Une soirée de concept art, une journée d’agents. Comment Nyx est passée d’une idée de fille goth à une combattante jouable à deux formes, avec chaque prompt et chaque raté sur une seule frise, et les outils qui permettent à des dizaines d’agents de partager un seul éditeur Unity.
 section: build
 order: 15
 updated: 2026-10-29
@@ -30,7 +30,7 @@ Le 28 octobre à 19 h 41, ce n’était qu’une idée d’une ligne dans un cha
 
 ## Comment je travaille avec les agents
 
-Je parle à un seul fil coordinateur (Claude). Il construit peu lui-même. Il écrit des briefs, les confie à d’autres fils d’agents (OpenAI Codex ou Claude, choisis selon la tâche), puis vérifie ce qui revient avant de me le montrer. Sur Nyx, il a lancé 30 tâches et n’a lui-même travaillé qu’environ deux heures sur les 22. Moi, je donne la direction, je dis oui ou non, et je joue le résultat.
+Je parle à un seul fil coordinateur (Claude). Il construit peu lui-même. Il écrit des briefs, les confie à d’autres fils d’agents (OpenAI Codex ou Claude, choisis selon la tâche), puis vérifie ce qui revient avant de me le montrer. Sur Nyx, il a lancé 30 tâches et n’a lui-même travaillé qu’environ deux heures sur les 22. Moi, je donne la direction, je dis oui ou non, et je joue le résultat. Les outils qui rendent ça possible sont [en bas de la page](#les-outils-derrière).
 
 ## La soirée : trouver son look
 
@@ -74,7 +74,7 @@ De 10 h 49 à environ 16 h 15, 15 tâches ont tourné, jusqu’à trois en même
 
 - **Un corps, deux meshs.** Les deux formes partagent un squelette, et changer de forme change simplement le mesh affiché. Le premier package utilisait les animations de FightGuy en attendant, donc tout le kit était jouable en Training dès midi.
 - **Le moteur, en quatre phases.** Les formes et le changement de forme, puis ses normaux et les spéciaux simples, puis Grasp, Hex Crow et Selfie Grab, puis le CPU, le HUD et Ability Lab. Après les phases, le coordinateur relançait les tests et vérifiait que les données des autres combattants n’avaient pas bougé.
-- **Ses propres animations.** 24 coups via le [workflow d’animation GenRA](../how-its-made/), un seul tour, 43 $ au total. 20 ont passé les vérifications automatiques. J’ai validé les 24 après un seul visionnage.
+- **Ses propres animations.** 24 coups via [GenRA](#genra--une-ia-qui-anime-avec-du-code), un seul tour, 43 $ au total. 20 ont passé les vérifications automatiques. J’ai validé les 24 après un seul visionnage.
 - **Les effets.** Peints en concepts sur ses propres frames d’animation, validés, puis construits.
 
 <figure>
@@ -121,15 +121,46 @@ Chaque prompt, chaque tâche et chaque vidéo, relus depuis le propre journal du
 <figcaption>Les trois combos autour desquels le kit a été pensé, sur le mannequin de Training.</figcaption>
 </figure>
 
-## Pourquoi ça a été si rapide
+## Les outils derrière
 
-Nyx a pris 21 prompts parce que le jeu en avait déjà pris des milliers. Chaque partie d’elle reposait sur quelque chose construit pour un combattant précédent :
+Nyx a pris 21 prompts parce que le jeu en avait déjà pris des milliers. Ici, un combattant, ce sont des données et pas du nouveau code, et chaque étape de son build a tourné sur des outils faits pour les combattants d’avant. Quatre d’entre eux font l’essentiel du travail.
 
-- le format de package de personnage et sa cuisson, donc un combattant, ce sont des données et pas du nouveau code ;
-- le workflow d’animation, les rig packs et les vérifications automatiques, construits en animant les combattants précédents ;
-- des briques moteur réutilisables, comme les projectiles autoguidés et le grappin de Bashie, devenu Grasp ;
-- les captures en Training, pour juger chaque étape en vidéo depuis mon téléphone.
+### T3 Code : une fenêtre pour tous les agents
 
-Et le design était fixé avant la première tâche. Quand les agents savent exactement ce que vous voulez, ils vont vite. Quand ils devinent, vous obtenez une robe abat-jour.
+[T3 Code ↗](https://github.com/pingdotgg/t3code) est une application open source pour faire tourner des agents de code, faite par l’équipe de Ping.gg. J’y fais tourner des fils Claude et Codex côte à côte, tous sur la même copie du jeu. Deux choses ont rendu Nyx possible. Un fil peut confier une tâche à un nouveau fil chez l’un ou l’autre fournisseur, avec le modèle et l’effort qu’il choisit, et récupère le rapport quand c’est fini. Et les images, les pages et les vidéos s’affichent directement dans la conversation, donc je relis les planches de concepts, les prises d’animation et cette frise là où je discute, souvent depuis mon téléphone.
+
+### pstack : comment les agents travaillent
+
+[pstack ↗](https://github.com/backnotprop/pstack) est un pack gratuit de skills pour agents, écrit par poteto, ingénieur chez Cursor. Il donne aux agents une méthode au lieu d’une page blanche. Une tâche est aiguillée vers un playbook (enquêter, construire une fonctionnalité, corriger un bug), et chaque playbook porte des principes comme « prouve que ça marche sur le vrai truc » et « corrige la cause, pas le symptôme ». Il décide aussi quel modèle fait quel travail. Sur Nyx, Codex a construit l’essentiel et Claude Opus a pris les décisions de jugement et le travail moteur le plus dur. Et il oblige le coordinateur à tenir un journal de décisions : 40 lignes sur ce qu’il a décidé, pourquoi, et comment il a vérifié. Sans ce fichier, cette page n’aurait pas pu être écrite.
+
+### La passerelle Unity : beaucoup d’agents, un seul éditeur
+
+Comment autant d’agents ne se marchent-ils pas sur les pieds ? Presque tout ce qu’ils font finit dans un seul éditeur Unity : importer des modèles, cuire le combattant, lancer le Training, enregistrer des clips. Unity fait une chose à la fois. Si un agent lance une recompilation pendant qu’un autre enregistre une capture, les deux cassent.
+
+J’ai donc construit une passerelle devant l’éditeur, sur un fork du package Pipeline d’Unity. Les agents ne pilotent jamais Unity directement. Un agent donne un lot à la passerelle, du genre « importe ces clips, cuis Nyx, ouvre le Training, enregistre le changement de forme », et reçoit un bail. Les autres font la queue. La passerelle vérifie qui demande, donc aucun agent ne peut utiliser le bail d’un autre, et elle recompile avant chaque lot pour que personne n’enregistre du code périmé. Quand je veux jouer, un interrupteur « Hold Editor for Me » me met en tête de file, et les agents attendent que j’aie fini.
+
+<div class="queue" aria-hidden="true">
+<div class="queue__line"><span class="queue__me">Moi · Play</span><span>Codex · importer les clips</span><span>Claude · cuire Nyx</span><span>Codex · filmer le swap</span></div>
+<div class="queue__gate">Passerelle<small>un bail à la fois</small></div>
+<div class="queue__editor">Éditeur Unity</div>
+</div>
+
+Le 29 octobre, voici ce trafic d’après les transcriptions, Nyx et les autres combattants confondus :
+
+<div class="stats">
+<div><b>~600</b>requêtes à la passerelle</div>
+<div><b>47</b>sessions d’agents</div>
+<div><b>1</b>éditeur Unity</div>
+</div>
+
+### GenRA : une IA qui anime avec du code
+
+Personne n’anime ses mouvements à la main. Notre boîte à outils d’animation (on l’appelle toujours GenRA, d’après le [projet de MacPaw ↗](https://github.com/MacPaw/GenRA) dont elle est issue) fait écrire chaque coup à Claude Opus sous forme d’un petit programme, sur son vrai squelette : des poses clés, des bras et des jambes résolus pour que les articulations ne plient que dans le bon sens, puis le mouvement entre les poses.
+
+Ensuite, elle vérifie son propre travail. Des os qui s’étirent, des genoux qui plient à l’envers, des membres qui sautent, des mains qui traversent le corps, et ce qu’on appelle le flow : les arrêts raides et les poses mortes qui donnent un mouvement de robot. Elle fait un rendu du coup, regarde les images et corrige ce qu’elle voit. Ce qui m’arrive, c’est le tableau plus haut : chaque coup sous trois angles avec ses résultats de vérification. Un coup coûte entre un et trois dollars. Sur notre coup de référence, ça prend deux à quatre minutes pour bien moins d’un dollar, là où la méthode par prompt de GenRA prenait 25 minutes et sept dollars, et ratait encore deux vérifications.
+
+### Et le design d’abord
+
+Rien de tout ça n’aide si les agents doivent deviner. Le look et le kit de Nyx étaient fixés avant la première tâche de build. Quand les agents savent exactement ce que vous voulez, ils vont vite. Quand ils devinent, vous obtenez une robe abat-jour.
 
 Nyx n’est pas encore dans le build de playtest. [Ajoutez SLOPArena à votre liste de souhaits sur Steam ↗](https://store.steampowered.com/app/5324910/) ou rejoignez le [Discord ↗](https://discord.gg/VvfaxDCF6Z) pour savoir quand elle arrive.
