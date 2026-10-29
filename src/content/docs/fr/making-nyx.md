@@ -28,6 +28,14 @@ Le 28 octobre à 19 h 41, ce n’était qu’une idée d’une ligne dans un cha
 <div><b>43 $</b>pour les 24 animations</div>
 </div>
 
+<div class="credits">
+<div><b>Claude Opus</b>a mené le projet et écrit les animations via GenRA</div>
+<div><b>Codex</b>a dessiné les concepts, écrit l’essentiel du code et les effets</div>
+<div><b>Tripo</b>a fait les modèles</div>
+<div><b>Mixamo</b>les a riggés</div>
+<p>Le tout dans une seule fenêtre <a href="#t3-code--une-fenêtre-pour-tous-les-agents">T3 Code</a>.</p>
+</div>
+
 ## Comment je travaille avec les agents
 
 Je parle à un seul fil coordinateur (Claude). Il construit peu lui-même. Il écrit des briefs, les confie à d’autres fils d’agents (OpenAI Codex ou Claude, choisis selon la tâche), puis vérifie ce qui revient avant de me le montrer. Sur Nyx, il a lancé 30 tâches et n’a lui-même travaillé qu’environ deux heures sur les 22. Moi, je donne la direction, je dis oui ou non, et je joue le résultat. Les outils qui rendent ça possible sont [en bas de la page](#les-outils-derrière).

@@ -28,6 +28,14 @@ On 28 October at 19:41 she was a one-line idea in a chat. 22 hours later, 9 of t
 <div><b>$43</b>for all 24 animation takes</div>
 </div>
 
+<div class="credits">
+<div><b>Claude Opus</b>ran the show and wrote the animations through GenRA</div>
+<div><b>Codex</b>drew the concept art, wrote most of the code and the effects</div>
+<div><b>Tripo</b>made the models</div>
+<div><b>Mixamo</b>rigged them</div>
+<p>All in one <a href="#t3-code-one-window-for-every-agent">T3 Code</a> window.</p>
+</div>
+
 ## How I work with the agents
 
 I talk to one coordinator thread (Claude). It doesn't build much itself. It writes briefs, hands them to other agent threads (OpenAI Codex or Claude, picked per job), then checks what comes back before showing it to me. On Nyx it ran 30 of those tasks and was itself busy for only about two hours of the 22. I give direction, say yes or no, and play the result. The tools that make this work are [at the end of the page](#the-tools-behind-it).
