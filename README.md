@@ -31,6 +31,7 @@ Copy `.env.example` to `.env` to override the Steam, feedback API and presence U
 | `src/i18n/` | Shared UI strings and URL helpers |
 | `src/assets/` | Portraits, screenshots and stage art, optimized at build time |
 | `functions/api/feedback.js` | The Pages feedback API, using shared validation in `src/lib/feedback.js` |
+| `functions/demo/[[path]].js` | Serves the browser demo at `/demo`: the page of the `sloparena-play` Pages project, with a `<base>` so its assets load from that project |
 | `migrations/` | D1 schema migrations |
 | `scripts/social-preview.html` | Source of `public/social-preview.png` (regeneration command inside) |
 
