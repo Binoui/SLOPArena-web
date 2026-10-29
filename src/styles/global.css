@@ -324,15 +324,20 @@ p { margin: 0; }
 .control-table dd { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin: 0; }
 .basics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); margin: 0; padding: 0; list-style: none; }
 .basic { padding: 22px; background: var(--field); border: 2px solid var(--ink); }
+.basics > :last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+.basics > :last-child:nth-child(3n + 2) { grid-column: span 2; }
 .basic h3 { margin-bottom: 10px; font-size: 22px; text-transform: uppercase; letter-spacing: -0.02em; }
 .basic p { font-size: 16px; line-height: 1.5; }
 .basic--loud { background: var(--ink); color: var(--paper); box-shadow: 7px 7px 0 var(--orange); }
-.modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border: 2px solid var(--ink); }
-.modes li { padding: 22px; border-right: 2px solid var(--ink); }
-.modes li:last-child { border-right: 0; }
+.modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; margin: 0; padding: 0; list-style: none; background: var(--ink); border: 2px solid var(--ink); }
+.modes li { padding: 22px; background: var(--paper) var(--grain); }
+/* The last mode stretches across its row's empty columns. */
+.modes li:last-child:nth-child(4n + 1) { grid-column: span 4; }
+.modes li:last-child:nth-child(4n + 2) { grid-column: span 3; }
+.modes li:last-child:nth-child(4n + 3) { grid-column: span 2; }
+.modes .label { margin-bottom: 8px; }
 .modes h3 { margin-bottom: 10px; font-size: 22px; text-transform: uppercase; letter-spacing: -0.02em; }
 .modes p { font-size: 16px; line-height: 1.5; }
-.modes .sticker { margin-bottom: 12px; }
 .faq { display: grid; gap: 12px; max-width: 860px; }
 .faq details { background: var(--field); border: 2px solid var(--ink); }
 .faq summary { position: relative; padding: 18px 56px 18px 20px; font: 19px/1.2 var(--display); letter-spacing: -0.01em; cursor: pointer; list-style: none; }
@@ -455,8 +460,8 @@ p { margin: 0; }
 @media (max-width: 1100px) {
   .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .modes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .modes li:nth-child(2) { border-right: 0; }
-  .modes li:nth-child(-n + 2) { border-bottom: 2px solid var(--ink); }
+  .modes li:last-child:nth-child(n) { grid-column: auto; }
+  .modes li:last-child:nth-child(odd) { grid-column: span 2; }
   .site-footer__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .site-footer__brand { grid-column: 1 / -1; }
 }
@@ -467,6 +472,8 @@ p { margin: 0; }
   .nameplate { width: min(100%, 560px); }
   .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .basics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .basics > :last-child:nth-child(n) { grid-column: auto; }
+  .basics > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .link-cards { grid-template-columns: minmax(0, 1fr); }
   .steps { grid-template-columns: minmax(0, 1fr); }
   .steps li { border-right: 0; border-bottom: 2px solid var(--ink); }
@@ -497,6 +504,7 @@ p { margin: 0; }
 
 @media (max-width: 600px) {
   .roster, .basics, .modes { grid-template-columns: minmax(0, 1fr); }
+  .basics > :last-child:nth-child(n) { grid-column: auto; }
   .roster .fighter-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
   .roster .fighter-card__art { border-bottom: 0; border-right: 6px solid var(--accent); }
   .roster .fighter-card__art img { height: 100%; aspect-ratio: auto; }
@@ -505,9 +513,12 @@ p { margin: 0; }
   .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
   .stage__name { left: -4px; top: 6px; padding: 4px 6px 3px; font-size: 13px; }
   .stage p { margin-top: 8px; font-size: 12px; }
-  .modes li { border-right: 0; border-bottom: 2px solid var(--ink); }
-  .modes li:last-child { border-bottom: 0; }
+  .modes li:last-child:nth-child(odd) { grid-column: auto; }
   .hero__cards { position: static; justify-content: center; margin-top: 26px; }
+  .hero__cards li { width: 52px; margin-right: -6px; }
+  .roster-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .roster-nav a { flex-direction: column; gap: 6px; padding: 6px; text-align: center; }
+  .roster-nav span { font-size: 11px; }
   .hero::before { display: none; }
   .mini-card span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .hero__visual { padding-bottom: 0; }
@@ -515,10 +526,6 @@ p { margin: 0; }
   .steam-cta { width: 100%; }
   .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pips { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .hero__cards li { width: 52px; margin-right: -6px; }
-  .roster-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-  .roster-nav a { flex-direction: column; gap: 6px; padding: 6px; text-align: center; }
-  .roster-nav span { font-size: 11px; }
   .pips label:last-child { grid-column: 1 / -1; }
   .doc-pager { grid-template-columns: minmax(0, 1fr); }
   .doc-pager a:last-child:not(:first-child), .doc-pager .next { grid-column: 1; }
