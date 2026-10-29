@@ -1,5 +1,5 @@
 ---
-name: SlopArena
+name: SLOPArena
 description: Bold DIY fight-flyer marketing for an unreleased low-poly underground toy-fight-club.
 colors:
   newsprint: "#ded8c9"
@@ -85,7 +85,7 @@ components:
     padding: "12px"
 ---
 
-# Design System: SlopArena
+# Design System: SLOPArena
 
 **Authority:** [SlopArena Visual Language](../SlopArena/docs/design/visual-language.md) defines the shared identity; [Art and Asset Conventions](../SlopArena/docs/contributing/conventions.md) own 3D presentation and assets. This document specifies the marketing realization, mirrored by `.impeccable/design.json`, not a competing guide. Marketing is Persuade; access instructions and feedback controls prioritize usability over expression.
 
