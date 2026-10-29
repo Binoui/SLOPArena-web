@@ -412,6 +412,13 @@ p { margin: 0; }
 .prose hr { margin-block: 2.4em; border: 0; border-top: 2px dashed var(--line); }
 .prose figure { margin-inline: 0; }
 .prose figure img, .prose figure video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); }
+.prose img.zoomable { cursor: zoom-in; }
+.prose img.zoomable:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.lightbox { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: clamp(12px, 3vw, 40px); background: transparent; border: 0; cursor: zoom-out; }
+.lightbox[open] { display: grid; place-items: center; }
+.lightbox::backdrop { background: rgba(23, 24, 20, 0.92); }
+.lightbox img { max-width: 100%; max-height: calc(100dvh - 2 * clamp(12px, 3vw, 40px)); width: auto; height: auto; object-fit: contain; border: 2px solid var(--paper); background: var(--ink); }
+.lightbox-close { position: fixed; top: 12px; right: 12px; width: 44px; height: 44px; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); font: 28px/1 var(--display); cursor: pointer; }
 .prose figcaption { margin-top: 8px; font: 700 12px/1.45 var(--mono); letter-spacing: 0.04em; color: var(--ink-soft); }
 .prose .duo, .prose .trio { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .prose .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }

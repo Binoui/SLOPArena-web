@@ -25,6 +25,8 @@ const copy = {
     previous: 'Previous',
     next: 'Next',
     fallback: '',
+    zoom: 'Enlarge image',
+    close: 'Close',
   },
   fr: {
     docs: 'Docs',
@@ -78,7 +80,7 @@ const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
       </nav>
       <div>
         {doc.fallback && <p class="notice" style="margin-bottom: 28px">{copy.fallback}</p>}
-        <article class="prose" lang={doc.fallback ? 'en' : undefined}>
+        <article class="prose" data-zoom-label={copy.zoom} lang={doc.fallback ? 'en' : undefined}>
           <Content />
         </article>
         <div class="doc-meta label">
@@ -94,4 +96,42 @@ const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
       </div>
     </div>
   </section>
+
+  <dialog class="lightbox" aria-label={copy.zoom}>
+    <button class="lightbox-close" type="button" aria-label={copy.close}>×</button>
+    <img alt="" />
+  </dialog>
 </Base>
+
+<script>
+  const prose = document.querySelector<HTMLElement>('.prose[data-zoom-label]')
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.lightbox')
+  const full = dialog?.querySelector('img')
+
+  if (prose && dialog && full) {
+    // Linked images keep their link; everything else in a figure can be enlarged.
+    const images = [...prose.querySelectorAll<HTMLImageElement>('figure img')].filter((img) => !img.closest('a'))
+
+    const open = (img: HTMLImageElement) => {
+      full.src = img.currentSrc || img.src
+      full.alt = img.alt
+      dialog.showModal()
+    }
+
+    for (const img of images) {
+      img.classList.add('zoomable')
+      img.tabIndex = 0
+      img.setAttribute('role', 'button')
+      img.setAttribute('aria-label', `${prose.dataset.zoomLabel}: ${img.alt}`)
+      img.addEventListener('click', () => open(img))
+      img.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        event.preventDefault()
+        open(img)
+      })
+    }
+
+    // Any click inside the modal closes it, image included; Escape is handled by <dialog>.
+    dialog.addEventListener('click', () => dialog.close())
+  }
+</script>
