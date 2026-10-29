@@ -1,5 +1,5 @@
 // Build-time settings. The VITE_* names are kept so existing .env files,
-// Docker builds and GitHub repository variables keep working.
+// local builds and GitHub repository variables keep working.
 const env = (name: string) => (import.meta.env[name] as string | undefined) || ''
 
 export const steamAppId = 5324910
@@ -22,7 +22,7 @@ export const links = {
 
 export const endpoints = {
   feedback: env('VITE_FEEDBACK_API_URL') || '/api/feedback',
-  presence: env('VITE_PRESENCE_URL') || '/api/presence',
+  presence: env('VITE_PRESENCE_URL') || 'https://master-test.sloparena.barakaslurp.fr/presence',
 }
 
 export const trailer = {

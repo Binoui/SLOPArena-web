@@ -1,0 +1,11 @@
+name = "playsloparena"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-29"
+
+[[d1_databases]]
+binding = "FEEDBACK_DB"
+database_name = "sloparena-feedback"
+# Local development works with this placeholder. Before deploying, replace it
+# with the database_id returned by `npx wrangler d1 create sloparena-feedback`.
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"

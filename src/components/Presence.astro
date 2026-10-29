@@ -20,7 +20,7 @@ const t = ui[lang].presence
 </section>
 
 <script>
-  type Strings = Record<'checking' | 'one' | 'many' | 'matchOne' | 'matchMany' | 'empty' | 'unavailable', string>
+  type Strings = Record<'checking' | 'one' | 'many' | 'empty' | 'unavailable', string>
 
   const root = document.querySelector<HTMLElement>('[data-presence]')
   if (root) {
@@ -41,13 +41,10 @@ const t = ui[lang].presence
         if (!response.ok) throw new Error('presence unavailable')
         const data = await response.json()
         const players = data?.onlinePlayerCount
-        const matches = data?.activeMatchCount
-        if (!Number.isInteger(players) || players < 0 || !Number.isInteger(matches) || matches < 0) throw new Error('invalid presence')
+        if (!Number.isInteger(players) || players < 0) throw new Error('invalid presence')
         if (players === 0) return show('empty', strings.empty)
         const playerText = count(players === 1 ? strings.one : strings.many, players)
-        const matchText = count(matches === 1 ? strings.matchOne : strings.matchMany, matches)
-        const playerNames = Array.isArray(data.playerNames) ? data.playerNames.map(String).join(' · ') : ''
-        show('live', `${playerText} · ${matchText}`, playerNames)
+        show('live', playerText)
       } catch {
         show('unavailable', strings.unavailable)
       }

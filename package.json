@@ -4,7 +4,6 @@
   "version": "0.2.0",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
     "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
     "preview": "astro preview --host 0.0.0.0",
