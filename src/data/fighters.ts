@@ -42,8 +42,8 @@ export interface Fighter {
 }
 
 // Move names, cooldowns and movement come from each package's character.json
-// in the game repository (snapshot of 16 October 2026). Playtest values move.
-export const tuningSnapshot = '2026-10-16'
+// in the game repository (snapshot of 21 October 2026). Playtest values move.
+export const tuningSnapshot = '2026-10-21'
 
 export const fighters: Fighter[] = [
   {
@@ -58,8 +58,8 @@ export const fighters: Fighter[] = [
     },
     epithet: { en: 'The all-rounder', fr: 'Le polyvalent' },
     pitch: {
-      en: 'Fists, feet and ki. FightGuy is the reference fighter: quick normals up close, a chargeable Ki Shot from range, and a punch flurry for anyone who gets comfortable.',
-      fr: 'Poings, pieds et ki. FightGuy est le combattant de référence : des coups rapides au corps à corps, un Ki Shot chargeable à distance et une rafale de coups de poing pour ceux qui se sentent trop à l’aise.',
+      en: 'The underground champion, and very pleased about it. FightGuy backs up the grin with quick punches, flying kicks and blue ki. A straightforward all-rounder with a show-off streak.',
+      fr: 'Le champion des combats clandestins, et il en est très fier. FightGuy accompagne son grand sourire de coups de poing rapides, de pieds voltigeurs et de ki bleu. Un polyvalent facile à prendre en main, qui adore frimer.',
     },
     tags: { en: ['Close range', 'All-rounder', 'Projectile'], fr: ['Corps à corps', 'Polyvalent', 'Projectile'] },
     signature: 'F',
@@ -80,8 +80,8 @@ export const fighters: Fighter[] = [
       fr: ['Des coups normaux rapides et simples', 'Un projectile pour chaque distance', 'Rising Dragon pour revenir sur le terrain'],
     },
     weaknesses: {
-      en: ['Has to get close to really hurt', 'Cyclone Kick commits you for over a second'],
-      fr: ['Doit s’approcher pour faire vraiment mal', 'Le Cyclone Kick vous engage plus d’une seconde'],
+      en: ['Has to get close to really hurt', 'Cyclone Kick leaves a punish window at the end'],
+      fr: ['Doit s’approcher pour faire vraiment mal', 'La fin du Cyclone Kick vous laisse exposé'],
     },
     specials: [
       {
@@ -108,8 +108,8 @@ export const fighters: Fighter[] = [
       {
         slot: 'F', name: 'Fist of Fury', cooldownSeconds: 12,
         text: {
-          en: 'Seven punches that drag the victim in, then a heavy right-foot finisher sends them flying.',
-          fr: 'Sept coups de poing qui aspirent la victime, puis un gros coup de pied droit qui l’envoie valser.',
+          en: 'A rapid punch flurry pulls the opponent in, then a heavy right-foot finisher sends them flying.',
+          fr: 'Une rafale de coups de poing attire l’adversaire, puis un gros coup de pied droit l’envoie valser.',
         },
       },
     ],
@@ -140,12 +140,12 @@ export const fighters: Fighter[] = [
       en: [
         'Hold A to aim a Round Bomb on the ground, release to lob it. Make them walk around it.',
         'Poke with the Bazooka (R) from wherever you happen to be floating.',
-        'When they rush you, commit to Aerosol Inferno (F), then Jetpack Boost (E) out.',
+        'Hold Aerosol Inferno (F) to build up a bigger flame, release to fire, then Jetpack Boost (E) out.',
       ],
       fr: [
         'Maintenez A pour viser au sol avec la Round Bomb, relâchez pour la lancer. Forcez-les à la contourner.',
         'Harcelez au Bazooka (R), d’où que vous flottiez.',
-        'Quand ils foncent sur vous, engagez Aerosol Inferno (F), puis décollez au Jetpack Boost (E).',
+        'Maintenez Aerosol Inferno (F) pour préparer une plus grosse flamme, relâchez pour tirer, puis décollez au Jetpack Boost (E).',
       ],
     },
     strengths: {
@@ -174,15 +174,15 @@ export const fighters: Fighter[] = [
       {
         slot: 'R', name: 'Bazooka', cooldownSeconds: 4,
         text: {
-          en: 'Fire a rocket where the camera points. It arcs and explodes on impact.',
-          fr: 'Tirez une roquette là où pointe la caméra. Elle suit une courbe et explose à l’impact.',
+          en: 'Hold to aim with the camera, release to fire a rocket. It arcs and explodes on impact.',
+          fr: 'Maintenez pour viser avec la caméra, relâchez pour tirer une roquette. Elle suit une courbe et explose à l’impact.',
         },
       },
       {
         slot: 'F', name: 'Aerosol Inferno', cooldownSeconds: 10,
         text: {
-          en: 'Shake the can, flick the lighter, project a column of fire forward. Catches anyone in front of or above you.',
-          fr: 'Secouez la bombe, allumez le briquet : une colonne de feu jaillit vers l’avant et attrape tout ce qui est devant ou au-dessus de vous.',
+          en: 'Hold to shake the can and aim, release to fire. Charging adds damage and reach to the flame, but leaves you sitting still.',
+          fr: 'Maintenez pour secouer la bombe et viser, relâchez pour cracher du feu. La charge augmente les dégâts et la portée, mais vous restez immobile.',
         },
       },
     ],
@@ -204,8 +204,8 @@ export const fighters: Fighter[] = [
     },
     epithet: { en: 'The sword duelist', fr: 'Le duelliste' },
     pitch: {
-      en: 'Shades on, blade out. The fastest fighter on foot, with a sword that owns the space in front of it. Wibou throws shuriken, dashes through gaps and sends people up, then straight back down.',
-      fr: 'Lunettes noires, lame au clair. Le combattant le plus rapide au sol, avec une épée qui contrôle tout l’espace devant elle. Wibou lance des shurikens, fonce dans les ouvertures et envoie ses adversaires en l’air, puis droit au sol.',
+      en: 'Shades, katana and far too much anime. Wibou is a mall ninja with green hacker effects and the fastest run in the roster. Keep people at sword’s reach, cut through a gap, then send them up and straight back down.',
+      fr: 'Lunettes noires, katana et beaucoup trop d’anime. Wibou joue au ninja avec ses effets de hacker verts et la course la plus rapide du roster. Gardez l’adversaire à portée de lame, foncez dans une ouverture, puis envoyez-le en l’air et droit au sol.',
     },
     tags: { en: ['Mid range', 'Fast', 'Sword'], fr: ['Mi-distance', 'Rapide', 'Épée'] },
     signature: 'F',
@@ -233,8 +233,8 @@ export const fighters: Fighter[] = [
       {
         slot: 'A', name: 'Shuriken Toss', cooldownSeconds: 2,
         text: {
-          en: 'After a short startup, throw three shuriken at your target.',
-          fr: 'Après une courte préparation, lancez trois shurikens vers votre cible.',
+          en: 'Tap to throw three projectiles toward your current target after a short startup. The kunai fly straight: no manual aiming or homing.',
+          fr: 'Une pression lance trois projectiles vers votre cible après une courte préparation. Les kunais volent droit : sans visée manuelle ni tête chercheuse.',
         },
       },
       {
@@ -247,8 +247,8 @@ export const fighters: Fighter[] = [
       {
         slot: 'R', name: 'Dash Slash', cooldownSeconds: 1.5,
         text: {
-          en: 'Hold to aim and charge, release to dash and slash. Longer charge, longer dash.',
-          fr: 'Maintenez pour viser et charger, relâchez pour foncer et trancher. Plus de charge, plus de distance.',
+          en: 'Hold to aim and charge, release to dash in that direction and slash at the end. More charge adds distance and damage. Shields and terrain stop you; the recovery leaves you open even if you miss.',
+          fr: 'Maintenez pour viser et charger, relâchez pour foncer dans cette direction et trancher à l’arrivée. La charge augmente la distance et les dégâts. Boucliers et terrain vous arrêtent ; la récupération vous expose même si vous ratez.',
         },
       },
       {
@@ -275,10 +275,10 @@ export const fighters: Fighter[] = [
       en: 'Bonk’s jump slam lands on a birthday cake and sends Manki flying toward a bunk bed.',
       fr: 'Le saut écrasant de Bonk atterrit sur un gâteau d’anniversaire et envoie Manki valser vers des lits superposés.',
     },
-    epithet: { en: 'The greatsword', fr: 'Le colosse' },
+    epithet: { en: 'The big hitter', fr: 'Le colosse' },
     pitch: {
-      en: 'Big sword. Bigger bonk. Slow on the ground, huge jumps, and armor on the moves that matter. Every swing is a commitment. So is getting hit by one.',
-      fr: 'Grosse épée. Gros bonk. Lent au sol, de grands sauts et de l’armure sur les coups qui comptent. Chaque coup est un engagement. Se le prendre aussi.',
+      en: 'A good-natured brute with a bucket helmet and a very big swing. Bonk wants to be a hero, protects anyone smaller than him and occasionally rings his own head. Slow feet, huge jumps, simple plans: BONK!',
+      fr: 'Un bon gros costaud avec un seau sur la tête et des coups énormes. Bonk veut être un héros, protège tous ceux qui sont plus petits que lui et se sonne parfois tout seul. Des pas lents, de grands sauts, un plan simple : BONK !',
     },
     tags: { en: ['Heavy hitter', 'Armor', 'Reach'], fr: ['Frappe lourde', 'Armure', 'Allonge'] },
     signature: 'R',
@@ -320,15 +320,15 @@ export const fighters: Fighter[] = [
       {
         slot: 'R', name: 'Charging Double Slash', cooldownSeconds: 4,
         text: {
-          en: 'An armored lunge. The first slash holds them in place; the second, stronger swing sends them.',
-          fr: 'Une charge avec armure. Le premier coup les immobilise, le second, plus fort, les envoie valser.',
+          en: 'Armor covers the opening lunge and first slash, which holds them in place. The stronger second swing sends them flying, but leaves Bonk exposed.',
+          fr: 'L’armure couvre la charge et le premier coup, qui maintient l’adversaire sur place. Le second coup l’envoie valser, mais laisse Bonk exposé.',
         },
       },
       {
         slot: 'F', name: 'Blade Storm', cooldownSeconds: 15,
         text: {
-          en: 'Hilt-to-tip greatsword slashes, over and over, ending in a heavy finisher.',
-          fr: 'Des coups d’épée de la garde à la pointe, encore et encore, jusqu’au coup final.',
+          en: 'Spin low through two hits that pull the opponent in, then a heavy finisher. The dizzy recovery is your opponent’s chance to hit back.',
+          fr: 'Tournez au ras du sol : deux coups attirent l’adversaire, puis un gros coup final l’éjecte. La récupération étourdie laisse à l’adversaire le temps de riposter.',
         },
       },
     ],

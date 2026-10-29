@@ -244,6 +244,7 @@ p { margin: 0; }
 .portrait-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
 .portrait-card figcaption { padding: 10px 2px 0; color: var(--paper); font: 700 11px/1.3 var(--mono); letter-spacing: 0.07em; text-transform: uppercase; }
 .fighter-hero h1 { font-size: clamp(64px, 10vw, 140px); text-transform: uppercase; }
+.fighter-hero h1.fighter-hero__name--long { font-size: clamp(48px, 7.5vw, 104px); }
 .fighter-hero .strip { margin-top: 18px; }
 .fighter-hero__pitch { margin-top: 26px; max-width: 46ch; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; }
 .fighter-hero .tags { margin-top: 22px; }
@@ -409,6 +410,16 @@ p { margin: 0; }
 .prose th, .prose td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .prose th { background: var(--ink); color: var(--paper); font: 700 12px/1.3 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
 .prose hr { margin-block: 2.4em; border: 0; border-top: 2px dashed var(--line); }
+.prose figure { margin-inline: 0; }
+.prose figure img, .prose figure video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); }
+.prose figcaption { margin-top: 8px; font: 700 12px/1.45 var(--mono); letter-spacing: 0.04em; color: var(--ink-soft); }
+.prose .duo, .prose .trio { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.prose .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.prose .duo figure, .prose .trio figure { margin: 0; }
+.prose .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 10px; }
+.prose .stats div { padding: 12px 14px; background: var(--ink); color: var(--paper); font: 700 12px/1.35 var(--mono); letter-spacing: 0.04em; }
+.prose .stats b { display: block; margin-bottom: 4px; font: 30px/1 var(--display); letter-spacing: -0.02em; color: var(--yellow); }
+@media (max-width: 640px) { .prose .duo, .prose .trio { grid-template-columns: 1fr; } }
 .doc-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; max-width: 740px; margin-top: 56px; padding-top: 18px; border-top: 2px solid var(--ink); }
 .doc-pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 740px; margin-top: 28px; }
 .doc-pager a { display: grid; gap: 4px; padding: 14px 16px; background: var(--field); border: 2px solid var(--ink); text-decoration: none; }

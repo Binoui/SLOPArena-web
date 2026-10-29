@@ -37,6 +37,10 @@ To add a doc, drop `src/content/docs/en/<slug>.md` (and optionally `fr/<slug>.md
 
 Fighter move names, cooldowns and movement numbers are copied from each package's `character.json` in the game repository (snapshot date in `src/data/fighters.ts`). Update them when kits change.
 
+The portraits match the game’s current roster art. Gameplay images come from the
+18 October store shoot and the latest **New this patch** video; their sources are
+recorded in [`src/assets/screens/README.md`](src/assets/screens/README.md).
+
 First-time French browsers are redirected to the French pages; after that the manual EN/FR switch wins and is remembered.
 
 ## Feedback API
