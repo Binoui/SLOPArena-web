@@ -508,3 +508,11 @@ p { margin: 0; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .fighter-card:hover .fighter-card__art img, .stage:hover .stage__img img { transform: none; }
 }
+.prose .queue { display: grid; grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 0.9fr); gap: 14px; align-items: center; padding: 18px; background: var(--ink); color: var(--paper); font: 700 12px/1.35 var(--mono); letter-spacing: 0.04em; }
+.prose .queue__line { display: grid; gap: 6px; }
+.prose .queue__line span { padding: 7px 10px; border: 1px solid var(--line-ink); }
+.prose .queue__line .queue__me { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+.prose .queue__gate { display: grid; place-items: center; padding: 16px 14px; background: var(--orange); color: var(--ink); font: 20px/1 var(--display); text-transform: uppercase; text-align: center; }
+.prose .queue__gate small { margin-top: 6px; font: 700 11px/1.3 var(--mono); text-transform: none; }
+.prose .queue__editor { padding: 22px 14px; border: 2px solid var(--paper); font: 20px/1.05 var(--display); text-transform: uppercase; text-align: center; }
+@media (max-width: 640px) { .prose .queue { grid-template-columns: 1fr; } }
