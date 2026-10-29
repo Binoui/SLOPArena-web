@@ -12,11 +12,11 @@ import { stages } from '../data/stages'
 import { getDocs } from '../lib/docs'
 import { links, steamAppId } from '../config'
 import { href, type Lang } from '../i18n'
-import heroShot from '../assets/screens/bonk-launches-wibou.jpg'
-import shotFourWay from '../assets/screens/four-way-slop-pit.jpg'
+import heroShot from '../assets/screens/nyxxie-going-live.jpg'
+import shotFourJump from '../assets/screens/splash-deck-four-jump.jpg'
 import shotManki from '../assets/screens/manki-bazooka-rooftop.jpg'
-import shotFightGuy from '../assets/screens/fightguy-fist-of-fury.jpg'
-import shotBonk from '../assets/screens/bonk-cake-slam.jpg'
+import shotSalamander from '../assets/screens/salamander-finger-guns.jpg'
+import shotBonk from '../assets/screens/sir-bonk-cake-slam.jpg'
 import poster from '../assets/key-art/trailer-poster.jpg'
 import nameplate from '../assets/key-art/nameplate.png'
 
@@ -34,8 +34,8 @@ const copy = {
     pitch: 'Smash-style chaos in 3D. Build damage, send your friends flying, <em>argue about balance</em>.',
     trailer: 'Watch the trailer',
     stamp: 'Not a render',
-    heroCaption: ['Bonk vs Wibou', 'From the playtest'],
-    heroAlt: 'Bonk’s greatsword launches Wibou at 157% off a painted boat deck.',
+    heroCaption: ['Nyxxie vs FightGuy', 'From the playtest'],
+    heroAlt: 'Nyx goes live: pink hearts burst as she swaps into Nyxxie, right next to FightGuy in the Slop Pit.',
     rosterLabel: 'The roster',
     intro: {
       kicker: 'What is this?',
@@ -45,23 +45,23 @@ const copy = {
       caption: 'Playtest trailer',
       pillars: [
         { mark: '%', title: 'Damage = distance', text: 'Every hit raises your percent. At 0% you shrug it off. At 150% a sneeze sends you into orbit.' },
-        { mark: '12', title: 'Twelve moves, one grid', text: 'Every fighter gets eight normals (1–4, on the ground and in the air) and four specials on cooldowns (A, E, R, F). Learn one, read them all.' },
-        { mark: '4P', title: 'Rooms for up to four', text: 'Make a room, bring friends, fight, rematch. The netcode is still mid-surgery, so expect weirdness and please report it.' },
+        { mark: '10', title: 'Ten moves, one grid', text: 'Every fighter gets six normals (1–3, on the ground and in the air) and four specials on cooldowns (Q, E, R, F), plus the Beeline, a homing dash on 4. Learn one, read them all.' },
+        { mark: '4P', title: 'Up to four, online or on the couch', text: 'Make an online room, or plug in more controllers for Local Play. The netcode is still mid-surgery, so expect weirdness and please report it.' },
         { mark: '0€', title: 'Free and open source', text: 'Free on Steam, MIT-licensed on GitHub. Built by one developer with AI agents, asset packs and questionable decisions.' },
       ],
       gallery: 'Screenshots from the playtest',
-      shots: ['Manki’s bazooka sends FightGuy flying on a neon rooftop', 'FightGuy’s Fist of Fury launches Bonk', 'All four fighters collide in the Slop Pit', 'Bonk’s jump slam sends Manki off a birthday cake'],
+      shots: ['Manki’s bazooka sends FightGuy flying on a neon rooftop', 'Salamander’s finger guns tag FightGuy on Log Off', 'FightGuy, Manki, Wibou and Sir Bonk jump into it on Splash Deck', 'Sir Bonk’s jump slam lands on Manki on a birthday cake'],
     },
     roster: {
       kicker: 'The roster',
       title: 'Pick your poison.',
-      lede: 'Four fighters, each with eight normals and four specials. Every kit is still being tuned, so your main might get nerfed by Tuesday.',
+      lede: 'Seven fighters, each with three normals and four specials. Three are so new they still wear a WIP sticker. Every kit is still being tuned, so your main might get nerfed by Tuesday.',
       all: 'All fighters',
     },
     stages: {
       kicker: 'Stages',
-      title: 'Six stages. No safety inspections.',
-      lede: 'Rooftops, boats, birthday cakes. Every stage is a 3D arena with edges to fall off and blast zones to fly into.',
+      title: 'Seven stages. No safety inspections.',
+      lede: 'Rooftops, boats, birthday cakes, a hamster cage. Every stage is a 3D arena with edges to fall off and blast zones to fly into.',
     },
     access: {
       kicker: 'How to get in',
@@ -96,8 +96,8 @@ const copy = {
     pitch: 'Le chaos façon Smash, en 3D. Accumulez les dégâts, envoyez vos amis valser, <em>râlez sur l’équilibrage</em>.',
     trailer: 'Voir la bande-annonce',
     stamp: 'Pas un rendu',
-    heroCaption: ['Bonk contre Wibou', 'Capture du playtest'],
-    heroAlt: 'L’épée de Bonk envoie Wibou valser à 157 % depuis le pont d’un bateau peint.',
+    heroCaption: ['Nyxxie contre FightGuy', 'Capture du playtest'],
+    heroAlt: 'Nyx passe en live : une pluie de cœurs roses la transforme en Nyxxie, juste à côté de FightGuy dans le Slop Pit.',
     rosterLabel: 'Le roster',
     intro: {
       kicker: 'C’est quoi ?',
@@ -107,23 +107,23 @@ const copy = {
       caption: 'Bande-annonce du playtest',
       pillars: [
         { mark: '%', title: 'Dégâts = distance', text: 'Chaque coup fait grimper votre pourcentage. À 0 %, vous encaissez. À 150 %, un éternuement vous envoie en orbite.' },
-        { mark: '12', title: 'Douze coups, une grille', text: 'Chaque combattant a huit coups normaux (1–4, au sol et en l’air) et quatre spéciales avec temps de recharge (A, E, R, F). Apprenez-en un, lisez-les tous.' },
-        { mark: '4P', title: 'Des salons jusqu’à quatre', text: 'Créez un salon, invitez vos amis, combattez, rejouez. Le netcode est encore en pleine opération : attendez-vous à des bizarreries, et signalez-les.' },
+        { mark: '10', title: 'Dix coups, une grille', text: 'Chaque combattant a six coups normaux (1–3, au sol et en l’air) et quatre spéciales avec temps de recharge (A, E, R, F), plus le Beeline, un dash à tête chercheuse sur 4. Apprenez-en un, lisez-les tous.' },
+        { mark: '4P', title: 'Jusqu’à quatre, en ligne ou sur le canapé', text: 'Créez un salon en ligne, ou branchez d’autres manettes pour le Local Play. Le netcode est encore en pleine opération : attendez-vous à des bizarreries, et signalez-les.' },
         { mark: '0€', title: 'Gratuit et open source', text: 'Gratuit sur Steam, sous licence MIT sur GitHub. Fait par un seul développeur, avec des agents IA, des packs d’assets et des décisions discutables.' },
       ],
       gallery: 'Captures du playtest',
-      shots: ['Le bazooka de Manki envoie FightGuy valser sur un toit sous les néons', 'Le Fist of Fury de FightGuy fait décoller Bonk', 'Les quatre combattants s’affrontent dans le Slop Pit', 'Le saut écrasant de Bonk éjecte Manki d’un gâteau d’anniversaire'],
+      shots: ['Le bazooka de Manki envoie FightGuy valser sur un toit sous les néons', 'Les pistolets à doigts de Salamander touchent FightGuy sur Log Off', 'FightGuy, Manki, Wibou et Sir Bonk sautent dans la mêlée sur le Splash Deck', 'Le saut écrasant de Sir Bonk atterrit sur Manki, sur un gâteau d’anniversaire'],
     },
     roster: {
       kicker: 'Le roster',
       title: 'Choisissez votre poison.',
-      lede: 'Quatre combattants, chacun avec huit coups normaux et quatre spéciales. Tous les kits sont encore en réglage : votre main peut se faire nerfer d’ici mardi.',
+      lede: 'Sept combattants, chacun avec trois coups normaux et quatre spéciales. Trois sont si récents qu’ils portent encore l’étiquette « En chantier ». Tous les kits sont encore en réglage : votre main peut se faire nerfer d’ici mardi.',
       all: 'Tous les combattants',
     },
     stages: {
       kicker: 'Arènes',
-      title: 'Six arènes. Aucune inspection de sécurité.',
-      lede: 'Des toits, des bateaux, des gâteaux d’anniversaire. Chaque arène est un terrain 3D avec des bords d’où tomber et des zones d’éjection où s’envoler.',
+      title: 'Sept arènes. Aucune inspection de sécurité.',
+      lede: 'Des toits, des bateaux, des gâteaux d’anniversaire, une cage à hamster. Chaque arène est un terrain 3D avec des bords d’où tomber et des zones d’éjection où s’envoler.',
     },
     access: {
       kicker: 'Comment entrer',
@@ -154,7 +154,7 @@ const copy = {
 }[lang]
 
 const gallery = await Promise.all(
-  [shotManki, shotFightGuy, shotFourWay, shotBonk].map(async (src, index) => ({
+  [shotManki, shotSalamander, shotFourJump, shotBonk].map(async (src, index) => ({
     src,
     alt: copy.intro.shots[index],
     full: (await getImage({ src, width: 1920, format: 'webp' })).src,
@@ -204,7 +204,7 @@ const jsonLd = {
             <li style={`--accent: ${fighter.accent}`}>
               <a class="mini-card" href={href(lang, `fighters/${fighter.id}/`)}>
                 <Image src={fighter.portrait} alt="" widths={[128, 256]} sizes="116px" loading="eager" />
-                <span>{fighter.name}</span>
+                <span style={`--chars: ${fighter.name.length}`}>{fighter.name}</span>
               </a>
             </li>
           ))}
