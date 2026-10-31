@@ -163,18 +163,34 @@ const gallery = await Promise.all(
   })),
 )
 const docs = (await getDocs(lang)).filter((doc) => doc.entry.data.section === 'build').slice(0, 3)
+const siteUrl = Astro.site?.href
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'VideoGame',
-  name: 'SLOPArena',
-  description: copy.description,
-  url: Astro.site?.href,
-  genre: ['Platform fighter', 'Fighting'],
-  gamePlatform: 'Windows',
-  playMode: ['MultiPlayer', 'SinglePlayer'],
-  author: { '@type': 'Person', name: 'Binoui' },
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
-  sameAs: [`https://store.steampowered.com/app/${steamAppId}/`, links.github],
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}#website`,
+      name: 'SLOPArena',
+      alternateName: ['Slop Arena', 'SLOPA'],
+      url: siteUrl,
+      inLanguage: lang,
+    },
+    {
+      '@type': 'VideoGame',
+      '@id': `${siteUrl}#game`,
+      name: 'SLOPArena',
+      alternateName: ['Slop Arena'],
+      description: copy.description,
+      url: siteUrl,
+      image: new URL('/social-preview.png?v=4', Astro.site).href,
+      genre: ['Platform fighter', 'Fighting'],
+      gamePlatform: 'Windows',
+      playMode: ['MultiPlayer', 'SinglePlayer'],
+      author: { '@type': 'Person', name: 'Binoui' },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+      sameAs: [`https://store.steampowered.com/app/${steamAppId}/`, links.github, links.x, links.youtube],
+    },
+  ],
 }
 ---
 <Base lang={lang} route="" title={copy.title} description={copy.description}>
