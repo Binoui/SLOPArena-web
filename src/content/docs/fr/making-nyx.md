@@ -7,8 +7,8 @@ updated: 2026-10-29
 ---
 
 <figure>
-<video src="../../../devlog/nyx/hero.mp4" poster="../../../devlog/nyx/hero.webp" autoplay muted loop playsinline></video>
-<figcaption>La vraie forme de Nyx en Training, avec sa propre course, Grasping Hands et son idle.</figcaption>
+<video src="../../../devlog/nyx/tools-video.mp4" poster="../../../devlog/nyx/tools-video.webp" controls playsinline preload="metadata"></video>
+<figcaption>Toute la fabrication en une minute : concepts, modèles, rigs, animations, les outils, les ratés, et Nyx en jeu.</figcaption>
 </figure>
 
 Nyx est la nouvelle combattante de SLOPArena. Elle alterne entre deux formes, un peu comme Zelda et Sheik dans Melee. Sa vraie forme est une vraie goth qui se bat en sorcière des ombres. Sa fausse forme est une influenceuse goth qui se bagarre avec son téléphone et le ring light accroché à son sac à dos.
