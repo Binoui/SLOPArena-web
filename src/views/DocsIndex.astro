@@ -19,7 +19,7 @@ const copy = {
     lede: 'How the game is built, how it runs, and how to help. For playing, start with the field guide.',
     play: 'How to play',
     playText: 'Getting access, controls, the basics and the modes.',
-    sections: { play: 'Playing', build: 'Behind the slop' },
+    sections: { about: 'About', play: 'Playing', build: 'Behind the slop' },
     read: 'Read',
     repo: 'In the game repository',
     repoLinks: [
@@ -37,7 +37,7 @@ const copy = {
     lede: 'Comment le jeu est construit, comment il tourne, et comment aider. Pour jouer, commencez par le guide de terrain.',
     play: 'Comment jouer',
     playText: 'Obtenir l’accès, les commandes, les bases et les modes.',
-    sections: { play: 'Jouer', build: 'Dans les coulisses' },
+    sections: { about: 'À propos', play: 'Jouer', build: 'Dans les coulisses' },
     read: 'Lire',
     repo: 'Dans le dépôt du jeu',
     repoLinks: [
@@ -50,9 +50,9 @@ const copy = {
 }[lang]
 
 const docs = await getDocs(lang)
-const sections = (['play', 'build'] as const)
+const sections = (['about', 'play', 'build'] as const)
   .map((section) => ({ section, docs: docs.filter((doc) => doc.entry.data.section === section) }))
-  .filter((group) => group.docs.length > 0)
+  .filter((group) => group.docs.length > 0 || group.section === 'play')
 ---
 <Base lang={lang} route="docs/" title={copy.title} description={copy.description}>
   <section class="page-hero">
@@ -65,20 +65,19 @@ const sections = (['play', 'build'] as const)
 
   <section class="section">
     <div class="wrap">
-      <ul class="doc-list">
-        <li>
-          <a class="link-card" href={href(lang, 'play/')}>
-            <span class="label">{copy.sections.play}</span>
-            <h2>{copy.play}</h2>
-            <p>{copy.playText}</p>
-            <span class="label">{copy.read} →</span>
-          </a>
-        </li>
-      </ul>
       {sections.map((group) => (
         <>
           <h2 class="h3-title">{copy.sections[group.section]}</h2>
           <ul class="doc-list">
+            {group.section === 'play' && (
+              <li>
+                <a class="link-card" href={href(lang, 'play/')}>
+                  <h3>{copy.play}</h3>
+                  <p>{copy.playText}</p>
+                  <span class="label">{copy.read} →</span>
+                </a>
+              </li>
+            )}
             {group.docs.map((doc) => (
               <li>
                 <a class="link-card" href={href(lang, `docs/${doc.slug}/`)}>
