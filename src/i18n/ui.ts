@@ -3,7 +3,7 @@ import type { Lang } from './index'
 const en = {
   skip: 'Skip to content',
   home: 'SLOPArena home',
-  nav: { label: 'Main navigation', play: 'How to play', fighters: 'Fighters', docs: 'Docs', feedback: 'Feedback' },
+  nav: { label: 'Main navigation', play: 'How to play', fighters: 'Fighters', docs: 'Docs', feedback: 'Feedback', what: 'What is SLOPArena?', who: 'Who made this' },
   language: 'Language',
   steam: {
     headerCta: 'Steam',
@@ -55,7 +55,7 @@ export type UiStrings = typeof en
 const fr: UiStrings = {
   skip: 'Aller au contenu',
   home: 'Accueil SLOPArena',
-  nav: { label: 'Navigation principale', play: 'Jouer', fighters: 'Combattants', docs: 'Docs', feedback: 'Avis' },
+  nav: { label: 'Navigation principale', play: 'Jouer', fighters: 'Combattants', docs: 'Docs', feedback: 'Avis', what: 'C’est quoi SLOPArena ?', who: 'Qui a fait ça' },
   language: 'Langue',
   steam: {
     headerCta: 'Steam',

@@ -18,7 +18,7 @@ const copy = {
     docs: 'Docs',
     nav: 'Documentation',
     breadcrumb: 'Breadcrumb',
-    sections: { play: 'Playing', build: 'Behind the slop' },
+    sections: { about: 'About', play: 'Playing', build: 'Behind the slop' },
     play: 'How to play',
     updated: 'Updated',
     edit: 'Edit this page on GitHub',
@@ -32,7 +32,7 @@ const copy = {
     docs: 'Docs',
     nav: 'Documentation',
     breadcrumb: 'Fil d’Ariane',
-    sections: { play: 'Jouer', build: 'Dans les coulisses' },
+    sections: { about: 'À propos', play: 'Jouer', build: 'Dans les coulisses' },
     play: 'Comment jouer',
     updated: 'Mis à jour le',
     edit: 'Modifier cette page sur GitHub',
@@ -62,14 +62,13 @@ const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
   <section class="section">
     <div class="wrap docs-layout">
       <nav class="docs-nav" aria-label={copy.nav}>
-        <h2>{copy.sections.play}</h2>
-        <ul><li><a href={href(lang, 'play/')}>{copy.play}</a></li></ul>
-        {(['play', 'build'] as const).map((section) => {
+        {(['about', 'play', 'build'] as const).map((section) => {
           const items = docs.filter((item) => item.entry.data.section === section)
-          return items.length > 0 && (
+          return (items.length > 0 || section === 'play') && (
             <>
-              {section !== 'play' && <h2>{copy.sections[section]}</h2>}
+              <h2>{copy.sections[section]}</h2>
               <ul>
+                {section === 'play' && <li><a href={href(lang, 'play/')}>{copy.play}</a></li>}
                 {items.map((item) => (
                   <li><a href={href(lang, `docs/${item.slug}/`)} aria-current={item.slug === doc.slug ? 'page' : undefined}>{item.entry.data.title}</a></li>
                 ))}
