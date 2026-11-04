@@ -6,27 +6,11 @@ order: 1
 updated: 2026-11-04
 ---
 
-SLOPArena is a free, open-source 3D platform fighter. The game is the part you play. The project around it is the bigger idea: a fighter that belongs to its players, where anyone can make their own character and the community decides what it becomes. It's built with a lot of AI, and it's meant to be the most human AI game there is.
+SLOPArena is a free, open-source 3D platform fighter. The idea is a game that belongs to its players, where anyone can make their own characters and the community decides what it becomes. A lot of AI is used to create those characters, and I chose to be honest about that whole process. That feeling of irony honestly is behind the name and was the source of the whole tone of SLOPArena.
 
 ![FightGuy, Manki, Wibou and Sir Bonk jump at each other on the deck of a boat](../../../assets/screens/splash-deck-four-jump.jpg)
 
-## Why it exists
-
-Good PvP games keep shutting down. Supervive and 2XKO both closed, and smaller fighters rarely get a chance. Players go where their friends and the short queues are, and a game that has to make money from them runs out of time before it finds its crowd.
-
-So SLOPArena drops the money problem altogether. It doesn't need to sell you anything to keep going.
-
-## Free, for real
-
-- **Nothing to buy.** No paid skins, no battle pass, no DLC fighters.
-- **I pay for the servers.** A small server runs the online play today, out of my own pocket, and I'll grow it if more people show up.
-- **Open source.** The code is on [GitHub ↗](https://github.com/Binoui/SLOPArena) under the MIT license, so SLOPArena can outlive me, or my wallet.
-
-## Everyone can make a fighter
-
-In SLOPArena a fighter is a package of data: the moves, the hitboxes, the timings, the model. Nothing about a fighter is hardcoded into the game. That's on purpose, because the goal is Steam Workshop support, where anyone can build a fighter and publish it for everyone else. Think MUGEN, but slop, in 3D.
-
-The editor I use to make every move today, [Ability Lab](../making-the-slop-ability-lab/), is the start of the Workshop tool I'll hand out when it's ready. The Workshop isn't open yet. Until then, the [repository ↗](https://github.com/Binoui/SLOPArena/blob/main/docs/characters/adding-a-new-character.md) already has a step-by-step guide to adding a fighter, written so an AI assistant can walk you through it.
+In SLOPArena, open source is not just about code: it's about documenting the whole process of creating the game. By showing why and how I did it, I hope to inspire others to take an interest in the project.
 
 ## Community first
 
@@ -41,7 +25,7 @@ Too many online games are "queue, play, leave, queue again" without ever talking
 
 SLOPArena is a PvP game, but it isn't chasing esports. Competition can't be forced, and the first goal is fun. StarCraft 2 is the model. People came for the campaign, the custom games or co-op, got hooked, and only then started climbing the ladder and watching tournaments. That's why there are couch modes like Slopball, Slop Rally and Manki Mayhem next to the fights.
 
-There's a real skill ceiling too. I play Melee, and getting good at a game is half the fun. Easy to pick up and worth mastering is a hard balance, and it's the one I'm aiming for.
+There's a real skill ceiling too. Putting in efforts into a game and being rewarded for it is a nice feeling. Easy to pick up and worth mastering is a hard balance, and it's the one I'm aiming for.
 
 ## The most human AI game
 
@@ -58,7 +42,7 @@ It's a platform fighter in the Smash family, in full 3D. Hits raise your damage 
 - An early playtest on Steam, free, by request on the [store page ↗](https://store.steampowered.com/app/5324910/), on Windows.
 - A [demo in your browser](/demo), no install needed.
 
-It's unfinished, and the site says so on purpose. Balance is still moving and online play still has rough edges. [How to play](../../play/) covers the controls and the modes.
+It's unfinished, and the site says so on purpose. A lot more content to come. [How to play](../../play/) covers the controls and the modes.
 
 ## Be part of it
 
