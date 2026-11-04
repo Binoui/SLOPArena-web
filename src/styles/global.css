@@ -429,8 +429,6 @@ p { margin: 0; }
 .prose th, .prose td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .prose th { background: var(--ink); color: var(--paper); font: 700 12px/1.3 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
 .prose hr { margin-block: 2.4em; border: 0; border-top: 2px dashed var(--line); }
-.prose .slop-line { margin-block: 2.4em; padding-block: 14px; border-block: 2px dashed var(--line); text-align: center; font: 700 12px/1.6 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
-.prose .slop-line b { font-size: 15px; color: var(--ink); }
 .prose figure { margin-inline: 0; }
 .prose figure img, .prose figure video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); }
 .prose img.zoomable { cursor: zoom-in; }

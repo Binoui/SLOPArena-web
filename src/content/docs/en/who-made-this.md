@@ -12,8 +12,6 @@ I'm Binoui, the dev behind SLOPArena. I work as a software engineer and I saw wh
 
 Creating SLOPArena has been an amazing experience, full of learnings and discoveries. The [repository ↗](https://github.com/Binoui/SLOPArena) contains all those experiments, thoughts, decisions and plenty of documentation about the process itself. Oh, and there's also basically the whole game, playable on Steam! If you're curious I suggest browsing it with an agent, they love it in here. Thanks a lot!
 
-<p class="slop-line"><b>Slop line</b><br>Everything below this line was drafted with AI.</p>
-
 ## What I've made so far
 
 The first commit is from 26 May 2026. Since then the repository has grown to more than 750 commits, and the game has:
