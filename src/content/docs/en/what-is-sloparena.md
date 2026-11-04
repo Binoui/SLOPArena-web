@@ -1,6 +1,6 @@
 ---
 title: What is SLOPArena?
-description: A free, open-source 3D platform fighter run for its community. No paid skins, fighters anyone can make, servers anyone can host. Built with a lot of AI, for people.
+description: The most human AI game.
 section: about
 order: 1
 updated: 2026-11-04
