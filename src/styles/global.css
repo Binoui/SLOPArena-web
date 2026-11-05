@@ -98,10 +98,6 @@ p { margin: 0; }
 .header-steam { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 12px; background: var(--ink); color: var(--paper); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--orange); font: 700 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: transform 0.12s, box-shadow 0.12s, background-color 0.12s, color 0.12s; }
 .header-steam:hover { background: var(--yellow); color: var(--ink); transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--orange); text-decoration: none; }
 .header-steam svg { width: 18px; height: 18px; fill: currentColor; }
-.lang-switch { display: flex; flex: none; border: 2px solid var(--ink); }
-.lang-switch a { display: grid; place-items: center; min-width: 44px; min-height: 40px; padding: 4px 8px; font: 700 12px/1 var(--mono); letter-spacing: 0.06em; text-decoration: none; }
-.lang-switch a[aria-current='true'] { background: var(--ink); color: var(--paper); }
-.lang-switch a:hover { background: var(--yellow); color: var(--ink); }
 
 /* Presence */
 .presence { background: var(--ink); color: var(--paper); }
@@ -466,7 +462,6 @@ p { margin: 0; }
   .header-steam { margin-left: auto; padding-inline: 10px; }
   .header-steam > span { display: none; }
   .brand { font-size: 18px; }
-  .lang-switch a { min-width: 40px; }
   .specials, .normals { grid-template-columns: minmax(0, 1fr); }
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stat { grid-template-columns: 110px 1fr 70px; gap: 10px; font-size: 11px; }

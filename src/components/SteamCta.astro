@@ -1,15 +1,10 @@
 ---
 import Icon from './Icon.astro'
 import { links } from '../config'
-import { ui } from '../i18n/ui'
-import type { Lang } from '../i18n'
+import { ui } from '../data/ui'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
-const t = ui[lang].steam
+const t = ui.steam
 ---
 <a class="steam-cta" href={links.steam} target="_blank" rel="noopener" aria-label={t.ctaAria}>
   <span class="steam-cta__logo"><Icon name="steam" /></span>

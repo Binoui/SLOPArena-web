@@ -148,7 +148,7 @@ The flyer palette uses warm stock and structural ink, with Action Yellow for gra
 
 ## Layout
 
-The site is multi-page: Home, Fighters (index and one brief per fighter), How to play, Feedback and Docs, in English at the root and French under `/fr/`. Pages alternate full-bleed structural bands (paper, an ink stage band, an orange feedback band) with a content frame capped at 1180px and section padding of roughly 64–118px.
+The site is multi-page: Home, Fighters (index and one brief per fighter), How to play, Feedback and Docs, in English only. Pages alternate full-bleed structural bands (paper, an ink stage band, an orange feedback band) with a content frame capped at 1180px and section padding of roughly 64–118px.
 
 The home page is a letter, not a poster. The hero puts the name plate, Binoui's first-person note, three buttons (Steam, browser demo, source) and the access note on the left, with one untilted gameplay screenshot and a trailer link on the right; a facts row (price, licence, first commit, roster size) runs underneath. Below it come the live-presence band, a "try it without installing anything" block with the browser demo and the terminal SpectateView command, the latest build write-ups beside a plain "want to help?" list, and a row of roster cards. Headings are plain sentence case with no kickers. Fighter briefs pair a large portrait card with the name, epithet, pitch, tags and actions, then game plan, strengths and weaknesses, specials, normals, movement bars and an in-game screenshot. Docs use a sticky sidebar beside a 72-character prose column.
 

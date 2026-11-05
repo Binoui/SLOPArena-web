@@ -2,8 +2,7 @@ import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 
-// One Markdown file per language: src/content/docs/<lang>/<slug>.md.
-// A page missing in French falls back to the English text.
+// One Markdown file per doc: src/content/docs/<slug>.md.
 const docs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/docs' }),
   schema: z.object({

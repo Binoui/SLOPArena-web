@@ -27,5 +27,5 @@ Portraits come from the game’s `client/Unity/Assets/Resources/UI/Portraits/`
 (refreshed 29 October 2026; `nyxxie-portrait.png` is `Nyx_Fake.png`). The game has no
 Salamander portrait yet: `salamander-portrait.png` was made for the site in the
 same style (`tmp/site-refresh/salamander/`, take 2). Keep the
-English and French alt text in `src/data/fighters.ts` and `src/views/Home.astro`
+Alt text in `src/data/fighters.ts` and `src/views/Home.astro`
 aligned when replacing a shot.

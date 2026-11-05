@@ -7,23 +7,17 @@ import { fighters } from '../data/fighters'
 import { getDocs } from '../lib/docs'
 import { formatDay } from '../lib/format'
 import { links, steamAppId, trailer } from '../config'
-import { href, type Lang } from '../i18n'
-import { ui } from '../i18n/ui'
+import { href } from '../lib/paths'
+import { ui } from '../data/ui'
 import heroShot from '../assets/screens/manki-bazooka-rooftop.jpg'
 import nameplate from '../assets/key-art/nameplate.png'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
-const t = ui[lang]
+const t = ui
 const wip = fighters.filter((fighter) => fighter.wip).map((fighter) => fighter.name)
-const and = { en: 'and', fr: 'et' }[lang]
-const wipNames = wip.length > 1 ? `${wip.slice(0, -1).join(', ')} ${and} ${wip.at(-1)}` : wip.join('')
+const wipNames = wip.length > 1 ? `${wip.slice(0, -1).join(', ')} and ${wip.at(-1)}` : wip.join('')
 
 const copy = {
-  en: {
     title: 'SLOPArena · a free, open-source fighting game',
     description: 'A free, open-source 3D fighting game made by one person with AI, in public. No shop, no battle pass. The code, the tools and the notes are on GitHub.',
     hi: 'Hi, I’m Binoui.',
@@ -57,8 +51,8 @@ const copy = {
     commits: 'Every commit on GitHub',
     helpTitle: 'Want to help?',
     help: [
-      `<strong>Play it with friends</strong> and tell me what broke on the <a href="${href(lang, 'feedback/')}">feedback form</a>. One sentence is plenty. I read all of them.`,
-      `<strong>Make a fighter.</strong> SlopBot walks your AI assistant through it, from the idea to a playable kit. Nobody has finished one yet, so you’d be the first. <a href="${href(lang, 'docs/contribute/')}">Start here</a>.`,
+      `<strong>Play it with friends</strong> and tell me what broke on the <a href="${href('feedback/')}">feedback form</a>. One sentence is plenty. I read all of them.`,
+      `<strong>Make a fighter.</strong> SlopBot walks your AI assistant through it, from the idea to a playable kit. Nobody has finished one yet, so you’d be the first. <a href="${href('docs/contribute/')}">Start here</a>.`,
       `<strong>Design a stage.</strong> Pitch it, block it out with an AI helper, then dress it. Most of the current stages went through <a href="https://github.com/Binoui/SLOPArena/blob/main/docs/design/stage-concepts.md" target="_blank" rel="noopener">this process</a>.`,
       `<strong>Poke at the code.</strong> It’s MIT-licensed. Point your agent at <code>AGENTS.md</code>, they love it in there.`,
       `<strong>Come say hi</strong> on <a href="${links.discord}" target="_blank" rel="noopener">Discord</a>. It’s also where people find matches.`,
@@ -68,56 +62,9 @@ const copy = {
     fightersLink: 'See what each one does',
     rosterLabel: 'The fighters',
     about: ['Read more:', 'What is SLOPArena?', 'Who made this'],
-  },
-  fr: {
-    title: 'SLOPArena · un jeu de combat gratuit et open source',
-    description: 'Un jeu de combat 3D gratuit et open source, fait par une seule personne avec l’IA, en public. Pas de boutique, pas de passe de combat. Le code, les outils et les notes sont sur GitHub.',
-    hi: 'Salut, moi c’est Binoui.',
-    letter: [
-      'SLOPArena, c’est le jeu de combat auquel j’ai toujours voulu jouer. Je le fais depuis mai avec beaucoup d’aide de l’IA, et je le fais en public.',
-      'Il est gratuit et il le restera. Pas de boutique, rien à débloquer en payant, pas de passe de combat. Le code, les outils et les notes sur chaque erreur sont open source sur GitHub.',
-      'Je veux qu’il appartienne à ceux qui y jouent. Vous pouvez créer votre propre combattant, ou juste me dire ce qui ne va pas et le voir changer. Plus tard, vous pourrez aussi héberger vos propres serveurs.',
-    ],
-    steam: 'Gratuit sur Steam',
-    demo: 'Jouer dans le navigateur',
-    code: 'Lire le code',
-    access: 'C’est un playtest, donc l’accès Steam se fait sur demande. Steam vous écrit quand vous êtes dedans.',
-    launch: 'Déjà dedans ? Lancer le jeu',
-    shotAlt: 'Le bazooka de Manki envoie FightGuy valser sur un toit sous les néons',
-    shotCaption: 'Le bazooka de Manki envoie FightGuy du haut d’un toit. C’est un vrai match, pas un rendu.',
-    trailer: 'Voir la bande-annonce',
-    facts: [
-      ['0 €', 'pour jouer, rien à acheter'],
-      ['MIT', 'licence'],
-      ['26 mai 2026', 'premier commit, tout est public'],
-      [String(fighters.length), 'combattants, jusqu’à 4 joueurs'],
-    ],
-    tryTitle: 'Essayer sans rien installer',
-    browserTitle: 'Dans le navigateur',
-    browserText: 'Les mêmes combattants et les mêmes coups, dans un onglet. C’est moins abouti que la version Steam.',
-    browserCta: 'Ouvrir la démo',
-    terminalTitle: 'Dans le terminal',
-    terminalText: 'Deux combattants contrôlés par l’ordinateur se battent dans votre terminal. C’est la vraie simulation du jeu, sans graphismes. Il faut Git et .NET 8.',
-    postsTitle: 'Ce sur quoi je travaille',
-    allPosts: 'Tout ce que j’ai écrit',
-    commits: 'Tous les commits sur GitHub',
-    helpTitle: 'Envie d’aider ?',
-    help: [
-      `<strong>Jouez entre amis</strong> et dites-moi ce qui a cassé avec le <a href="${href(lang, 'feedback/')}">formulaire d’avis</a>. Une phrase suffit. Je les lis toutes.`,
-      `<strong>Créez un combattant.</strong> SlopBot guide votre assistant IA de l’idée jusqu’à un kit jouable. Personne n’en a encore terminé un, vous seriez la première personne à le faire. <a href="${href(lang, 'docs/contribute/')}">Par ici</a>.`,
-      `<strong>Imaginez une arène.</strong> Proposez-la, maquettez-la avec un assistant IA, puis habillez-la. La plupart des arènes actuelles sont passées par <a href="https://github.com/Binoui/SLOPArena/blob/main/docs/design/stage-concepts.md" target="_blank" rel="noopener">ce processus</a>.`,
-      `<strong>Fouillez le code.</strong> Il est sous licence MIT. Donnez <code>AGENTS.md</code> à votre agent, il va adorer.`,
-      `<strong>Passez dire bonjour</strong> sur <a href="${links.discord}" target="_blank" rel="noopener">Discord</a>. C’est aussi là qu’on trouve des adversaires.`,
-    ],
-    fightersTitle: 'Les combattants',
-    fightersText: `${fighters.length} pour l’instant. Il manque encore des morceaux à ${wipNames}.`,
-    fightersLink: 'Voir ce que chacun sait faire',
-    rosterLabel: 'Les combattants',
-    about: ['Pour en savoir plus :', 'C’est quoi SLOPArena ?', 'Qui a fait ça'],
-  },
-}[lang]
+  }
 
-const posts = (await getDocs(lang))
+const posts = (await getDocs())
   .filter((doc) => doc.entry.data.section === 'build' && doc.slug !== 'contribute')
   .sort((a, b) => b.entry.data.updated.getTime() - a.entry.data.updated.getTime())
   .slice(0, 3)
@@ -135,7 +82,7 @@ const jsonLd = {
       name: 'SLOPArena',
       alternateName: ['Slop Arena', 'SLOPA'],
       url: siteUrl,
-      inLanguage: lang,
+      inLanguage: 'en',
     },
     {
       '@type': 'VideoGame',
@@ -155,7 +102,7 @@ const jsonLd = {
   ],
 }
 ---
-<Base lang={lang} route="" title={copy.title} description={copy.description}>
+<Base route="" title={copy.title} description={copy.description}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <section class="home-hero">
@@ -167,7 +114,7 @@ const jsonLd = {
         </h1>
         <p class="letter__hi">{copy.hi}</p>
         {copy.letter.map((paragraph) => <p>{paragraph}</p>)}
-        <p class="letter__more">{copy.about[0]} <a href={href(lang, 'docs/what-is-sloparena/')}>{copy.about[1]}</a> · <a href={href(lang, 'docs/who-made-this/')}>{copy.about[2]}</a></p>
+        <p class="letter__more">{copy.about[0]} <a href={href('docs/what-is-sloparena/')}>{copy.about[1]}</a> · <a href={href('docs/who-made-this/')}>{copy.about[2]}</a></p>
         <div class="letter__actions">
           <a class="btn btn--yellow" href={links.steam} target="_blank" rel="noopener" aria-label={t.steam.ctaAria}><Icon name="steam" />{copy.steam}</a>
           <a class="btn" href={links.demo}>{copy.demo}</a>
@@ -185,7 +132,7 @@ const jsonLd = {
     </ul>
   </section>
 
-  <Presence lang={lang} />
+  <Presence />
 
   <section class="home-section">
     <div class="wrap">
@@ -212,15 +159,15 @@ const jsonLd = {
         <ul class="posts">
           {posts.map((post) => (
             <li>
-              <a href={href(lang, `docs/${post.slug}/`)}>
-                <time datetime={post.entry.data.updated.toISOString().slice(0, 10)}>{formatDay(lang, post.entry.data.updated)}</time>
+              <a href={href(`docs/${post.slug}/`)}>
+                <time datetime={post.entry.data.updated.toISOString().slice(0, 10)}>{formatDay(post.entry.data.updated)}</time>
                 <span class="posts__title">{post.entry.data.title}</span>
                 <span class="posts__text">{post.entry.data.description}</span>
               </a>
             </li>
           ))}
         </ul>
-        <p><a href={href(lang, 'docs/')}>{copy.allPosts}</a> · <a href={`${links.github}/commits/main/`} target="_blank" rel="noopener">{copy.commits} ↗</a></p>
+        <p><a href={href('docs/')}>{copy.allPosts}</a> · <a href={`${links.github}/commits/main/`} target="_blank" rel="noopener">{copy.commits} ↗</a></p>
       </div>
       <div>
         <h2>{copy.helpTitle}</h2>
@@ -234,11 +181,11 @@ const jsonLd = {
   <section class="home-section">
     <div class="wrap">
       <h2>{copy.fightersTitle}</h2>
-      <p>{copy.fightersText} <a href={href(lang, 'fighters/')}>{copy.fightersLink}</a>.</p>
+      <p>{copy.fightersText} <a href={href('fighters/')}>{copy.fightersLink}</a>.</p>
       <ul class="home-roster" aria-label={copy.rosterLabel}>
         {fighters.map((fighter) => (
           <li style={`--accent: ${fighter.accent}`}>
-            <a class="mini-card" href={href(lang, `fighters/${fighter.id}/`)}>
+            <a class="mini-card" href={href(`fighters/${fighter.id}/`)}>
               <Image src={fighter.portrait} alt="" widths={[256]} sizes="120px" />
               <span style={`--chars: ${fighter.name.length}`}>{fighter.name}</span>
             </a>

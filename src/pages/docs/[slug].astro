@@ -2,8 +2,8 @@
 import Doc from '../../views/Doc.astro'
 import { getDocs } from '../../lib/docs'
 
-export const getStaticPaths = async () => (await getDocs('en')).map((doc) => ({ params: { slug: doc.slug }, props: { doc } }))
+export const getStaticPaths = async () => (await getDocs()).map((doc) => ({ params: { slug: doc.slug }, props: { doc } }))
 
 const { doc } = Astro.props
 ---
-<Doc lang="en" doc={doc} />
+<Doc doc={doc} />

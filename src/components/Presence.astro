@@ -1,14 +1,9 @@
 ---
 import { endpoints, links } from '../config'
-import { ui } from '../i18n/ui'
-import type { Lang } from '../i18n'
+import { ui } from '../data/ui'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
-const t = ui[lang].presence
+const t = ui.presence
 ---
 <section class="presence" data-state="checking" data-presence={endpoints.presence} data-strings={JSON.stringify(t)} aria-live="polite">
   <div class="wrap presence__inner">

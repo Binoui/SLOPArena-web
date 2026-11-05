@@ -4,17 +4,15 @@ import Base from '../layouts/Base.astro'
 import { getDocs, type Doc } from '../lib/docs'
 import { formatDate } from '../lib/format'
 import { links } from '../config'
-import { href, type Lang } from '../i18n'
+import { href } from '../lib/paths'
 
 interface Props {
-  lang: Lang
   doc: Doc
 }
 
-const { lang, doc } = Astro.props
+const { doc } = Astro.props
 
 const copy = {
-  en: {
     docs: 'Docs',
     nav: 'Documentation',
     breadcrumb: 'Breadcrumb',
@@ -24,38 +22,24 @@ const copy = {
     edit: 'Edit this page on GitHub',
     previous: 'Previous',
     next: 'Next',
-    fallback: '',
     zoom: 'Enlarge image',
     close: 'Close',
-  },
-  fr: {
-    docs: 'Docs',
-    nav: 'Documentation',
-    breadcrumb: 'Fil d’Ariane',
-    sections: { about: 'À propos', play: 'Jouer', build: 'Dans les coulisses' },
-    play: 'Comment jouer',
-    updated: 'Mis à jour le',
-    edit: 'Modifier cette page sur GitHub',
-    previous: 'Précédent',
-    next: 'Suivant',
-    fallback: 'Cette page n’est pas encore traduite : voici la version anglaise.',
-  },
-}[lang]
+  }
 
 const { Content } = await render(doc.entry)
-const docs = await getDocs(lang)
+const docs = await getDocs()
 const index = docs.findIndex((item) => item.slug === doc.slug)
 const previous = docs[index - 1]
 const next = docs[index + 1]
 const route = `docs/${doc.slug}/`
 const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
 ---
-<Base lang={lang} route={route} title={doc.entry.data.title} description={doc.entry.data.description}>
+<Base route={route} title={doc.entry.data.title} description={doc.entry.data.description}>
   <section class="page-hero">
     <div class="wrap">
-      <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href(lang, 'docs/')}>{copy.docs}</a> / {copy.sections[doc.entry.data.section]}</nav>
-      <h1 lang={doc.fallback ? 'en' : undefined}>{doc.entry.data.title}</h1>
-      <p class="lede" lang={doc.fallback ? 'en' : undefined}>{doc.entry.data.description}</p>
+      <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href('docs/')}>{copy.docs}</a> / {copy.sections[doc.entry.data.section]}</nav>
+      <h1>{doc.entry.data.title}</h1>
+      <p class="lede">{doc.entry.data.description}</p>
     </div>
   </section>
 
@@ -68,9 +52,9 @@ const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
             <>
               <h2>{copy.sections[section]}</h2>
               <ul>
-                {section === 'play' && <li><a href={href(lang, 'play/')}>{copy.play}</a></li>}
+                {section === 'play' && <li><a href={href('play/')}>{copy.play}</a></li>}
                 {items.map((item) => (
-                  <li><a href={href(lang, `docs/${item.slug}/`)} aria-current={item.slug === doc.slug ? 'page' : undefined}>{item.entry.data.title}</a></li>
+                  <li><a href={href(`docs/${item.slug}/`)} aria-current={item.slug === doc.slug ? 'page' : undefined}>{item.entry.data.title}</a></li>
                 ))}
               </ul>
             </>
@@ -78,18 +62,17 @@ const editUrl = `${links.webRepo}/edit/main/${doc.entry.filePath}`
         })}
       </nav>
       <div>
-        {doc.fallback && <p class="notice" style="margin-bottom: 28px">{copy.fallback}</p>}
-        <article class="prose" data-zoom-label={copy.zoom} lang={doc.fallback ? 'en' : undefined}>
+        <article class="prose" data-zoom-label={copy.zoom}>
           <Content />
         </article>
         <div class="doc-meta label">
-          <span>{copy.updated} {formatDate(lang, doc.entry.data.updated)}</span>
+          <span>{copy.updated} {formatDate(doc.entry.data.updated)}</span>
           <a href={editUrl} target="_blank" rel="noopener">{copy.edit} ↗</a>
         </div>
         {(previous || next) && (
           <nav class="doc-pager" aria-label={`${copy.previous} / ${copy.next}`}>
-            {previous && <a href={href(lang, `docs/${previous.slug}/`)}><span class="label">← {copy.previous}</span><b>{previous.entry.data.title}</b></a>}
-            {next && <a class="next" href={href(lang, `docs/${next.slug}/`)}><span class="label">{copy.next} →</span><b>{next.entry.data.title}</b></a>}
+            {previous && <a href={href(`docs/${previous.slug}/`)}><span class="label">← {copy.previous}</span><b>{previous.entry.data.title}</b></a>}
+            {next && <a class="next" href={href(`docs/${next.slug}/`)}><span class="label">{copy.next} →</span><b>{next.entry.data.title}</b></a>}
           </nav>
         )}
       </div>
