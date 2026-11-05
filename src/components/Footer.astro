@@ -1,23 +1,19 @@
 ---
 import { links } from '../config'
-import { href, type Lang } from '../i18n'
-import { ui } from '../i18n/ui'
+import { href } from '../lib/paths'
+import { ui } from '../data/ui'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
-const t = ui[lang]
+const t = ui
 const columns = [
   {
     title: t.footer.play,
     links: [
-      { label: t.nav.what, href: href(lang, 'docs/what-is-sloparena/') },
+      { label: t.nav.what, href: href('docs/what-is-sloparena/') },
       { label: 'Steam', href: links.steam, external: true },
-      { label: t.nav.play, href: href(lang, 'play/') },
-      { label: t.nav.fighters, href: href(lang, 'fighters/') },
-      { label: t.nav.feedback, href: href(lang, 'feedback/') },
+      { label: t.nav.play, href: href('play/') },
+      { label: t.nav.fighters, href: href('fighters/') },
+      { label: t.nav.feedback, href: href('feedback/') },
     ],
   },
   {
@@ -33,8 +29,8 @@ const columns = [
   {
     title: t.footer.build,
     links: [
-      { label: t.nav.who, href: href(lang, 'docs/who-made-this/') },
-      { label: t.nav.docs, href: href(lang, 'docs/') },
+      { label: t.nav.who, href: href('docs/who-made-this/') },
+      { label: t.nav.docs, href: href('docs/') },
       { label: t.footer.gameSource, href: links.github, external: true },
       { label: t.footer.siteSource, href: links.webRepo, external: true },
     ],
@@ -44,7 +40,7 @@ const columns = [
 <footer class="site-footer">
   <div class="wrap site-footer__grid">
     <div class="site-footer__brand">
-      <a class="brand" href={href(lang)} aria-label={t.home}>SLOPArena</a>
+      <a class="brand" href={href()} aria-label={t.home}>SLOPArena</a>
       <p class="site-footer__tagline">{t.footer.tagline}</p>
     </div>
     {columns.map((column) => (

@@ -5,19 +5,17 @@ import Icon from '../components/Icon.astro'
 import { fighters, jumpHeight, kits, tuningSnapshot, type Fighter, type Kit } from '../data/fighters'
 import { links } from '../config'
 import { formatDate, formatNumber } from '../lib/format'
-import { href, type Lang } from '../i18n'
-import { ui } from '../i18n/ui'
+import { href } from '../lib/paths'
+import { ui } from '../data/ui'
 
 interface Props {
-  lang: Lang
   fighter: Fighter
 }
 
-const { lang, fighter } = Astro.props
-const t = ui[lang]
+const { fighter } = Astro.props
+const t = ui
 
 const copy = {
-  en: {
     description: (name: string, epithet: string) => `${name}, ${epithet.toLowerCase()}: SLOPArena fighter brief with specials, normals, strengths and weaknesses.`,
     crumbs: 'Fighters',
     breadcrumb: 'Breadcrumb',
@@ -38,32 +36,9 @@ const copy = {
     others: 'The rest of the roster',
     form: 'Second form',
     formLede: 'F swaps forms. Each form has its own normals, specials and movement.',
-  },
-  fr: {
-    description: (name: string, epithet: string) => `${name}, ${epithet.toLowerCase()} : fiche du combattant SLOPArena avec spéciales, coups normaux, points forts et points faibles.`,
-    crumbs: 'Combattants',
-    breadcrumb: 'Fil d’Ariane',
-    portrait: 'Illustration',
-    steam: 'Jouer sur Steam',
-    report: (name: string) => `Vous jouez ${name} ? Signalez ce qui cloche`,
-    plan: 'Plan de jeu',
-    good: 'Points forts',
-    bad: 'Points faibles',
-    specials: 'Spéciales',
-    specialsLede: 'Le temps de recharge démarre à la fin du coup. La spéciale E sert toujours à revenir sur le terrain.',
-    normals: 'Coups normaux',
-    normalsLede: 'Sans temps de recharge. La même touche fait autre chose au sol et en l’air.',
-    movement: 'Déplacements',
-    stats: ['Vitesse au sol', 'Vitesse en l’air', 'Hauteur de saut', 'Gravité'],
-    tuning: (date: string) => `Réglages du playtest au ${date}. La hauteur de saut est estimée à partir de la vitesse de saut et de la gravité. Les chiffres bougent d’un build à l’autre.`,
-    inGame: 'En jeu',
-    others: 'Le reste du roster',
-    form: 'Seconde forme',
-    formLede: 'F change de forme. Chaque forme a ses propres coups normaux, spéciales et déplacements.',
-  },
-}[lang]
+  }
 
-const n = (value: number) => formatNumber(lang, value)
+const n = (value: number) => formatNumber(value)
 const max = (pick: (kit: Kit) => number) => Math.max(...kits.map(pick))
 const stats = ({ movement }: Kit) => [
   { label: copy.stats[0], value: movement.run, max: max((k) => k.movement.run), text: `${n(movement.run)} m/s` },
@@ -76,7 +51,7 @@ const forms: { name: string; kit: Kit }[] = [{ name: fighter.name, kit: fighter 
 const titled = (title: string, name: string) => (forms.length > 1 ? `${title} · ${name}` : title)
 const route = `fighters/${fighter.id}/`
 ---
-<Base lang={lang} route={route} title={fighter.name} description={copy.description(fighter.name, fighter.epithet[lang])}>
+<Base route={route} title={fighter.name} description={copy.description(fighter.name, fighter.epithet)}>
   <div class="fighter-page" style={`--accent: ${fighter.accent}`}>
     <section class="fighter-hero">
       <div class="wrap fighter-hero__grid">
@@ -85,15 +60,15 @@ const route = `fighters/${fighter.id}/`
           <figcaption>{copy.portrait}</figcaption>
         </figure>
         <div>
-          <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href(lang, 'fighters/')}>{copy.crumbs}</a> / {fighter.name}</nav>
+          <nav class="breadcrumb label" aria-label={copy.breadcrumb}><a href={href('fighters/')}>{copy.crumbs}</a> / {fighter.name}</nav>
           <h1 style={`--chars: ${fighter.name.length}`}>{fighter.name}</h1>
-          <p class="strip">{fighter.epithet[lang]}</p>
+          <p class="strip">{fighter.epithet}</p>
           {fighter.wip && <p class="sticker fighter-hero__wip" title={t.common.wipTitle}>{t.common.wip}</p>}
-          <p class="fighter-hero__pitch">{fighter.pitch[lang]}</p>
-          <ul class="tags">{fighter.tags[lang].map((tag) => <li class="tag">{tag}</li>)}</ul>
+          <p class="fighter-hero__pitch">{fighter.pitch}</p>
+          <ul class="tags">{fighter.tags.map((tag) => <li class="tag">{tag}</li>)}</ul>
           <div class="fighter-hero__actions">
             <a class="btn btn--yellow" href={links.steam} target="_blank" rel="noopener"><Icon name="steam" />{copy.steam} ↗</a>
-            <a class="text-link" href={`${href(lang, 'feedback/')}?fighter=${fighter.id}`}>{copy.report(fighter.name)} →</a>
+            <a class="text-link" href={`${href('feedback/')}?fighter=${fighter.id}`}>{copy.report(fighter.name)} →</a>
           </div>
         </div>
       </div>
@@ -103,16 +78,16 @@ const route = `fighters/${fighter.id}/`
       <div class="wrap split">
         <div>
           <h2 class="h3-title">{copy.plan}</h2>
-          <ol class="gameplan">{fighter.gameplan[lang].map((step) => <li>{step}</li>)}</ol>
+          <ol class="gameplan">{fighter.gameplan.map((step) => <li>{step}</li>)}</ol>
         </div>
         <div class="verdicts">
           <div class="verdict verdict--good">
             <h3>{copy.good}</h3>
-            <ul>{fighter.strengths[lang].map((item) => <li>{item}</li>)}</ul>
+            <ul>{fighter.strengths.map((item) => <li>{item}</li>)}</ul>
           </div>
           <div class="verdict verdict--bad">
             <h3>{copy.bad}</h3>
-            <ul>{fighter.weaknesses[lang].map((item) => <li>{item}</li>)}</ul>
+            <ul>{fighter.weaknesses.map((item) => <li>{item}</li>)}</ul>
           </div>
         </div>
       </div>
@@ -127,7 +102,7 @@ const route = `fighters/${fighter.id}/`
               <div>
                 <p class="kicker">{copy.form}</p>
                 <h2>{alternate.name}</h2>
-                <p class="lede">{alternate.pitch[lang]}</p>
+                <p class="lede">{alternate.pitch}</p>
                 <p class="fine-print">{copy.formLede}</p>
               </div>
             </div>
@@ -148,11 +123,11 @@ const route = `fighters/${fighter.id}/`
                       <h3>{special.name}</h3>
                       <p class="special__meta">
                         <span class="flag">{t.slots[special.slot]}</span>
-                        <span>{special.limit ? special.limit[lang] : `${n(special.cooldownSeconds)} s ${t.common.cooldown}`}</span>
+                        <span>{special.limit ? special.limit : `${n(special.cooldownSeconds)} s ${t.common.cooldown}`}</span>
                         {signature && <span class="flag flag--accent">{t.common.mustTry}</span>}
                       </p>
                     </div>
-                    <p>{special.text[lang]}</p>
+                    <p>{special.text}</p>
                   </li>
                 )
               })}
@@ -199,12 +174,12 @@ const route = `fighters/${fighter.id}/`
               </ul>
             </Fragment>
           ))}
-          <p class="fine-print">{copy.tuning(formatDate(lang, new Date(tuningSnapshot)))}</p>
+          <p class="fine-print">{copy.tuning(formatDate(new Date(tuningSnapshot)))}</p>
         </div>
         <div>
           <h2 class="h3-title">{copy.inGame}</h2>
           <figure class="shot-frame">
-            <Image src={fighter.shot} alt={fighter.shotAlt[lang]} widths={[640, 960, 1280]} sizes="(max-width: 900px) 92vw, 560px" />
+            <Image src={fighter.shot} alt={fighter.shotAlt} widths={[640, 960, 1280]} sizes="(max-width: 900px) 92vw, 560px" />
           </figure>
         </div>
       </div>
@@ -216,7 +191,7 @@ const route = `fighters/${fighter.id}/`
         <ul class="roster-nav">
           {fighters.map((other) => (
             <li>
-              <a href={href(lang, `fighters/${other.id}/`)} aria-current={other.id === fighter.id ? 'page' : undefined}>
+              <a href={href(`fighters/${other.id}/`)} aria-current={other.id === fighter.id ? 'page' : undefined}>
                 <Image src={other.portrait} alt="" widths={[112]} sizes="56px" />
                 <span>{other.name}</span>
               </a>

@@ -1,0 +1,3 @@
+# The site was English and French until 2026-11-05. Search engines indexed /fr/ pages.
+/fr /  301
+/fr/* /:splat 301

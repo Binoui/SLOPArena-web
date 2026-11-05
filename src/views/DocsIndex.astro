@@ -2,16 +2,11 @@
 import Base from '../layouts/Base.astro'
 import { getDocs } from '../lib/docs'
 import { links } from '../config'
-import { href, type Lang } from '../i18n'
+import { href } from '../lib/paths'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
 
 const copy = {
-  en: {
     title: 'Docs',
     description: 'How SLOPArena is made, how a match runs under the hood, and how to contribute.',
     kicker: 'Docs',
@@ -27,34 +22,14 @@ const copy = {
       { title: 'Architecture overview', text: 'The components, their trust boundaries and the main runtime path.', href: 'https://github.com/Binoui/SLOPArena/blob/main/docs/architecture-overview.md' },
       { title: 'Contributing guide', text: 'Setting up .NET, Unity and the local stack.', href: 'https://github.com/Binoui/SLOPArena/blob/main/CONTRIBUTING.md' },
     ],
-    english: 'In English',
-  },
-  fr: {
-    title: 'Docs',
-    description: 'Comment SLOPArena est fabriqué, comment tourne un match sous le capot, et comment contribuer.',
-    kicker: 'Docs',
-    heading: 'Le manuel, l’atelier et les preuves.',
-    lede: 'Comment le jeu est construit, comment il tourne, et comment aider. Pour jouer, commencez par le guide de terrain.',
-    play: 'Comment jouer',
-    playText: 'Obtenir l’accès, les commandes, les bases et les modes.',
-    sections: { about: 'À propos', play: 'Jouer', build: 'Dans les coulisses' },
-    read: 'Lire',
-    repo: 'Dans le dépôt du jeu',
-    repoLinks: [
-      { title: 'Plan de la documentation', text: 'Chaque système, plan et décision d’architecture du dépôt du jeu.', href: links.githubDocs },
-      { title: 'Vue d’ensemble de l’architecture', text: 'Les composants, leurs frontières de confiance et le chemin principal à l’exécution.', href: 'https://github.com/Binoui/SLOPArena/blob/main/docs/architecture-overview.md' },
-      { title: 'Guide de contribution', text: 'Installer .NET, Unity et la pile locale.', href: 'https://github.com/Binoui/SLOPArena/blob/main/CONTRIBUTING.md' },
-    ],
-    english: 'En anglais',
-  },
-}[lang]
+  }
 
-const docs = await getDocs(lang)
+const docs = await getDocs()
 const sections = (['about', 'play', 'build'] as const)
   .map((section) => ({ section, docs: docs.filter((doc) => doc.entry.data.section === section) }))
   .filter((group) => group.docs.length > 0 || group.section === 'play')
 ---
-<Base lang={lang} route="docs/" title={copy.title} description={copy.description}>
+<Base route="docs/" title={copy.title} description={copy.description}>
   <section class="page-hero">
     <div class="wrap">
       <p class="kicker">{copy.kicker}</p>
@@ -71,7 +46,7 @@ const sections = (['about', 'play', 'build'] as const)
           <ul class="doc-list">
             {group.section === 'play' && (
               <li>
-                <a class="link-card" href={href(lang, 'play/')}>
+                <a class="link-card" href={href('play/')}>
                   <h3>{copy.play}</h3>
                   <p>{copy.playText}</p>
                   <span class="label">{copy.read} →</span>
@@ -80,10 +55,10 @@ const sections = (['about', 'play', 'build'] as const)
             )}
             {group.docs.map((doc) => (
               <li>
-                <a class="link-card" href={href(lang, `docs/${doc.slug}/`)}>
+                <a class="link-card" href={href(`docs/${doc.slug}/`)}>
                   <h3>{doc.entry.data.title}</h3>
                   <p>{doc.entry.data.description}</p>
-                  <span class="label">{copy.read} →{doc.fallback && ` · ${copy.english}`}</span>
+                  <span class="label">{copy.read} →</span>
                 </a>
               </li>
             ))}

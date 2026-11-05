@@ -4,16 +4,10 @@ import Base from '../layouts/Base.astro'
 import Icon from '../components/Icon.astro'
 import { fighters } from '../data/fighters'
 import { endpoints, links } from '../config'
-import type { Lang } from '../i18n'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
 
 const copy = {
-  en: {
     title: 'Feedback',
     heading: 'How was the slop?',
     description: 'Played SLOPArena? Tell the developer what broke, what felt great and who needs a nerf.',
@@ -65,66 +59,12 @@ const copy = {
       send: 'Send report',
       counter: '{n} / 2000',
     },
-  },
-  fr: {
-    title: 'Avis',
-    heading: 'Alors, ce slop ?',
-    description: 'Vous avez joué à SLOPArena ? Dites au développeur ce qui a cassé, ce qui était génial et qui mérite un nerf.',
-    kicker: 'Après le match',
-    lede: 'Ce qui a cassé, ce qui était génial, qui mérite un nerf. Une phrase suffit, et elle arrive directement chez le développeur.',
-    helpTitle: 'Ce qui aide le plus',
-    help: [
-      'Ce que vous faisiez quand ça a cassé : combattant, arène, mode.',
-      'Ce que vous attendiez, et ce qui s’est passé à la place.',
-      'Qui vous a paru trop fort ou trop faible, et pourquoi.',
-      'Un truc génial. Ça compte aussi.',
-    ],
-    elsewhere: 'Vous préférez en parler ? Passez sur le Discord. Un bug reproductible à chaque fois ? Une issue GitHub, c’est parfait.',
-    form: 'Rapport de match',
-    minute: 'Une minute, pas plus',
-    topic: 'C’est à quel sujet ?',
-    topics: { bug: 'Un truc a cassé', balance: 'Équilibrage', love: 'C’était génial', idea: 'Idée', other: 'Autre' },
-    message: 'Qu’est-ce qui s’est passé ?',
-    messageHint: 'Une phrase suffit.',
-    placeholder: 'ex. « Sir Bonk est bien trop lent, et la caméra s’est perdue sur Splash Deck. »',
-    favorite: 'Combattant préféré',
-    noFavorite: 'Aucun',
-    unsure: 'Je ne sais pas',
-    ratings: 'Notez la session',
-    ratingsHint: 'Quatre notes rapides, si vous avez joué.',
-    questions: {
-      fun: ['C’était amusant ?', 'Pas amusant', 'Très amusant'],
-      hitDifficulty: ['Était-il facile de toucher vos adversaires ?', 'Très difficile', 'Très facile'],
-      camera: ['La caméra était-elle confortable ?', 'Inconfortable', 'Confortable'],
-      lockOn: ['Le verrouillage de cible était-il utile ?', 'Inutile', 'Très utile'],
-    },
-    notTried: 'Pas essayé',
-    name: 'Nom ou pseudo Discord',
-    nameHint: 'Laissez vide pour rester anonyme.',
-    optional: 'facultatif',
-    required: 'obligatoire',
-    send: 'Envoyer le rapport',
-    note: 'Pas besoin de compte.',
-    done: 'Rapport reçu',
-    doneText: 'Merci de nous aider à mieux casser le jeu. Il est maintenant sur la pile du développeur.',
-    another: 'En envoyer un autre',
-    strings: {
-      sending: 'Envoi…',
-      required: 'Écrivez au moins une phrase avant d’envoyer.',
-      network: 'Impossible de joindre le service d’avis. Votre rapport est toujours là, réessayez dans un instant.',
-      service: 'Le service d’avis est en panne pour le moment. Votre rapport est toujours là, réessayez plus tard.',
-      rejected: 'Le rapport n’a pas été accepté. Vérifiez-le et réessayez.',
-      retry: 'Réessayer',
-      send: 'Envoyer le rapport',
-      counter: '{n} / 2000',
-    },
-  },
-}[lang]
+  }
 
 const topics = Object.entries(copy.topics)
 const questions = Object.entries(copy.questions)
 ---
-<Base lang={lang} route="feedback/" title={copy.title} description={copy.description}>
+<Base route="feedback/" title={copy.title} description={copy.description}>
   <section class="page-hero">
     <div class="wrap">
       <p class="kicker">{copy.kicker}</p>
@@ -148,7 +88,7 @@ const questions = Object.entries(copy.questions)
       </aside>
 
       <div class="report">
-        <form id="report" novalidate data-endpoint={endpoints.feedback} data-lang={lang} data-strings={JSON.stringify(copy.strings)}>
+        <form id="report" novalidate data-endpoint={endpoints.feedback} data-strings={JSON.stringify(copy.strings)}>
           <div class="report__head">
             <h2 id="report-title">{copy.form}</h2>
             <span class="sticker">{copy.minute}</span>
@@ -313,7 +253,7 @@ const questions = Object.entries(copy.questions)
         return
       }
       const payload = {
-        language: form.dataset.lang,
+        language: 'en',
         name: values.name.trim() || null,
         message: values.message.trim(),
         ratings: Object.fromEntries(ratingKeys.map((key) => {

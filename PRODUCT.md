@@ -12,7 +12,7 @@ The primary users are friends and curious players joining the SLOPArena playtest
 
 ## Product Purpose
 
-SLOPArena-web turns curiosity into a completed playtest: visitors see real gameplay and the roster, request access on the Steam store page, fight friends or meet players on Discord, and send useful feedback that informs the next build. It also hosts the bilingual docs that explain how the game is made.
+SLOPArena-web turns curiosity into a completed playtest: visitors see real gameplay and the roster, request access on the Steam store page, fight friends or meet players on Discord, and send useful feedback that informs the next build. It also hosts the docs that explain how the game is made.
 
 ## Positioning
 
@@ -33,12 +33,12 @@ Write like a person. Avoid the landing-page template the site used before 2026-1
 ## Capabilities and Constraints
 
 - The product is a small, chaotic free 3D online platform fighter for friends.
-- The public experience supports English and French, including automatic language selection and a persistent manual switch.
+- The site is English only (the game is English only). French pages were removed on 2026-11-05 and `/fr/*` redirects to the English pages.
 - The roster on the site is FightGuy, Manki, Wibou, Sir Bonk, Bashie, Salamander and Nyx (Bashie, Salamander and Nyx tagged work in progress), with kits, cooldowns and movement copied from the game's character packages; the snapshot date lives in `src/data/fighters.ts`.
 - The primary CTA links to the Steam store page and explains access by request. Do not invent download routes or claim instant access.
 - The feedback flow requires only a nonblank message; blank name means anonymous, a topic is optional, four ratings can be unselected, scored, or explicitly marked `notTried`, and the favorite fighter covers every fighter on the roster.
 - The site must remain usable when live presence is unavailable.
-- The project is an Astro static site deployed through Cloudflare Pages at https://playsloparena.com, with a Pages Function and D1 for feedback. Docs are Markdown in `src/content/docs/<lang>/`; a missing French page falls back to English.
+- The project is an Astro static site deployed through Cloudflare Pages at https://playsloparena.com, with a Pages Function and D1 for feedback. Docs are Markdown in `src/content/docs/`.
 
 ## Brand Commitments
 
@@ -46,7 +46,7 @@ Preserve the SLOPArena name (player-facing spelling; shorthand SLOPA), the roste
 
 The website flyer is the strongest existing graphic reference. Source hierarchy: usability/readability first; shared guide `../SlopArena/docs/design/visual-language.md` is brand authority, art conventions owns 3D/assets, this local DESIGN document realizes the website surface, and `.impeccable/design.json` mirrors it rather than acting as a separate guide. The website now ships Action Yellow and the Archivo family; native UI migration is tracked in the game repository.
 
-Preserve the free and open-source pitch, real gameplay media, bilingual copy, the trailer link, keyboard/gamepad guidance, purposeful community links, presence states, message-first feedback, and honest docs about the AI-assisted workflow.
+Preserve the free and open-source pitch, real gameplay media, the trailer link, keyboard/gamepad guidance, purposeful community links, presence states, message-first feedback, and honest docs about the AI-assisted workflow.
 
 ## Evidence on Hand
 
@@ -54,7 +54,7 @@ Preserve the free and open-source pitch, real gameplay media, bilingual copy, th
 - `src/assets/screens/`: real gameplay stills from the Steam store shoot, the 2026-10-28 promo clips and in-game captures; sources in its README.
 - `src/assets/stages/`: stage-select previews of the seven PvP picker stages.
 - `https://youtu.be/2_6SbaZ5sA8`: “SLOPArena Playtest Trailer” (16:9, 2026-10-28), linked from the home page hero.
-- `src/views/` and `src/data/`: complete English and French copy, roster data, access, controls and feedback content.
+- `src/views/` and `src/data/`: the site copy, roster data, access, controls and feedback content.
 - `README.md`: development, deployment, Steam, feedback, and presence behavior.
 - `src/lib/feedback.js` and `functions/api/feedback.js`: strict v3 feedback record contract and D1 storage.
 - There is no committed testimonial, player count, benchmark, press quote, pricing plan, or other third-party proof. Future work must not fabricate these.
@@ -65,9 +65,9 @@ Preserve the free and open-source pitch, real gameplay media, bilingual copy, th
 1. Complete the invitation-to-feedback loop: every product decision should help friends get into a match and report what they learned.
 2. Be honest about the pre-alpha: expose uncertainty and rough edges with humor rather than making unsupported polish or quality claims.
 3. Make community input consequential: feedback is a core part of how the prototype improves, not a decorative contact form.
-4. Keep the playtest accessible: preserve bilingual content, a short install path, resilient offline states, and practical inclusive interaction.
+4. Keep the playtest accessible: preserve a short install path, resilient offline states, and practical inclusive interaction.
 5. Preserve product truth over promotional convention: use real builds, characters, status, and evidence; never invent social proof.
 
 ## Accessibility & Inclusion
 
-Maintain a practical inclusive baseline: keyboard-operable interactions, semantic structure, readable contrast, reduced-motion respect, and usable responsive layouts. English and French must remain first-class product languages. No formal accessibility certification target is currently committed.
+Maintain a practical inclusive baseline: keyboard-operable interactions, semantic structure, readable contrast, reduced-motion respect, and usable responsive layouts. No formal accessibility certification target is currently committed.

@@ -1,6 +1,6 @@
 # SLOPArena Web
 
-The bilingual (English/French) website for SLOPArena, a free 3D platform fighter in early playtest: what the game is, the seven fighters, how to get in and play, a feedback form, and docs about how the game is made.
+The website for SLOPArena, a free, open-source fighting game in early playtest: what the game is, the seven fighters, how to get in and play, a feedback form, and docs about how the game is made.
 
 SLOPArena has a public [Steam store page](https://store.steampowered.com/app/5324910/) (app `5324910`, listed as coming soon, wishlistable) with a limited **Steam Playtest** (app `5325920`). Players request access on the store page and Steam emails them when they are let in. The 2026-10-04 rollout activated `0.2.0-playtest.5` on the Playtest default branch, BuildID `25702912`, alongside the compatible VPS backend; release and backend proof lives in the game repository's [`docs/testing.md`](https://github.com/Binoui/SLOPArena/blob/main/docs/testing.md).
 
@@ -19,15 +19,15 @@ Copy `.env.example` to `.env` to override the Steam, feedback API and presence U
 
 ## How the site is built
 
-[Astro](https://astro.build) renders every page to static HTML; the only client scripts are the language switch, live presence, the docs image lightbox and the feedback form.
+[Astro](https://astro.build) renders every page to static HTML; the only client scripts are live presence, the docs image lightbox and the feedback form.
 
 | Path | What lives there |
 | --- | --- |
-| `src/pages/` | Routes. English at the root, French under `fr/`; each file renders a view with a `lang` |
-| `src/views/` | Page bodies with their English and French copy side by side |
+| `src/pages/` | Routes; each file renders a view |
+| `src/views/` | Page bodies with their copy |
 | `src/data/fighters.ts` | Roster: briefs, kits, cooldowns and movement tuning |
 | `src/data/stages.ts` | The curated PvP stage list |
-| `src/content/docs/<lang>/` | Docs as Markdown. A page missing in French falls back to English with a notice |
+| `src/content/docs/` | Docs as Markdown |
 | `src/i18n/` | Shared UI strings and URL helpers |
 | `src/assets/` | Portraits, screenshots and stage art, optimized at build time |
 | `functions/api/feedback.js` | The Pages feedback API, using shared validation in `src/lib/feedback.js` |
@@ -35,7 +35,7 @@ Copy `.env.example` to `.env` to override the Steam, feedback API and presence U
 | `migrations/` | D1 schema migrations |
 | `scripts/social-preview.html` | Source of `public/social-preview.png` (regeneration command inside) |
 
-To add a doc, drop `src/content/docs/en/<slug>.md` (and optionally `fr/<slug>.md`) with `title`, `description`, `section` (`play` or `build`), `order` and `updated` frontmatter. It appears in the docs hub and sidebar automatically. Link to other pages with relative URLs such as `../../feedback/` so links work under any base path and in both languages.
+To add a doc, drop `src/content/docs/<slug>.md` with `title`, `description`, `section` (`play` or `build`), `order` and `updated` frontmatter. It appears in the docs hub and sidebar automatically. Link to other pages with relative URLs such as `../../feedback/` so links work under any base path.
 
 Fighter move names, cooldowns and movement numbers are copied from each package's `character.json` in the game repository (snapshot date in `src/data/fighters.ts`). Update them when kits change.
 
@@ -45,7 +45,7 @@ sources are recorded in [`src/assets/screens/README.md`](src/assets/screens/READ
 Fighters still being built carry `wip: true` in `src/data/fighters.ts`, mirroring the
 game’s `MenuRoster.IsWorkInProgress`.
 
-First-time French browsers are redirected to the French pages; after that the manual EN/FR switch wins and is remembered.
+The site is English only. It had French pages under `/fr/` until 2026-11-05; `public/_redirects` sends those URLs to their English pages with a 301.
 
 ## Feedback API
 
@@ -88,7 +88,7 @@ curl --fail-with-body --request POST \
   --data '{"name":"playsloparena.com"}'
 ```
 
-The API associates the domain; ensure DNS also has the apex CNAME to `playsloparena.pages.dev` (the dashboard setup handles this). Adding DNS alone is insufficient. After provisioning and merging, the main-branch workflow performs the first deployment. Verify `/`, `/fr/`, `/feedback/`, a successful feedback submission, an unknown route returning 404, and custom-domain activation before retiring the old host.
+The API associates the domain; ensure DNS also has the apex CNAME to `playsloparena.pages.dev` (the dashboard setup handles this). Adding DNS alone is insufficient. After provisioning and merging, the main-branch workflow performs the first deployment. Verify `/`, `/feedback/`, that `/fr/` redirects to `/`, a successful feedback submission, an unknown route returning 404, and custom-domain activation before retiring the old host.
 
 References: [Pages configuration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/), [D1 migrations](https://developers.cloudflare.com/d1/reference/migrations/), [custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [domain association API](https://developers.cloudflare.com/api/resources/pages/subresources/projects/subresources/domains/methods/create/).
 

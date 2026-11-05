@@ -8,7 +8,7 @@ updated: 2026-11-04
 
 SLOPArena is a free, open-source 3D platform fighter. The idea is a game that belongs to its players, where anyone can make their own characters and the community decides what it becomes. A lot of AI is used to create those characters, and I chose to be honest about that whole process. That feeling of irony honestly is behind the name and was the source of the whole tone of SLOPArena.
 
-![FightGuy, Manki, Wibou and Sir Bonk jump at each other on the deck of a boat](../../../assets/screens/splash-deck-four-jump.jpg)
+![FightGuy, Manki, Wibou and Sir Bonk jump at each other on the deck of a boat](../../assets/screens/splash-deck-four-jump.jpg)
 
 In SLOPArena, open source is not just about code: it's about documenting the whole process of creating the game. By showing why and how I did it, I hope to inspire others to take an interest in the project.
 

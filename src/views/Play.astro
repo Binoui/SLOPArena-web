@@ -4,18 +4,13 @@ import SteamCta from '../components/SteamCta.astro'
 import SteamHelp from '../components/SteamHelp.astro'
 import Icon from '../components/Icon.astro'
 import { links } from '../config'
-import { href, type Lang } from '../i18n'
+import { href } from '../lib/paths'
 
-interface Props {
-  lang: Lang
-}
 
-const { lang } = Astro.props
 
 type Binding = { action: string; keys: string[] }
 
 const copy = {
-  en: {
     title: 'How to play',
     description: 'Get SLOPArena playtest access on Steam, learn the keyboard and controller controls, and understand damage, stocks, recovery and shields.',
     kicker: 'Field guide',
@@ -106,104 +101,11 @@ const copy = {
       ],
     },
     stuck: { title: 'Stuck?', text: 'Ask on Discord. Someone, possibly the developer, will answer.', feedback: 'Send feedback' },
-  },
-  fr: {
-    title: 'Comment jouer',
-    description: 'Obtenez l’accès au playtest SLOPArena sur Steam, apprenez les commandes clavier et manette, et comprenez dégâts, vies, remontée et bouclier.',
-    kicker: 'Guide de terrain',
-    lede: 'Obtenez l’accès, apprenez les touches et comprenez pourquoi vous venez de quitter l’arène en vol plané.',
-    get: {
-      title: 'Obtenir le jeu',
-      steps: [
-        { title: 'Demandez l’accès', text: 'Ouvrez la page SLOPArena sur Steam et demandez l’accès au playtest. Ajoutez le jeu à votre liste de souhaits au passage.' },
-        { title: 'Attendez l’e-mail', text: 'Le playtest accepte les joueurs par vagues. Steam vous écrit quand le développeur est prêt à accueillir du monde.' },
-        { title: 'Installez et combattez', text: 'SLOPArena Playtest apparaît dans votre bibliothèque Steam. Installez-le, ouvrez Training et commencez à taper.' },
-      ],
-      needsTitle: 'Ce qu’il vous faut',
-      needs: ['Un compte Steam', 'Windows', 'Clavier et souris, ou une manette (Xbox, DualShock et DualSense fonctionnent)', 'Une connexion internet pour les salons en ligne'],
-    },
-    controls: {
-      title: 'Commandes',
-      lede: 'Voici les touches par défaut. Tout se reconfigure dans Settings → Controls (le jeu est en anglais), et le HUD affiche toujours vos touches actuelles.',
-      keyboard: 'Clavier et souris',
-      controller: 'Manette',
-      kb: [
-        { action: 'Se déplacer (WASD en QWERTY)', keys: ['Z', 'Q', 'S', 'D'] },
-        { action: 'Caméra', keys: ['Souris'] },
-        { action: 'Sauter (appui court : petit saut)', keys: ['Espace'] },
-        { action: 'Bouclier au sol, esquive en l’air', keys: ['Maj'] },
-        { action: 'Saisie', keys: ['C'] },
-        { action: 'S’accroupir, glisser, chute rapide', keys: ['X'] },
-        { action: 'Coups normaux', keys: ['1', '2', '3'] },
-        { action: 'Spéciales, comme indiqué sur le HUD (Q E R F en QWERTY)', keys: ['A', 'E', 'R', 'F'] },
-        { action: 'Beeline (dash à tête chercheuse)', keys: ['4'] },
-        { action: 'Se tourner vers la caméra', keys: ['Clic gauche'] },
-        { action: 'Verrouiller une cible', keys: ['Clic droit'] },
-        { action: 'Changer de cible', keys: ['Tab'] },
-        { action: 'Caméra Steady ou manuelle', keys: ['Y'] },
-        { action: 'Zoom', keys: ['Molette'] },
-        { action: 'Pause', keys: ['Échap'] },
-      ] as Binding[],
-      pad: [
-        { action: 'Se déplacer', keys: ['Stick gauche'] },
-        { action: 'Sauter (appui court : petit saut)', keys: ['A'] },
-        { action: 'Bouclier au sol, esquive en l’air', keys: ['RT'] },
-        { action: 'Saisie', keys: ['LB'] },
-        { action: 'S’accroupir, glisser, chute rapide', keys: ['LT'] },
-        { action: 'Coups normaux 1 · 2 · 3', keys: ['X', 'Y', 'B'] },
-        { action: 'Spéciales A · E · R · F : un coup de stick droit', keys: ['↓', '↑', '←', '→'] },
-        { action: 'Beeline (dash à tête chercheuse)', keys: ['RB'] },
-        { action: 'Se tourner vers la caméra', keys: ['L3'] },
-        { action: 'Verrouiller une cible (appui court)', keys: ['R3'] },
-        { action: 'Caméra Steady ou manuelle (maintenir)', keys: ['R3'] },
-        { action: 'Changer de cible', keys: ['Croix →'] },
-        { action: 'Pause', keys: ['Start'] },
-      ] as Binding[],
-      padNote: 'Libellés Xbox. Sur PlayStation : A = Croix, X = Carré, Y = Triangle, B = Rond, LB/RB = L1/R1, LT/RT = L2/R2. Vous préférez l’ancienne disposition ? Settings → Controls → Right Stick : Camera remet la caméra sur le stick droit, les spéciales sur LB + A/X/Y/B et la saisie sur LB + RT.',
-    },
-    basics: {
-      title: 'Les bases',
-      items: [
-        { title: 'Les dégâts, c’est de la distance', text: 'Chaque coup fait grimper votre pourcentage. Le coup de poing qui chatouille à 20 % vous éjecte à 120 %.', loud: true },
-        { title: 'Vies et zones d’éjection', text: 'Sortez de l’arène en vol ou tombez dans le vide, et vous perdez une vie. Les matchs commencent avec trois vies. Le dernier debout gagne.' },
-        { title: 'Revenir sur le terrain', text: 'Vous avez un double saut, une esquive aérienne et une spéciale E faite pour remonter. Pas d’accroche aux rebords dans ce playtest : atterrissez sur l’arène, ou n’atterrissez pas.' },
-        { title: 'Beeline', text: 'Appuyez sur 4 (RB à la manette) pour foncer droit sur votre cible. À l’arrivée, enchaînez avec ce que vous voulez. Raté, et vous êtes grand ouvert. Boucliers, coups et projectiles l’arrêtent.' },
-        { title: 'Bouclier et esquive', text: 'Maintenez Maj au sol pour bloquer dans toutes les directions. Le relâcher vous expose un instant. En l’air, la même touche esquive là où pointe le stick, une fois jusqu’à l’atterrissage.' },
-        { title: 'Petit saut, chute rapide', text: 'Appuyez brièvement pour un petit saut, maintenez pour un saut complet. Appuyez sur X pendant la chute pour tomber plus vite.' },
-        { title: 'Clash', text: 'Deux attaques qui touchent en même temps se repoussent : aucun dégât, retour au neutre pour les deux.' },
-      ],
-    },
-    modes: {
-      title: 'Modes',
-      items: [
-        { title: 'Tutorial', text: 'Le Fighter’s License : un examen sur un toit qui vous apprend les commandes leçon par leçon, avec les vrais noms des coups de votre combattant.' },
-        { title: 'Training', text: 'Le Crash-Test Lab : un mannequin CPU, des exercices et des îlots pour s’entraîner à revenir, avec vos coups affichés sur le HUD. Échap pour le faire attaquer, bloquer ou esquiver, changer ses dégâts ou réinitialiser les positions.' },
-        { menu: 'Local Play', title: 'Brawl', text: 'Éjectez tout le monde. Le dernier debout gagne. De un à quatre joueurs sur le même écran, avec des CPU aux places libres.' },
-        { menu: 'Local Play', title: 'Slopball', text: 'Faites tomber la balle de l’autre côté du filet avec vos attaques. Un raté remet votre combo à zéro. Battez votre record.' },
-        { menu: 'Local Play', title: 'Slop Rally', text: 'N’importe quel combattant sur n’importe quel parcours : un contre-la-montre en solo, ou une course entre amis sur le canapé pour les cibles et les points d’arrivée.' },
-        { menu: 'Local Play', title: 'Manki Mayhem', text: 'Manki dicte la manche. Survivez pour marquer. De deux à quatre combattants, complétés par des CPU.' },
-        { title: 'En ligne', text: 'Parcourez les salons ou créez le vôtre, jusqu’à quatre joueurs. Le chef choisit l’arène, chacun choisit son combattant, en vies, revanche dans le même salon. Encore brut : signalez chaque désynchro.' },
-      ],
-    },
-    faq: {
-      title: 'Questions',
-      items: [
-        { q: 'C’est gratuit ?', a: ['Oui. SLOPArena est gratuit, et le playtest aussi. Il n’y a rien à acheter.'] },
-        { q: 'Pourquoi faut-il demander l’accès ?', a: ['Le playtest est limité pour que les serveurs et l’unique développeur suivent le rythme. Steam fait entrer les joueurs par vagues et vous écrit quand c’est votre tour.'] },
-        { q: 'Mac ou Linux ?', a: ['Pas officiellement. Le build du playtest est prévu pour Windows.'] },
-        { q: 'C’est fini ?', a: ['Non. L’équilibrage n’est pas terminé, le jeu en ligne a encore des problèmes de connexion, et des choses vont casser. C’est à ça que sert le formulaire d’avis.'] },
-        { q: 'C’est fait avec de l’IA ?', a: ['Oui, ouvertement. SLOPArena utilise des agents de code IA et des images générées comme outils de production, et ces workflows sont publics. Chaque changement est quand même relu et testé par un humain.', 'Le nom assume.'] },
-        { q: 'Où signaler un bug ?', a: ['Utilisez le formulaire d’avis, postez sur Discord, ou ouvrez une issue sur GitHub si vous savez comment le reproduire.'] },
-        { q: 'Je peux contribuer ?', a: ['Oui. Le jeu est sous licence MIT sur GitHub. Commencez par les docs, puis lisez le guide de contribution du dépôt.'] },
-      ],
-    },
-    stuck: { title: 'Bloqué ?', text: 'Demandez sur Discord. Quelqu’un, peut-être le développeur, vous répondra.', feedback: 'Donner son avis' },
-  },
-}[lang]
+  }
 
 const keyClass = (key: string) => (key === '+' ? 'label' : 'key')
 ---
-<Base lang={lang} route="play/" title={copy.title} description={copy.description}>
+<Base route="play/" title={copy.title} description={copy.description}>
   <section class="page-hero">
     <div class="wrap">
       <p class="kicker">{copy.kicker}</p>
@@ -220,8 +122,8 @@ const keyClass = (key: string) => (key === '+' ? 'label' : 'key')
       </ol>
       <div class="split" style="margin-top: clamp(32px, 4vw, 48px); align-items: start">
         <div>
-          <SteamCta lang={lang} />
-          <SteamHelp lang={lang} />
+          <SteamCta />
+          <SteamHelp />
         </div>
         <div class="verdict">
           <h3>{copy.get.needsTitle}</h3>
@@ -306,7 +208,7 @@ const keyClass = (key: string) => (key === '+' ? 'label' : 'key')
         <p>{copy.stuck.text}</p>
         <div class="callout__actions">
           <a class="btn btn--ink" href={links.discord} target="_blank" rel="noopener"><Icon name="discord" />Discord ↗</a>
-          <a class="btn" href={href(lang, 'feedback/')}>{copy.stuck.feedback} →</a>
+          <a class="btn" href={href('feedback/')}>{copy.stuck.feedback} →</a>
         </div>
       </div>
     </div>

@@ -6,4 +6,4 @@ export const getStaticPaths = () => fighters.map((fighter) => ({ params: { id: f
 
 const { fighter } = Astro.props
 ---
-<Fighter lang="en" fighter={fighter} />
+<Fighter fighter={fighter} />
