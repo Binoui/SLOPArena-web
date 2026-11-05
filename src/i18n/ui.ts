@@ -25,14 +25,14 @@ const en = {
     discord: 'Find players on Discord',
   },
   footer: {
-    tagline: 'A free 3D platform fighter for friends. Early playtest. Balance not included.',
+    tagline: 'A free, open-source fighting game, made by one person with AI, in public.',
     play: 'Play',
     community: 'Community',
     build: 'Build',
     gameSource: 'Game source',
     siteSource: 'Website source',
     status: 'SLOPArena · Early playtest',
-    joke: 'Made with questionable decisions',
+    license: 'MIT license',
   },
   common: {
     cooldown: 'cooldown',
@@ -77,14 +77,14 @@ const fr: UiStrings = {
     discord: 'Trouver des joueurs sur Discord',
   },
   footer: {
-    tagline: 'Un jeu de combat de plateforme 3D gratuit, entre amis. Playtest précoce. Équilibrage non inclus.',
+    tagline: 'Un jeu de combat gratuit et open source, fait par une seule personne avec l’IA, en public.',
     play: 'Jouer',
     community: 'Communauté',
     build: 'Coulisses',
     gameSource: 'Code du jeu',
     siteSource: 'Code du site',
     status: 'SLOPArena · Playtest précoce',
-    joke: 'Fait avec des décisions discutables',
+    license: 'Licence MIT',
   },
   common: {
     cooldown: 'de recharge',

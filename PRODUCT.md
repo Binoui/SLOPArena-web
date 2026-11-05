@@ -16,7 +16,9 @@ SLOPArena-web turns curiosity into a completed playtest: visitors see real gamep
 
 ## Positioning
 
-SLOPArena is a transparent, solo-developed, open-source pre-alpha built with AI agents in the open. It is unreleased: the Steam store page is listed as coming soon, and only a limited playtest is available. Players are invited into an unfinished platform fighter, shown its rough edges honestly, and given a direct role in making the next build less broken.
+SLOPArena is a free, open-source fighting game made by one person with AI, in public. There is no shop and nothing to buy, the code and tools are MIT-licensed on GitHub, and the goal is a game that belongs to its players. The home page leads with that, in Binoui's first-person voice, and not with an explanation of platform-fighter rules (the docs' What is SLOPArena page covers the rules). It is unreleased: the Steam store page is listed as coming soon, and only a limited playtest is available.
+
+Write like a person. Avoid the landing-page template the site used before 2026-11-05: a kicker, a punchline headline ("Pick your poison."), a summary paragraph, and a joke in every block. Plain sentence-case headings that say what the section is, first-person copy, and real facts (dates, licence, commands that run) instead of slogans.
 
 ## Operating Context
 
@@ -44,14 +46,14 @@ Preserve the SLOPArena name (player-facing spelling; shorthand SLOPA), the roste
 
 The website flyer is the strongest existing graphic reference. Source hierarchy: usability/readability first; shared guide `../SlopArena/docs/design/visual-language.md` is brand authority, art conventions owns 3D/assets, this local DESIGN document realizes the website surface, and `.impeccable/design.json` mirrors it rather than acting as a separate guide. The website now ships Action Yellow and the Archivo family; native UI migration is tracked in the game repository.
 
-Preserve the free 3D fighter pitch, real gameplay media, bilingual copy, video, keyboard/gamepad guidance, purposeful community links, presence states, message-first feedback, and honest docs about the AI-assisted workflow.
+Preserve the free and open-source pitch, real gameplay media, bilingual copy, the trailer link, keyboard/gamepad guidance, purposeful community links, presence states, message-first feedback, and honest docs about the AI-assisted workflow.
 
 ## Evidence on Hand
 
 - `src/assets/fighters/*-portrait.png`: the game's illustrated fighter portraits (from the Unity client's `Resources/UI/Portraits`), also used as Steam key art.
 - `src/assets/screens/`: real gameplay stills from the Steam store shoot, the 2026-10-28 promo clips and in-game captures; sources in its README.
 - `src/assets/stages/`: stage-select previews of the seven PvP picker stages.
-- `https://youtu.be/2_6SbaZ5sA8`: “SLOPArena Playtest Trailer” (16:9, 2026-10-28), embedded on the home page behind a click-to-load facade.
+- `https://youtu.be/2_6SbaZ5sA8`: “SLOPArena Playtest Trailer” (16:9, 2026-10-28), linked from the home page hero.
 - `src/views/` and `src/data/`: complete English and French copy, roster data, access, controls and feedback content.
 - `README.md`: development, deployment, Steam, feedback, and presence behavior.
 - `src/lib/feedback.js` and `functions/api/feedback.js`: strict v3 feedback record contract and D1 storage.
