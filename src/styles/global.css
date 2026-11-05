@@ -118,6 +118,7 @@ p { margin: 0; }
 .letter__plate { display: block; width: min(360px, 80%); height: auto; margin-bottom: 18px; }
 .letter p { max-width: 34em; margin: 0 0 14px; font-size: 19px; line-height: 1.55; }
 .letter .letter__hi { margin-bottom: 12px; font: 28px/1.1 var(--display); letter-spacing: -0.02em; }
+.letter .letter__more a { font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .letter__actions { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0 16px; }
 .letter .letter__small { font-size: 15px; color: var(--ink-soft); }
 .home-shot { margin: 0; }
