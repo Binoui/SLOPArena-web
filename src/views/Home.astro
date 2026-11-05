@@ -67,6 +67,7 @@ const copy = {
     fightersText: `${fighters.length} of them. ${wipNames} are still missing bits.`,
     fightersLink: 'See what each one does',
     rosterLabel: 'The fighters',
+    about: ['Read more:', 'What is SLOPArena?', 'Who made this'],
   },
   fr: {
     title: 'SLOPArena · un jeu de combat gratuit et open source',
@@ -112,6 +113,7 @@ const copy = {
     fightersText: `${fighters.length} pour l’instant. Il manque encore des morceaux à ${wipNames}.`,
     fightersLink: 'Voir ce que chacun sait faire',
     rosterLabel: 'Les combattants',
+    about: ['Pour en savoir plus :', 'C’est quoi SLOPArena ?', 'Qui a fait ça'],
   },
 }[lang]
 
@@ -165,6 +167,7 @@ const jsonLd = {
         </h1>
         <p class="letter__hi">{copy.hi}</p>
         {copy.letter.map((paragraph) => <p>{paragraph}</p>)}
+        <p class="letter__more">{copy.about[0]} <a href={href(lang, 'docs/what-is-sloparena/')}>{copy.about[1]}</a> · <a href={href(lang, 'docs/who-made-this/')}>{copy.about[2]}</a></p>
         <div class="letter__actions">
           <a class="btn btn--yellow" href={links.steam} target="_blank" rel="noopener" aria-label={t.steam.ctaAria}><Icon name="steam" />{copy.steam}</a>
           <a class="btn" href={links.demo}>{copy.demo}</a>
