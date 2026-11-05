@@ -19,7 +19,7 @@ Copy `.env.example` to `.env` to override the Steam, feedback API and presence U
 
 ## How the site is built
 
-[Astro](https://astro.build) renders every page to static HTML; the only client scripts are the language switch, live presence, the video facade and the feedback form.
+[Astro](https://astro.build) renders every page to static HTML; the only client scripts are the language switch, live presence, the docs image lightbox and the feedback form.
 
 | Path | What lives there |
 | --- | --- |

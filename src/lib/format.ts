@@ -7,3 +7,6 @@ export const formatNumber = (lang: Lang, value: number, digits = 1) =>
 
 export const formatDate = (lang: Lang, date: Date) =>
   new Intl.DateTimeFormat(locales[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(date)
+
+export const formatDay = (lang: Lang, date: Date) =>
+  new Intl.DateTimeFormat(locales[lang], { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(date)
